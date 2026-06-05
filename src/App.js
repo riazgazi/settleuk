@@ -226,7 +226,7 @@ export default function App() {
           <div>
             <div style={{ display: "flex", gap: 8, overflowX: "auto", marginBottom: 20, paddingBottom: 4 }}>
               {PHASES.map(ph => {
-                const { d, t, pct: pp } = phaseProgress(ph);
+                const { d, t } = phaseProgress(ph);
                 return (
                   <button key={ph.id} onClick={() => setOpenPhase(ph.id)} style={{ flex: "none", display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 20, background: openPhase === ph.id ? ph.accent + "33" : "rgba(255,255,255,0.04)", border: `1px solid ${openPhase === ph.id ? ph.accent + "66" : "rgba(255,255,255,0.06)"}`, color: openPhase === ph.id ? ph.accent : "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>
                     {ph.emoji} {ph.label}
