@@ -269,9 +269,8 @@ export default function App() {
   const filteredRes = resCat === "All" ? RESOURCES : RESOURCES.filter(r => r.cat === resCat);
 
   const arrivalDays = profile.arrival
-    ? Math.ceil((new Date(profile.arrival) - new Date()) / (1000 * 60 * 60 * 24))
+    ? Math.ceil((new Date(profile.arrival + "T12:00:00") - new Date()) / (1000 * 60 * 60 * 24))
     : null;
-
   return (
     <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", paddingBottom: 72 }}>
 
