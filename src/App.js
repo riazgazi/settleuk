@@ -1,103 +1,178 @@
 import { useState, useEffect } from "react";
 
-const PHASES = [
+// ============================================================
+// DATA — Status definitions and stage details
+// ============================================================
+const STATUSES = [
+  { id: 0, label: "Just researching", sub: "Exploring UK study options", emoji: "🔍" },
+  { id: 1, label: "Applied to university", sub: "Waiting for offer letter", emoji: "📝" },
+  { id: 2, label: "Offer received", sub: "Got conditional/unconditional offer", emoji: "🎉" },
+  { id: 3, label: "CAS received", sub: "University sent CAS number", emoji: "📋" },
+  { id: 4, label: "Visa applied", sub: "Application submitted", emoji: "⏳" },
+  { id: 5, label: "Visa approved", sub: "Ready to travel to UK", emoji: "✅" },
+  { id: 6, label: "Already in UK", sub: "Arrived and settling", emoji: "🇬🇧" },
+];
+
+const ALL_STAGE_NAMES = ["Research", "Applied", "Offer", "CAS", "Visa applied", "Visa approved", "Arrived"];
+
+const STAGES = [
   {
-    id: "preflight", label: "Before You Fly", emoji: "✈️", accent: "#E8A838",
+    id: 0, name: "Research & IELTS", sub: "Choose university, prepare English test",
+    nextAction: "Book IELTS test", deadline: "ASAP — 6-12 months before intake",
+    emotion: "Great time to start! Early preparation means better university options.",
+    accentBg: "#E6F1FB", accentText: "#0C447C", accentBtn: "#185FA5", chipBg: "#E6F1FB", chipColor: "#185FA5",
     tasks: [
-      { id: "pf1", title: "Valid Passport & Visa", detail: "Confirm visa type matches purpose. Check expiry date.", urgent: true },
-      { id: "pf2", title: "Book eSIM / UK SIM", detail: "GiffGaff, Lebara, Lyca — order online before flying.", urgent: true },
-      { id: "pf3", title: "Travel Insurance", detail: "Get comprehensive cover including medical and baggage." },
-      { id: "pf4", title: "Confirm Accommodation", detail: "Secure first 4-6 weeks. You need this address for bank accounts." },
-      { id: "pf5", title: "Scan All Documents", detail: "Upload passport, visa, offer letter, bank statement to Google Drive." },
-      { id: "pf6", title: "Notify Your Home Bank", detail: "Tell them you are travelling to avoid card blocks." },
+      { id: "t0-1", text: "Research UK universities on UCAS", priority: true },
+      { id: "t0-2", text: "Register for IELTS or PTE Academic", priority: true },
+      { id: "t0-3", text: "Prepare personal statement draft" },
+      { id: "t0-4", text: "Check tuition fees and scholarship options" },
+      { id: "t0-5", text: "Contact university admissions teams" },
+    ],
+    insights: [
+      { type: "tip", title: "Start early", sub: "Universities with September intake usually open applications 12 months ahead." },
+      { type: "info", title: "IELTS validity", sub: "IELTS scores are valid for 2 years — plan your test date accordingly." },
     ]
   },
   {
-    id: "arrival", label: "First 7 Days", emoji: "🏠", accent: "#3DB88B",
+    id: 1, name: "University application", sub: "Submitted — waiting for offer",
+    nextAction: "Follow up with admissions", deadline: "Check application portal weekly",
+    emotion: "Application submitted! Most offers arrive within 4-8 weeks. Stay patient.",
+    accentBg: "#EEEDFE", accentText: "#3C3489", accentBtn: "#534AB7", chipBg: "#EEEDFE", chipColor: "#534AB7",
     tasks: [
-      { id: "ar1", title: "Collect BRP from Post Office", detail: "Must collect within 10 days of arrival.", urgent: true },
-      { id: "ar2", title: "Activate UK SIM or eSIM", detail: "Get a working UK number immediately for verification texts." },
-      { id: "ar3", title: "Open Monzo or Starling Account", detail: "No UK address needed on day 1. Just passport and selfie.", urgent: true },
-      { id: "ar4", title: "Register at University or Employer", detail: "Complete enrolment or HR onboarding. Get your ID." },
-      { id: "ar5", title: "Find Local GP Surgery", detail: "Find nearest NHS GP at nhs.uk/service-search." },
+      { id: "t1-1", text: "Log in to application portal daily", priority: true },
+      { id: "t1-2", text: "Prepare for possible interview", priority: true },
+      { id: "t1-3", text: "Gather financial documents early" },
+      { id: "t1-4", text: "Research student accommodation options" },
+      { id: "t1-5", text: "Connect with current students on LinkedIn" },
+    ],
+    insights: [
+      { type: "tip", title: "Be reachable", sub: "Universities may email or call for interviews — check spam folder regularly." },
+      { type: "info", title: "Average wait", sub: "Most UK universities respond within 4-8 weeks of application." },
     ]
   },
   {
-    id: "month1", label: "First Month", emoji: "📋", accent: "#5B8DEF",
+    id: 2, name: "Offer received", sub: "Accept offer and request CAS",
+    nextAction: "Accept offer and pay deposit", deadline: "Check offer letter for deadline",
+    emotion: "Congratulations! Accept your offer quickly — CAS takes time to process.",
+    accentBg: "#E1F5EE", accentText: "#085041", accentBtn: "#0F6E56", chipBg: "#E1F5EE", chipColor: "#0F6E56",
     tasks: [
-      { id: "m1a", title: "Register with GP (NHS)", detail: "Walk in with passport and proof of address. Free.", urgent: true },
-      { id: "m1b", title: "Apply for NI Number", detail: "Call 0800 141 2075 or apply online. Takes 4-8 weeks.", urgent: true },
-      { id: "m1c", title: "Council Tax — Check Exemption", detail: "Full-time students are usually exempt." },
-      { id: "m1d", title: "NHS Registration Confirmation", detail: "After GP registration you will receive an NHS number." },
-      { id: "m1e", title: "Set Up Internet and Utilities", detail: "Arrange broadband, electricity, water if renting privately." },
-      { id: "m1f", title: "UKCISA Registration (Students)", detail: "Register with your university International Student Office." },
+      { id: "t2-1", text: "Accept unconditional offer formally", priority: true },
+      { id: "t2-2", text: "Pay tuition deposit to secure place", priority: true },
+      { id: "t2-3", text: "Request CAS number from university", priority: true },
+      { id: "t2-4", text: "Start saving bank statement (28 days)" },
+      { id: "t2-5", text: "Book TB test appointment (Bangladesh)" },
+    ],
+    insights: [
+      { type: "warn", title: "Conditional offer?", sub: "Make sure you meet all conditions (grades, English score) before CAS request." },
+      { type: "tip", title: "Bank statement timing", sub: "Start your 28-day bank statement period now — it takes time to build up." },
     ]
   },
   {
-    id: "banking", label: "Banking Setup", emoji: "🏦", accent: "#9B6FE8",
+    id: 3, name: "CAS received", sub: "Apply for student visa now",
+    nextAction: "Submit visa application online", deadline: "At least 3 months before intake",
+    emotion: "CAS received — this is the most critical stage. Apply for visa immediately.",
+    accentBg: "#FAECE7", accentText: "#712B13", accentBtn: "#993C1D", chipBg: "#FAECE7", chipColor: "#993C1D",
     tasks: [
-      { id: "bk1", title: "Monzo or Starling (Instant)", detail: "Opens with passport only. Free UK account number and sort code.", urgent: true },
-      { id: "bk2", title: "Wise Multi-Currency Account", detail: "Great for sending money home. Hold GBP, USD, EUR in one account." },
-      { id: "bk3", title: "Traditional Bank (HSBC or Barclays)", detail: "May need 3 months of statements." },
-      { id: "bk4", title: "Set Up Direct Debits", detail: "Rent, utilities, phone bill setup." },
-      { id: "bk5", title: "Build UK Credit Score", detail: "Register on electoral roll, use a credit builder card." },
+      { id: "t3-1", text: "Pay Immigration Health Surcharge (IHS)", priority: true },
+      { id: "t3-2", text: "Complete online visa application form", priority: true },
+      { id: "t3-3", text: "Prepare 28-day bank statement", priority: true },
+      { id: "t3-4", text: "Book biometric appointment at UKVCAS", priority: true },
+      { id: "t3-5", text: "Collect TB test certificate" },
+      { id: "t3-6", text: "Book flights once visa is submitted" },
+    ],
+    insights: [
+      { type: "warn", title: "Bank statement risk", sub: "Must show funds for 28 consecutive days. Any dip below the required amount restarts the count." },
+      { type: "tip", title: "Apply early for visa", sub: "Average processing: 3 weeks. Apply soon to stay safe before intake." },
+      { type: "info", title: "TB test required", sub: "Bangladesh is on the TB test list. Book appointment before visa application." },
     ]
   },
   {
-    id: "jobs", label: "Job Searching", emoji: "💼", accent: "#E85B5B",
+    id: 4, name: "Visa applied", sub: "Waiting for visa decision",
+    nextAction: "Prepare pre-departure checklist", deadline: "Decision usually in 3 weeks",
+    emotion: "Visa submitted! Average decision: 3 weeks. Use this time to prepare departure.",
+    accentBg: "#FAEEDA", accentText: "#633806", accentBtn: "#854F0B", chipBg: "#FAEEDA", chipColor: "#854F0B",
     tasks: [
-      { id: "jb1", title: "Convert CV to UK Format", detail: "1-2 pages, no photo, no date of birth. UK English spelling." },
-      { id: "jb2", title: "Create or Update LinkedIn", detail: "Add UK location. Set Open to Work flag." },
-      { id: "jb3", title: "Register on UK Job Portals", detail: "Indeed UK, Reed, Totaljobs, Glassdoor. Set daily alerts." },
-      { id: "jb4", title: "Check Your Work Hours (Visa)", detail: "Student Visa: max 20 hrs per week during term." },
-      { id: "jb5", title: "Apply to 5+ Jobs Per Week", detail: "Track applications in a spreadsheet." },
+      { id: "t4-1", text: "Book flights for your intake month", priority: true },
+      { id: "t4-2", text: "Confirm university accommodation booking", priority: true },
+      { id: "t4-3", text: "Order eSIM (GiffGaff, Lebara)" },
+      { id: "t4-4", text: "Get travel insurance" },
+      { id: "t4-5", text: "Pack essentials — clothes for cold weather" },
+      { id: "t4-6", text: "Inform home bank about travel" },
+    ],
+    insights: [
+      { type: "tip", title: "Use the waiting time well", sub: "Visa decisions take about 3 weeks on average — perfect time to prep for departure." },
+      { type: "info", title: "Priority service", sub: "Priority visa service (extra fee) gives a decision in 5 working days if you're short on time." },
     ]
   },
   {
-    id: "visa", label: "Visa & Legal", emoji: "📜", accent: "#E8783A",
+    id: 5, name: "Visa approved", sub: "Pre-departure final preparations",
+    nextAction: "Check BRP collection Post Office", deadline: "Note it in your visa vignette",
+    emotion: "Visa approved! You are going to UK. Final preparations — almost there!",
+    accentBg: "#E1F5EE", accentText: "#085041", accentBtn: "#0F6E56", chipBg: "#E1F5EE", chipColor: "#0F6E56",
     tasks: [
-      { id: "vs1", title: "Note Visa Expiry Date", detail: "Set a calendar reminder 3 months before expiry.", urgent: true },
-      { id: "vs2", title: "Understand Your Visa Conditions", detail: "Work hours, public funds access, travel rules." },
-      { id: "vs3", title: "Register with UKVI if Required", detail: "Some visa categories require UKVI registration." },
-      { id: "vs4", title: "IHS Surcharge — NHS Access", detail: "If you paid the IHS surcharge, you have full NHS access." },
-      { id: "vs5", title: "Know Your Right to Work", detail: "Generate share code at gov.uk/prove-right-to-work." },
+      { id: "t5-1", text: "Check BRP Post Office in visa vignette", priority: true },
+      { id: "t5-2", text: "Download bank app (Monzo/Starling)" },
+      { id: "t5-3", text: "Join university Facebook/WhatsApp groups" },
+      { id: "t5-4", text: "Pack documents in hand luggage only" },
+      { id: "t5-5", text: "Confirm airport pickup or transport" },
+      { id: "t5-6", text: "Exchange some cash to GBP" },
+    ],
+    insights: [
+      { type: "warn", title: "BRP collection deadline", sub: "You must collect your BRP within 10 days of arrival or as stated on your visa." },
+      { type: "tip", title: "Keep documents handy", sub: "Passport, visa, offer letter, CAS — keep all in hand luggage, never in checked baggage." },
+    ]
+  },
+  {
+    id: 6, name: "Arrived in UK", sub: "Settlement and registration",
+    nextAction: "Collect BRP from Post Office", deadline: "Within 10 days of arrival",
+    emotion: "Welcome to UK! Complete these tasks in order — do not delay BRP collection.",
+    accentBg: "#E1F5EE", accentText: "#085041", accentBtn: "#0F6E56", chipBg: "#E1F5EE", chipColor: "#0F6E56",
+    tasks: [
+      { id: "t6-1", text: "Collect BRP from Post Office", priority: true },
+      { id: "t6-2", text: "Open Monzo or Starling bank account", priority: true },
+      { id: "t6-3", text: "Register at university — get student ID", priority: true },
+      { id: "t6-4", text: "Register with local NHS GP surgery" },
+      { id: "t6-5", text: "Apply for NI Number (call 0800 141 2075)" },
+      { id: "t6-6", text: "Get council tax exemption letter" },
+    ],
+    insights: [
+      { type: "warn", title: "BRP first!", sub: "Collect your BRP within 10 days — delays can cause legal issues with your visa status." },
+      { type: "tip", title: "NI Number takes time", sub: "Apply for your National Insurance number now — it can take 4-8 weeks to arrive." },
     ]
   },
 ];
 
 const DOCS = [
-  { id: "d1", name: "Passport", hint: "Primary photo ID", icon: "🛂" },
-  { id: "d2", name: "Visa / BRP", hint: "Biometric Residence Permit", icon: "🪪" },
-  { id: "d3", name: "Offer Letter", hint: "University or employer", icon: "📄" },
-  { id: "d4", name: "Proof of Funds", hint: "Bank statements (3 months)", icon: "💷" },
-  { id: "d5", name: "Passport Photos", hint: "At least 6 recent photos", icon: "🖼️" },
-  { id: "d6", name: "NHS Number", hint: "After GP registration", icon: "🩺" },
-  { id: "d7", name: "NI Number Letter", hint: "From HMRC, takes 4-8 weeks", icon: "🔢" },
-  { id: "d8", name: "UK Bank Details", hint: "Sort code and account number", icon: "🏦" },
-  { id: "d9", name: "Insurance Certificate", hint: "Travel and health insurance", icon: "🛡️" },
-  { id: "d10", name: "Tenancy Agreement", hint: "Proof of UK address", icon: "🏠" },
-  { id: "d11", name: "Council Tax Letter", hint: "Exemption if student", icon: "📬" },
-  { id: "d12", name: "University or Work ID", hint: "Student or staff card", icon: "🎓" },
+  { id: "d1", name: "Passport", hint: "Valid 6+ months", icon: "🛂" },
+  { id: "d2", name: "Offer Letter", hint: "Conditional/unconditional", icon: "📄" },
+  { id: "d3", name: "CAS Number", hint: "From university", icon: "🎓" },
+  { id: "d4", name: "IELTS Certificate", hint: "Score 6.0+ usually", icon: "📝" },
+  { id: "d5", name: "Bank Statement", hint: "28 consecutive days", icon: "💷" },
+  { id: "d6", name: "TB Test Result", hint: "From approved clinic", icon: "🩺" },
+  { id: "d7", name: "Passport Photos", hint: "2 recent photos", icon: "🖼️" },
+  { id: "d8", name: "IHS Receipt", hint: "After payment", icon: "🛡️" },
+  { id: "d9", name: "Personal Statement", hint: "For visa form", icon: "✍️" },
+  { id: "d10", name: "Accommodation Proof", hint: "Uni halls or rental", icon: "🏠" },
+  { id: "d11", name: "BRP / Visa Vignette", hint: "After visa approval", icon: "🪪" },
+  { id: "d12", name: "NI Number Letter", hint: "From HMRC", icon: "🔢" },
 ];
 
-const RESOURCES = [
-  { title: "GOV.UK — Visas and Immigration", url: "https://www.gov.uk/visas-immigration", icon: "🏛️", cat: "Official" },
-  { title: "NHS — Find a GP", url: "https://www.nhs.uk/service-search/find-a-gp", icon: "🩺", cat: "Healthcare" },
-  { title: "Apply for NI Number", url: "https://www.gov.uk/apply-national-insurance-number", icon: "🔢", cat: "Official" },
-  { title: "Monzo — Open UK Account", url: "https://monzo.com", icon: "💳", cat: "Banking" },
-  { title: "Wise — Send Money Home", url: "https://wise.com", icon: "💸", cat: "Banking" },
-  { title: "Reed — UK Jobs", url: "https://www.reed.co.uk", icon: "💼", cat: "Jobs" },
-  { title: "Indeed UK", url: "https://www.indeed.co.uk", icon: "🔍", cat: "Jobs" },
-  { title: "Rightmove — UK Housing", url: "https://www.rightmove.co.uk", icon: "🏘️", cat: "Housing" },
-  { title: "UKCISA — Student Support", url: "https://www.ukcisa.org.uk", icon: "🎓", cat: "Students" },
-  { title: "GiffGaff — UK SIM", url: "https://www.giffgaff.com", icon: "📱", cat: "SIM" },
-  { title: "Council Tax Check", url: "https://www.gov.uk/council-tax/who-has-to-pay", icon: "📋", cat: "Official" },
-  { title: "Prove Right to Work", url: "https://www.gov.uk/prove-right-to-work", icon: "✅", cat: "Official" },
+const GUIDES = [
+  { title: "NHS registration", sub: "Free healthcare access", icon: "🩺", url: "https://www.nhs.uk/service-search/find-a-gp" },
+  { title: "Open UK bank account", sub: "Monzo, Starling, Wise", icon: "🏦", url: "https://monzo.com" },
+  { title: "Apply for NI number", sub: "Call 0800 141 2075", icon: "🔢", url: "https://www.gov.uk/apply-national-insurance-number" },
+  { title: "BRP collection guide", sub: "Collect within 10 days", icon: "🪪", url: "https://www.gov.uk/biometric-residence-permits" },
+  { title: "Council tax exemption", sub: "Students usually exempt", icon: "📬", url: "https://www.gov.uk/council-tax/who-has-to-pay" },
+  { title: "Right to work — visa hours", sub: "Max 20hrs/week term time", icon: "✅", url: "https://www.gov.uk/prove-right-to-work" },
+  { title: "UK Visa Application", sub: "Official gov.uk portal", icon: "📜", url: "https://www.gov.uk/student-visa" },
+  { title: "UKCISA Student Support", sub: "International student advice", icon: "🎓", url: "https://www.ukcisa.org.uk" },
+  { title: "GiffGaff UK SIM", sub: "Order eSIM before flying", icon: "📱", url: "https://www.giffgaff.com" },
+  { title: "Wise — Send Money", sub: "Best exchange rates", icon: "💸", url: "https://wise.com" },
 ];
 
-const totalTasks = PHASES.reduce((a, p) => a + p.tasks.length, 0);
-
-// ── localStorage helpers ──────────────────────────────────────
+// ============================================================
+// HELPERS — localStorage
+// ============================================================
 function loadLS(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
   catch { return fallback; }
@@ -106,38 +181,26 @@ function saveLS(key, value) {
   try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
 }
 
+// ============================================================
+// MAIN APP
+// ============================================================
 export default function App() {
   const [screen, setScreen] = useState(() => {
     const saved = loadLS("settleuk_profile", null);
     return saved && saved.name ? "home" : "onboard";
   });
-  const [profile, setProfile] = useState(() => loadLS("settleuk_profile", { name: "", type: "", arrival: "", step: 0 }));
-  const [checked, setChecked] = useState(() => loadLS("settleuk_checked", {}));
+  const [profile, setProfile] = useState(() => loadLS("settleuk_profile", { name: "", statusId: 0, arrival: "", step: 0 }));
+  const [taskDone, setTaskDone] = useState(() => loadLS("settleuk_tasks", {}));
   const [docChecked, setDocChecked] = useState(() => loadLS("settleuk_docs", {}));
-  const [tab, setTab] = useState("roadmap");
-  const [openPhase, setOpenPhase] = useState("preflight");
-  const [jobLog, setJobLog] = useState(() => loadLS("settleuk_jobs", []));
-  const [jobForm, setJobForm] = useState({ company: "", role: "", date: "", status: "Applied" });
-  const [showJobForm, setShowJobForm] = useState(false);
-  const [resCat, setResCat] = useState("All");
+  const [tab, setTab] = useState("home");
   const [showSettings, setShowSettings] = useState(false);
-  const [editProfile, setEditProfile] = useState({ name: "", type: "", arrival: "" });
+  const [editProfile, setEditProfile] = useState({ name: "", statusId: 0, arrival: "" });
 
-  // Save to localStorage whenever data changes
   useEffect(() => { saveLS("settleuk_profile", profile); }, [profile]);
-  useEffect(() => { saveLS("settleuk_checked", checked); }, [checked]);
+  useEffect(() => { saveLS("settleuk_tasks", taskDone); }, [taskDone]);
   useEffect(() => { saveLS("settleuk_docs", docChecked); }, [docChecked]);
-  useEffect(() => { saveLS("settleuk_jobs", jobLog); }, [jobLog]);
 
-  const done = Object.values(checked).filter(Boolean).length;
-  const pct = Math.round((done / totalTasks) * 100);
-
-  const phaseProgress = (phase) => {
-    const d = phase.tasks.filter(t => checked[t.id]).length;
-    return { d, t: phase.tasks.length, pct: Math.round(d / phase.tasks.length * 100) };
-  };
-
-  const toggle = (id) => setChecked(p => ({ ...p, [id]: !p[id] }));
+  const toggleTask = (id) => setTaskDone(p => ({ ...p, [id]: !p[id] }));
   const toggleDoc = (id) => setDocChecked(p => ({ ...p, [id]: !p[id] }));
 
   const inputStyle = {
@@ -153,7 +216,7 @@ export default function App() {
     cursor: bg === "#333" ? "default" : "pointer"
   });
 
-  // ── SETTINGS MODAL ────────────────────────────────────────────
+  // ── SETTINGS MODAL ──────────────────────────────────────────
   if (showSettings) {
     return (
       <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
@@ -164,23 +227,24 @@ export default function App() {
           </div>
 
           <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>Your Name</label>
-          <input value={editProfile.name} onChange={e => setEditProfile(p => ({ ...p, name: e.target.value }))}
-            placeholder="Enter your name" style={inputStyle} />
+          <input value={editProfile.name} onChange={e => setEditProfile(p => ({ ...p, name: e.target.value }))} placeholder="Enter your name" style={inputStyle} />
 
-          <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>Purpose of Visit</label>
+          <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>Current Status</label>
           <div style={{ marginBottom: 16 }}>
-            {["🎓 Student", "💼 Skilled Worker", "🎓💼 Student + Working"].map((opt, i) => (
-              <button key={i} onClick={() => setEditProfile(p => ({ ...p, type: opt }))} style={{
+            {STATUSES.map(s => (
+              <button key={s.id} onClick={() => setEditProfile(p => ({ ...p, statusId: s.id }))} style={{
                 width: "100%", display: "flex", alignItems: "center", gap: 12,
                 padding: "12px 16px", marginBottom: 8,
-                background: editProfile.type === opt ? "rgba(61,184,139,0.2)" : "rgba(255,255,255,0.05)",
-                border: `1px solid ${editProfile.type === opt ? "#3DB88B" : "rgba(255,255,255,0.1)"}`,
-                borderRadius: 12, color: "#fff", fontSize: 14, cursor: "pointer"
-              }}>{opt}</button>
+                background: editProfile.statusId === s.id ? "rgba(61,184,139,0.2)" : "rgba(255,255,255,0.05)",
+                border: `1px solid ${editProfile.statusId === s.id ? "#3DB88B" : "rgba(255,255,255,0.1)"}`,
+                borderRadius: 12, color: "#fff", fontSize: 14, cursor: "pointer", textAlign: "left"
+              }}>
+                {s.emoji} {s.label}
+              </button>
             ))}
           </div>
 
-          <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>UK Arrival Date</label>
+          <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>UK Arrival Date (estimated)</label>
           <input type="date" value={editProfile.arrival} onChange={e => setEditProfile(p => ({ ...p, arrival: e.target.value }))} style={inputStyle} />
 
           <button onClick={() => {
@@ -205,7 +269,7 @@ export default function App() {
     );
   }
 
-  // ── ONBOARDING ────────────────────────────────────────────────
+  // ── ONBOARDING ──────────────────────────────────────────────
   if (screen === "onboard") {
     const step = profile.step;
     return (
@@ -222,7 +286,7 @@ export default function App() {
                 Settle<span style={{ color: "#3DB88B" }}>UK</span>
               </h1>
               <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15, marginBottom: 40, lineHeight: 1.6 }}>
-                Your personal roadmap for arriving and settling in the United Kingdom.
+                Your Personal UK Student Journey Manager — from offer to settlement, step by step.
               </p>
               <button onClick={() => setProfile(p => ({ ...p, step: 1 }))} style={btnStyle("#3DB88B")}>
                 Start My Journey →
@@ -241,10 +305,15 @@ export default function App() {
           {step === 2 && (
             <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 24, padding: "32px 28px", border: "1px solid rgba(255,255,255,0.1)" }}>
               <button onClick={() => setProfile(p => ({ ...p, step: 1 }))} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13, marginBottom: 16, padding: 0 }}>← Back</button>
-              <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 24 }}>🎯 Why are you going to the UK?</h2>
-              {["🎓 Student", "💼 Skilled Worker", "🎓💼 Student + Working"].map((opt, i) => (
-                <button key={i} onClick={() => setProfile(p => ({ ...p, type: opt, step: 3 }))} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px 18px", marginBottom: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", fontSize: 15, cursor: "pointer" }}>
-                  {opt}
+              <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 8 }}>📍 Where are you now?</h2>
+              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 20 }}>This helps us build your personalised roadmap</p>
+              {STATUSES.map(s => (
+                <button key={s.id} onClick={() => setProfile(p => ({ ...p, statusId: s.id, step: 3 }))} style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "13px 16px", marginBottom: 8, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", fontSize: 14, cursor: "pointer", textAlign: "left" }}>
+                  <span style={{ fontSize: 20 }}>{s.emoji}</span>
+                  <span>
+                    <div style={{ fontWeight: 700 }}>{s.label}</div>
+                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{s.sub}</div>
+                  </span>
                 </button>
               ))}
             </div>
@@ -252,9 +321,10 @@ export default function App() {
           {step === 3 && (
             <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 24, padding: "32px 28px", border: "1px solid rgba(255,255,255,0.1)" }}>
               <button onClick={() => setProfile(p => ({ ...p, step: 2 }))} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13, marginBottom: 16, padding: 0 }}>← Back</button>
-              <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 24 }}>📅 When do you arrive in the UK?</h2>
+              <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 8 }}>📅 Estimated UK arrival date?</h2>
+              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 20 }}>This is approximate — you can change it later</p>
               <input type="date" value={profile.arrival} onChange={e => setProfile(p => ({ ...p, arrival: e.target.value }))} style={inputStyle} />
-              <button disabled={!profile.arrival} onClick={() => { setScreen("home"); setTab("roadmap"); }} style={btnStyle(profile.arrival ? "#3DB88B" : "#333")}>
+              <button disabled={!profile.arrival} onClick={() => { setScreen("home"); setTab("home"); }} style={btnStyle(profile.arrival ? "#3DB88B" : "#333")}>
                 Build My Roadmap 🗺️
               </button>
             </div>
@@ -264,53 +334,56 @@ export default function App() {
     );
   }
 
-  // ── HOME ──────────────────────────────────────────────────────
-  const cats = ["All", ...Array.from(new Set(RESOURCES.map(r => r.cat)))];
-  const filteredRes = resCat === "All" ? RESOURCES : RESOURCES.filter(r => r.cat === resCat);
+  // ── HOME ────────────────────────────────────────────────────
+  const statusId = profile.statusId || 0;
+  const sg = STAGES[statusId];
+  const stIdx = statusId;
 
   const arrivalDays = profile.arrival
     ? Math.ceil((new Date(profile.arrival + "T12:00:00") - new Date()) / (1000 * 60 * 60 * 24))
     : null;
+
+  const insightIcon = (type) => type === "warn" ? "⚠️" : type === "tip" ? "💡" : "ℹ️";
+  const insightBg = (type) => type === "warn" ? "rgba(232,168,56,0.08)" : type === "tip" ? "rgba(61,184,139,0.08)" : "rgba(91,141,239,0.08)";
+  const insightBorder = (type) => type === "warn" ? "rgba(232,168,56,0.25)" : type === "tip" ? "rgba(61,184,139,0.25)" : "rgba(91,141,239,0.25)";
+  const insightColor = (type) => type === "warn" ? "#E8A838" : type === "tip" ? "#3DB88B" : "#5B8DEF";
+
+  const completedTasksCount = sg.tasks.filter(t => taskDone[t.id]).length;
+  const docsReadyCount = Object.values(docChecked).filter(Boolean).length;
+
   return (
     <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", paddingBottom: 72 }}>
 
       {/* HEADER */}
       <div style={{ background: "linear-gradient(135deg,#0B1E35,#0D2A1F)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "16px 20px 0" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
             <div style={{ fontSize: 28 }}>🇬🇧</div>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 19, fontWeight: 800 }}>
                 Settle<span style={{ color: "#3DB88B" }}>UK</span>
                 {profile.name && <span style={{ fontSize: 14, fontWeight: 400, color: "rgba(255,255,255,0.6)", marginLeft: 8 }}>· Hello, {profile.name}!</span>}
               </div>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
-                {profile.type && profile.type.replace(/^[^ ]+ /, "")}
-                {arrivalDays !== null && arrivalDays > 0 && <span style={{ marginLeft: 8, color: "#E8A838" }}>· {arrivalDays} days to arrival</span>}
-                {arrivalDays !== null && arrivalDays <= 0 && <span style={{ marginLeft: 8, color: "#3DB88B" }}>· Arrived in UK!</span>}
-              </div>
+              {arrivalDays !== null && (
+                <div style={{ fontSize: 12, color: arrivalDays > 0 ? "#E8A838" : "#3DB88B" }}>
+                  {arrivalDays > 0 ? `${arrivalDays} days to arrival` : "You're in the UK now!"}
+                </div>
+              )}
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: 26, fontWeight: 900, color: "#3DB88B" }}>{pct}%</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{done}/{totalTasks}</div>
-              </div>
-              {/* Settings button */}
-              <button onClick={() => { setEditProfile({ name: profile.name, type: profile.type, arrival: profile.arrival }); setShowSettings(true); }}
-                style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 18, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                ⚙️
-              </button>
-            </div>
+            <button onClick={() => { setEditProfile({ name: profile.name, statusId: profile.statusId, arrival: profile.arrival }); setShowSettings(true); }}
+              style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 18, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              ⚙️
+            </button>
           </div>
 
-          {/* Progress bar */}
-          <div style={{ height: 5, background: "rgba(255,255,255,0.08)", borderRadius: 8, marginBottom: 18, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${pct}%`, background: "linear-gradient(90deg,#3DB88B,#1D9E6A)", borderRadius: 8, transition: "width .5s" }} />
+          <div style={{ marginBottom: 12 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, background: sg.chipBg, color: sg.chipColor, padding: "4px 12px", borderRadius: 20 }}>
+              📍 {sg.name} stage
+            </span>
           </div>
 
-          {/* Tabs */}
           <div style={{ display: "flex", gap: 2, overflowX: "auto", paddingBottom: 1 }}>
-            {[["roadmap", "🗺️ Roadmap"], ["docs", "📄 Documents"], ["jobs", "💼 Jobs"], ["resources", "🔗 Resources"]].map(([id, lbl]) => (
+            {[["home", "🏠 Home"], ["tasks", "✅ Tasks"], ["docs", "📄 Documents"], ["guides", "📖 Guides"]].map(([id, lbl]) => (
               <button key={id} onClick={() => setTab(id)} style={{ flex: "none", padding: "9px 14px", background: "transparent", border: "none", borderBottom: tab === id ? "2px solid #3DB88B" : "2px solid transparent", color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.45)", fontSize: 13, fontWeight: tab === id ? 700 : 400, cursor: "pointer", whiteSpace: "nowrap" }}>{lbl}</button>
             ))}
           </div>
@@ -319,46 +392,131 @@ export default function App() {
 
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "20px 16px" }}>
 
-        {/* ROADMAP TAB */}
-        {tab === "roadmap" && (
+        {/* HOME TAB */}
+        {tab === "home" && (
           <div>
-            <div style={{ display: "flex", gap: 8, overflowX: "auto", marginBottom: 20, paddingBottom: 4 }}>
-              {PHASES.map(ph => {
-                const { d, t } = phaseProgress(ph);
+            {/* Emotional support banner */}
+            <div style={{ background: "rgba(61,184,139,0.08)", border: "1px solid rgba(61,184,139,0.25)", borderRadius: 14, padding: "12px 16px", marginBottom: 14, display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ fontSize: 20 }}>😊</span>
+              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.5 }}>{sg.emotion}</span>
+            </div>
+
+            {/* Next best action */}
+            <div style={{ background: sg.accentBg + "22", border: `1px solid ${sg.accentBg}55`, borderRadius: 16, padding: "16px", marginBottom: 20 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: sg.accentBtn, marginBottom: 6 }}>⚡ Next best action</div>
+              <div style={{ fontSize: 16, fontWeight: 800, marginBottom: 4 }}>{sg.nextAction}</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 12 }}>🕒 {sg.deadline}</div>
+              <button onClick={() => setTab("tasks")} style={{ width: "100%", padding: "10px 0", background: sg.accentBtn, border: "none", borderRadius: 10, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                Start Now →
+              </button>
+            </div>
+
+            {/* Journey map */}
+            <h3 style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>Your journey</h3>
+            <div style={{ marginBottom: 20 }}>
+              {ALL_STAGE_NAMES.map((name, i) => {
+                const isDone = i < stIdx;
+                const isNow = i === stIdx;
+                const isLast = i === ALL_STAGE_NAMES.length - 1;
                 return (
-                  <button key={ph.id} onClick={() => setOpenPhase(ph.id)} style={{ flex: "none", display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 20, background: openPhase === ph.id ? ph.accent + "33" : "rgba(255,255,255,0.04)", border: `1px solid ${openPhase === ph.id ? ph.accent + "66" : "rgba(255,255,255,0.06)"}`, color: openPhase === ph.id ? ph.accent : "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>
-                    {ph.emoji} {ph.label}
-                    <span style={{ background: openPhase === ph.id ? ph.accent : "rgba(255,255,255,0.12)", color: openPhase === ph.id ? "#fff" : "rgba(255,255,255,0.5)", borderRadius: 10, padding: "1px 7px", fontSize: 11 }}>{d}/{t}</span>
-                  </button>
+                  <div key={i} style={{ display: "flex", gap: 12 }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 28, flexShrink: 0 }}>
+                      <div style={{
+                        width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, flexShrink: 0,
+                        background: isDone ? "#3DB88B22" : isNow ? sg.accentBtn : "rgba(255,255,255,0.05)",
+                        border: `1px solid ${isDone ? "#3DB88B" : isNow ? sg.accentBtn : "rgba(255,255,255,0.15)"}`,
+                        color: isDone ? "#3DB88B" : isNow ? "#fff" : "rgba(255,255,255,0.3)"
+                      }}>
+                        {isDone ? "✓" : isNow ? "●" : i + 1}
+                      </div>
+                      {!isLast && <div style={{ width: 2, height: 24, background: isDone ? "#3DB88B" : "rgba(255,255,255,0.1)", margin: "2px 0" }} />}
+                    </div>
+                    <div style={{ paddingTop: 3, paddingBottom: isLast ? 0 : 16 }}>
+                      <div style={{
+                        fontSize: 13, fontWeight: 700,
+                        color: isDone ? "rgba(255,255,255,0.35)" : isNow ? sg.accentText === "#085041" ? "#3DB88B" : "#fff" : "rgba(255,255,255,0.4)",
+                        textDecoration: isDone ? "line-through" : "none"
+                      }}>
+                        {name}
+                        {isNow && <span style={{ fontSize: 10, fontWeight: 700, background: sg.chipBg, color: sg.chipColor, padding: "2px 8px", borderRadius: 10, marginLeft: 8 }}>You are here</span>}
+                      </div>
+                      {isDone && <div style={{ fontSize: 11, color: "#3DB88B", marginTop: 2 }}>✓ Completed</div>}
+                      {isNow && <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{sg.sub}</div>}
+                    </div>
+                  </div>
                 );
               })}
             </div>
-            {PHASES.map(ph => ph.id === openPhase && (
-              <div key={ph.id}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                  <span style={{ fontSize: 28 }}>{ph.emoji}</span>
-                  <div>
-                    <h2 style={{ margin: 0, fontSize: 18, fontWeight: 800 }}>{ph.label}</h2>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{phaseProgress(ph).d} of {phaseProgress(ph).t} completed</div>
-                  </div>
-                  <div style={{ marginLeft: "auto", fontSize: 13, fontWeight: 700, color: ph.accent, background: ph.accent + "22", padding: "4px 12px", borderRadius: 12 }}>{phaseProgress(ph).pct}%</div>
+
+            {/* Insights & risk alerts */}
+            <h3 style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>Insights & risk alerts</h3>
+            {sg.insights.map((ins, i) => (
+              <div key={i} style={{ display: "flex", gap: 12, background: insightBg(ins.type), border: `1px solid ${insightBorder(ins.type)}`, borderRadius: 14, padding: "12px 14px", marginBottom: 8 }}>
+                <span style={{ fontSize: 18 }}>{insightIcon(ins.type)}</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: insightColor(ins.type), marginBottom: 2 }}>{ins.title}</div>
+                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>{ins.sub}</div>
                 </div>
-                {ph.tasks.map(task => (
-                  <div key={task.id} onClick={() => toggle(task.id)} style={{ display: "flex", gap: 14, padding: "14px 16px", marginBottom: 8, background: checked[task.id] ? "rgba(61,184,139,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${checked[task.id] ? "#3DB88B44" : "rgba(255,255,255,0.06)"}`, borderRadius: 14, cursor: "pointer", alignItems: "flex-start" }}>
-                    <div style={{ width: 22, height: 22, borderRadius: 7, flexShrink: 0, marginTop: 2, border: `2px solid ${checked[task.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: checked[task.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13 }}>
-                      {checked[task.id] && "✓"}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                        <span style={{ fontSize: 14, fontWeight: 700, textDecoration: checked[task.id] ? "line-through" : "none", color: checked[task.id] ? "rgba(255,255,255,0.3)" : "#EEF2F7" }}>{task.title}</span>
-                        {task.urgent && !checked[task.id] && (<span style={{ fontSize: 10, fontWeight: 700, color: "#E8A838", background: "#E8A83822", padding: "2px 7px", borderRadius: 8 }}>PRIORITY</span>)}
-                      </div>
-                      <p style={{ margin: "4px 0 0", fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.5 }}>{task.detail}</p>
-                    </div>
-                  </div>
-                ))}
               </div>
             ))}
+
+            {/* Quick actions */}
+            <h3 style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.4)", margin: "20px 0 12px" }}>Quick actions</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              <div onClick={() => setTab("docs")} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 22 }}>📄</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700 }}>Documents</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{docsReadyCount} of {DOCS.length} ready</div>
+                </div>
+              </div>
+              <div onClick={() => setTab("tasks")} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 22 }}>✅</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700 }}>Tasks</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{completedTasksCount} of {sg.tasks.length} done</div>
+                </div>
+              </div>
+              <div onClick={() => setTab("guides")} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 22 }}>🏦</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700 }}>Banking guide</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>Open Monzo</div>
+                </div>
+              </div>
+              <div onClick={() => setTab("guides")} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 22 }}>🏥</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700 }}>NHS guide</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>Register with GP</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TASKS TAB */}
+        {tab === "tasks" && (
+          <div>
+            <h2 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 800 }}>{sg.name} tasks</h2>
+            <p style={{ margin: "0 0 16px", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{completedTasksCount} of {sg.tasks.length} completed · {sg.deadline}</p>
+            {sg.tasks.map(task => (
+              <div key={task.id} onClick={() => toggleTask(task.id)} style={{ display: "flex", gap: 14, padding: "14px 16px", marginBottom: 8, background: taskDone[task.id] ? "rgba(61,184,139,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${taskDone[task.id] ? "#3DB88B44" : "rgba(255,255,255,0.06)"}`, borderRadius: 14, cursor: "pointer", alignItems: "flex-start" }}>
+                <div style={{ width: 22, height: 22, borderRadius: 7, flexShrink: 0, marginTop: 2, border: `2px solid ${taskDone[task.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: taskDone[task.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13 }}>
+                  {taskDone[task.id] && "✓"}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    <span style={{ fontSize: 14, fontWeight: 700, textDecoration: taskDone[task.id] ? "line-through" : "none", color: taskDone[task.id] ? "rgba(255,255,255,0.3)" : "#EEF2F7" }}>{task.text}</span>
+                    {task.priority && !taskDone[task.id] && (<span style={{ fontSize: 10, fontWeight: 700, color: "#E8A838", background: "#E8A83822", padding: "2px 7px", borderRadius: 8 }}>PRIORITY</span>)}
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <div style={{ marginTop: 20, padding: "12px 16px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, fontSize: 12, color: "rgba(255,255,255,0.4)", textAlign: "center" }}>
+              💡 Your tasks update automatically based on your current stage. Change your status in ⚙️ Settings as you progress.
+            </div>
           </div>
         )}
 
@@ -366,9 +524,7 @@ export default function App() {
         {tab === "docs" && (
           <div>
             <h2 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 800 }}>📄 Document Vault</h2>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>
-              {Object.values(docChecked).filter(Boolean).length} of {DOCS.length} documents ready
-            </p>
+            <p style={{ margin: "0 0 16px", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{docsReadyCount} of {DOCS.length} documents ready</p>
             <div style={{ background: "rgba(232,168,56,0.08)", border: "1px solid rgba(232,168,56,0.25)", borderRadius: 14, padding: "12px 16px", marginBottom: 20, fontSize: 13, color: "rgba(255,255,255,0.65)" }}>
               💡 <strong style={{ color: "#E8A838" }}>Tip:</strong> Scan everything and upload to Google Drive. Never carry all originals in one bag.
             </div>
@@ -387,78 +543,17 @@ export default function App() {
           </div>
         )}
 
-        {/* JOBS TAB */}
-        {tab === "jobs" && (
+        {/* GUIDES TAB */}
+        {tab === "guides" && (
           <div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-              <div>
-                <h2 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 800 }}>💼 Job Tracker</h2>
-                <p style={{ margin: 0, fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{jobLog.length} application{jobLog.length !== 1 ? "s" : ""} tracked</p>
-              </div>
-              <button onClick={() => setShowJobForm(!showJobForm)} style={{ padding: "8px 16px", background: "#5B8DEF22", border: "1px solid #5B8DEF55", borderRadius: 10, color: "#5B8DEF", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>+ Add Job</button>
-            </div>
-            {showJobForm && (
-              <div style={{ background: "rgba(91,141,239,0.06)", border: "1px solid rgba(91,141,239,0.2)", borderRadius: 16, padding: "18px 16px", marginBottom: 20 }}>
-                <h3 style={{ margin: "0 0 14px", fontSize: 15, color: "#5B8DEF" }}>New Application</h3>
-                {[["Company", "company", "text"], ["Role / Job Title", "role", "text"], ["Date Applied", "date", "date"]].map(([lbl, key, type]) => (
-                  <div key={key} style={{ marginBottom: 12 }}>
-                    <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 4 }}>{lbl}</label>
-                    <input type={type} value={jobForm[key]} onChange={e => setJobForm(p => ({ ...p, [key]: e.target.value }))} style={{ ...inputStyle, marginBottom: 0 }} placeholder={lbl} />
-                  </div>
-                ))}
-                <div style={{ marginBottom: 14 }}>
-                  <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 4 }}>Status</label>
-                  <select value={jobForm.status} onChange={e => setJobForm(p => ({ ...p, status: e.target.value }))} style={{ ...inputStyle, marginBottom: 0 }}>
-                    {["Applied", "Interview", "Offer", "Rejected", "Withdrawn"].map(s => <option key={s}>{s}</option>)}
-                  </select>
-                </div>
-                <div style={{ display: "flex", gap: 8 }}>
-                  <button onClick={() => { if (jobForm.company && jobForm.role) { setJobLog(p => [{ ...jobForm, id: Date.now() }, ...p]); setJobForm({ company: "", role: "", date: "", status: "Applied" }); setShowJobForm(false); } }} style={{ ...btnStyle("#5B8DEF"), padding: "10px 20px", flex: 1 }}>Save</button>
-                  <button onClick={() => setShowJobForm(false)} style={{ ...btnStyle("rgba(255,255,255,0.08)"), padding: "10px 20px" }}>Cancel</button>
-                </div>
-              </div>
-            )}
-            {jobLog.length === 0 ? (
-              <div style={{ textAlign: "center", padding: "40px 20px", color: "rgba(255,255,255,0.2)", fontSize: 14 }}>
-                <div style={{ fontSize: 40, marginBottom: 12 }}>📋</div>
-                No applications yet. Start tracking your job search!
-              </div>
-            ) : jobLog.map(j => {
-              const statusColors = { Applied: "#5B8DEF", Interview: "#E8A838", Offer: "#3DB88B", Rejected: "#E85B5B", Withdrawn: "#999" };
-              const sc = statusColors[j.status] || "#999";
-              return (
-                <div key={j.id} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px 16px", marginBottom: 10, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: 14 }}>{j.company}</div>
-                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>{j.role}</div>
-                    {j.date && <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 3 }}>{j.date}</div>}
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: sc, background: sc + "22", padding: "4px 10px", borderRadius: 10 }}>{j.status}</span>
-                    <button onClick={() => setJobLog(p => p.filter(x => x.id !== j.id))} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.2)", cursor: "pointer", fontSize: 16 }}>✕</button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* RESOURCES TAB */}
-        {tab === "resources" && (
-          <div>
-            <h2 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 800 }}>🔗 Resources</h2>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Official links and tools for UK settlers</p>
-            <div style={{ display: "flex", gap: 8, overflowX: "auto", marginBottom: 18, paddingBottom: 4 }}>
-              {cats.map(c => (
-                <button key={c} onClick={() => setResCat(c)} style={{ flex: "none", padding: "6px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", background: resCat === c ? "#3DB88B" : "rgba(255,255,255,0.05)", color: resCat === c ? "#fff" : "rgba(255,255,255,0.5)", border: `1px solid ${resCat === c ? "#3DB88B" : "rgba(255,255,255,0.08)"}` }}>{c}</button>
-              ))}
-            </div>
-            {filteredRes.map((r, i) => (
-              <a key={i} href={r.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 16px", marginBottom: 8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, textDecoration: "none", color: "#EEF2F7" }}>
-                <span style={{ fontSize: 24 }}>{r.icon}</span>
+            <h2 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 800 }}>📖 Guides & Resources</h2>
+            <p style={{ margin: "0 0 16px", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Official links and step-by-step guides for life in UK</p>
+            {GUIDES.map((g, i) => (
+              <a key={i} href={g.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 16px", marginBottom: 8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, textDecoration: "none", color: "#EEF2F7" }}>
+                <span style={{ fontSize: 24 }}>{g.icon}</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 14, fontWeight: 600 }}>{r.title}</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{r.cat}</div>
+                  <div style={{ fontSize: 14, fontWeight: 700 }}>{g.title}</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{g.sub}</div>
                 </div>
                 <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 16 }}>↗</span>
               </a>
@@ -470,7 +565,7 @@ export default function App() {
 
       {/* BOTTOM NAV */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "rgba(8,17,28,0.95)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", padding: "8px 0 12px" }}>
-        {[["roadmap", "🗺️", "Roadmap"], ["docs", "📄", "Documents"], ["jobs", "💼", "Jobs"], ["resources", "🔗", "Resources"]].map(([id, em, lbl]) => (
+        {[["home", "🏠", "Home"], ["tasks", "✅", "Tasks"], ["docs", "📄", "Docs"], ["guides", "📖", "Guides"]].map(([id, em, lbl]) => (
           <button key={id} onClick={() => setTab(id)} style={{ flex: 1, background: "transparent", border: "none", cursor: "pointer", padding: "4px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
             <span style={{ fontSize: 20 }}>{em}</span>
             <span style={{ fontSize: 10, fontWeight: 600, color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.3)" }}>{lbl}</span>
