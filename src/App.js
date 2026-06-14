@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // ============================================================
-// DATA — Status definitions and stage details
+// DATA
 // ============================================================
 const STATUSES = [
   { id: 0, label: "Just researching", sub: "Exploring UK study options", emoji: "🔍" },
@@ -13,12 +13,13 @@ const STATUSES = [
   { id: 6, label: "Already in UK", sub: "Arrived and settling", emoji: "🇬🇧" },
 ];
 
-const ALL_STAGE_NAMES = ["Research", "Applied", "Offer", "CAS", "Visa applied", "Visa approved", "Arrived"];
+const ALL_STAGE_NAMES = ["Research", "Apply", "Offer", "CAS", "Visa", "Approved", "UK"];
 
 const STAGES = [
   {
     id: 0, name: "Research & IELTS", sub: "Choose university, prepare English test",
     nextAction: "Book IELTS test", deadline: "ASAP — 6-12 months before intake",
+    deadlineUrgency: "medium",
     emotion: "Great time to start! Early preparation means better university options.",
     accentBg: "#E6F1FB", accentText: "#0C447C", accentBtn: "#185FA5", chipBg: "#E6F1FB", chipColor: "#185FA5",
     tasks: [
@@ -35,8 +36,9 @@ const STAGES = [
   },
   {
     id: 1, name: "University application", sub: "Submitted — waiting for offer",
-    nextAction: "Follow up with admissions", deadline: "Check application portal weekly",
-    emotion: "Application submitted! Most offers arrive within 4-8 weeks. Stay patient.",
+    nextAction: "Follow up with admissions", deadline: "Check portal this week",
+    deadlineUrgency: "high",
+    emotion: "Application submitted! Most universities reply within 4-8 weeks. Stay patient.",
     accentBg: "#EEEDFE", accentText: "#3C3489", accentBtn: "#534AB7", chipBg: "#EEEDFE", chipColor: "#534AB7",
     tasks: [
       { id: "t1-1", text: "Log in to application portal daily", priority: true },
@@ -53,7 +55,8 @@ const STAGES = [
   {
     id: 2, name: "Offer received", sub: "Accept offer and request CAS",
     nextAction: "Accept offer and pay deposit", deadline: "Check offer letter for deadline",
-    emotion: "Congratulations! Accept your offer quickly — CAS takes time to process.",
+    deadlineUrgency: "high",
+    emotion: "Congratulations! Time to accept your offer and prepare for CAS.",
     accentBg: "#E1F5EE", accentText: "#085041", accentBtn: "#0F6E56", chipBg: "#E1F5EE", chipColor: "#0F6E56",
     tasks: [
       { id: "t2-1", text: "Accept unconditional offer formally", priority: true },
@@ -70,6 +73,7 @@ const STAGES = [
   {
     id: 3, name: "CAS received", sub: "Apply for student visa now",
     nextAction: "Submit visa application online", deadline: "At least 3 months before intake",
+    deadlineUrgency: "critical",
     emotion: "CAS received — this is the most critical stage. Apply for visa immediately.",
     accentBg: "#FAECE7", accentText: "#712B13", accentBtn: "#993C1D", chipBg: "#FAECE7", chipColor: "#993C1D",
     tasks: [
@@ -89,7 +93,8 @@ const STAGES = [
   {
     id: 4, name: "Visa applied", sub: "Waiting for visa decision",
     nextAction: "Prepare pre-departure checklist", deadline: "Decision usually in 3 weeks",
-    emotion: "Visa submitted! Average decision: 3 weeks. Use this time to prepare departure.",
+    deadlineUrgency: "medium",
+    emotion: "Visa submitted! Average decision time: 3 weeks. Use this time to prep for departure.",
     accentBg: "#FAEEDA", accentText: "#633806", accentBtn: "#854F0B", chipBg: "#FAEEDA", chipColor: "#854F0B",
     tasks: [
       { id: "t4-1", text: "Book flights for your intake month", priority: true },
@@ -107,7 +112,8 @@ const STAGES = [
   {
     id: 5, name: "Visa approved", sub: "Pre-departure final preparations",
     nextAction: "Check BRP collection Post Office", deadline: "Note it in your visa vignette",
-    emotion: "Visa approved! You are going to UK. Final preparations — almost there!",
+    deadlineUrgency: "high",
+    emotion: "Visa approved! You are going to the UK. Final preparations — almost there!",
     accentBg: "#E1F5EE", accentText: "#085041", accentBtn: "#0F6E56", chipBg: "#E1F5EE", chipColor: "#0F6E56",
     tasks: [
       { id: "t5-1", text: "Check BRP Post Office in visa vignette", priority: true },
@@ -125,7 +131,8 @@ const STAGES = [
   {
     id: 6, name: "Arrived in UK", sub: "Settlement and registration",
     nextAction: "Collect BRP from Post Office", deadline: "Within 10 days of arrival",
-    emotion: "Welcome to UK! Complete these tasks in order — do not delay BRP collection.",
+    deadlineUrgency: "critical",
+    emotion: "Welcome to the UK! Complete these tasks in order — do not delay BRP collection.",
     accentBg: "#E1F5EE", accentText: "#085041", accentBtn: "#0F6E56", chipBg: "#E1F5EE", chipColor: "#0F6E56",
     tasks: [
       { id: "t6-1", text: "Collect BRP from Post Office", priority: true },
@@ -182,6 +189,376 @@ function saveLS(key, value) {
 }
 
 // ============================================================
+// COMPONENT: Stepper Progress Bar (improvement #1)
+// ============================================================
+function StepperBar({ stIdx, sg }) {
+  const total = ALL_STAGE_NAMES.length;
+  const pct = Math.round((stIdx / (total - 1)) * 100);
+
+  return (
+    <div style={{
+      marginBottom: 18,
+      padding: "16px 14px",
+      background: "rgba(255,255,255,0.03)",
+      border: "1px solid rgba(255,255,255,0.07)",
+      borderRadius: 16,
+    }}>
+      {/* Step info row — current phase + step count + % all together */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 800, color: "#EEF2F7", marginBottom: 2 }}>
+            {ALL_STAGE_NAMES[stIdx]}
+          </div>
+          <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.35)", fontWeight: 600 }}>
+            Step {stIdx + 1} of {total}
+          </div>
+        </div>
+        <span style={{
+          fontSize: 12, fontWeight: 800,
+          color: sg.accentBtn,
+          background: sg.accentBtn + "22",
+          padding: "4px 11px", borderRadius: 20,
+          flexShrink: 0,
+        }}>
+          {pct}% Complete
+        </span>
+      </div>
+
+      {/* Dot stepper */}
+      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        {/* Connecting line — behind dots */}
+        <div style={{
+          position: "absolute", top: "50%", left: 10, right: 10,
+          height: 3, background: "rgba(255,255,255,0.08)",
+          transform: "translateY(-50%)", borderRadius: 3, zIndex: 0,
+        }}>
+          <div style={{
+            height: "100%",
+            width: stIdx === 0 ? "0%" : `${(stIdx / (total - 1)) * 100}%`,
+            background: `linear-gradient(90deg, ${sg.accentBtn}, #3DB88B)`,
+            borderRadius: 3,
+            transition: "width 0.5s ease",
+          }} />
+        </div>
+
+        {ALL_STAGE_NAMES.map((name, i) => {
+          const done = i < stIdx;
+          const current = i === stIdx;
+          return (
+            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, zIndex: 1 }}>
+              <div style={{
+                width: current ? 26 : 18,
+                height: current ? 26 : 18,
+                borderRadius: "50%",
+                border: `2.5px solid ${done ? "#3DB88B" : current ? sg.accentBtn : "rgba(255,255,255,0.15)"}`,
+                background: done ? "#3DB88B" : current ? sg.accentBtn + "33" : "rgba(255,255,255,0.04)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: current ? 11 : 9,
+                color: done ? "#fff" : current ? sg.accentBtn : "rgba(255,255,255,0.25)",
+                fontWeight: 800,
+                transition: "all 0.3s",
+                boxShadow: current ? `0 0 0 4px ${sg.accentBtn}22` : "none",
+              }}>
+                {done ? "✓" : i + 1}
+              </div>
+              <span style={{
+                fontSize: 8.5, fontWeight: current ? 800 : 500,
+                color: current ? sg.accentBtn : done ? "rgba(255,255,255,0.45)" : "rgba(255,255,255,0.2)",
+                textAlign: "center", whiteSpace: "nowrap",
+              }}>
+                {name}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// COMPONENT: Status Dropdown (improvement #2)
+// ============================================================
+function StatusDropdown({ statusId, onChange }) {
+  const [open, setOpen] = useState(false);
+  const current = STATUSES[statusId];
+
+  return (
+    <div style={{ marginBottom: 18, position: "relative" }}>
+      <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.35)", marginBottom: 7 }}>
+        Current Status
+      </div>
+
+      {/* Trigger */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: "100%", display: "flex", alignItems: "center", gap: 10,
+          padding: "11px 14px",
+          background: "rgba(61,184,139,0.1)",
+          border: "1.5px solid rgba(61,184,139,0.35)",
+          borderRadius: 12, cursor: "pointer", textAlign: "left",
+          color: "#EEF2F7",
+        }}
+      >
+        <span style={{
+          width: 9, height: 9, borderRadius: "50%",
+          background: "#3DB88B", flexShrink: 0,
+          boxShadow: "0 0 0 3px rgba(61,184,139,0.25)",
+        }} />
+        <span style={{ flex: 1, fontSize: 13.5, fontWeight: 800, color: "#3DB88B" }}>
+          {current.emoji} {current.label}
+        </span>
+        <span style={{
+          fontSize: 11, color: "rgba(255,255,255,0.35)", fontWeight: 600,
+          transition: "transform 0.2s",
+          transform: open ? "rotate(180deg)" : "rotate(0deg)",
+          display: "inline-block",
+        }}>▼</span>
+      </button>
+
+      {/* Dropdown */}
+      {open && (
+        <div style={{
+          position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 100,
+          background: "#0D1E2F",
+          border: "1px solid rgba(255,255,255,0.12)",
+          borderRadius: 14, overflow: "hidden",
+          boxShadow: "0 16px 40px rgba(0,0,0,0.5)",
+        }}>
+          {STATUSES.map(s => (
+            <button
+              key={s.id}
+              onClick={() => { onChange(s.id); setOpen(false); }}
+              style={{
+                width: "100%", display: "flex", alignItems: "center", gap: 10,
+                padding: "11px 14px",
+                background: s.id === statusId ? "rgba(61,184,139,0.1)" : "transparent",
+                border: "none",
+                borderBottom: "1px solid rgba(255,255,255,0.05)",
+                color: s.id === statusId ? "#3DB88B" : "rgba(255,255,255,0.7)",
+                fontSize: 13, fontWeight: s.id === statusId ? 800 : 500,
+                cursor: "pointer", textAlign: "left",
+              }}
+            >
+              <span style={{ fontSize: 15 }}>{s.emoji}</span>
+              <span style={{ flex: 1 }}>{s.label}</span>
+              {s.id === statusId && <span style={{ fontSize: 12 }}>✓</span>}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// COMPONENT: Countdown Card (improvement #7 — premium)
+// ============================================================
+function CountdownCard({ arrivalDays }) {
+  if (arrivalDays === null) return null;
+
+  const arrived = arrivalDays <= 0;
+  const urgentColor = arrivalDays < 30 ? "#E85B5B" : arrivalDays < 60 ? "#E8A838" : "#3DB88B";
+
+  return (
+    <div style={{
+      marginBottom: 18,
+      background: `linear-gradient(135deg, rgba(61,184,139,0.08) 0%, rgba(24,95,165,0.08) 100%)`,
+      border: `1px solid ${urgentColor}33`,
+      borderRadius: 16,
+      padding: "16px 18px",
+      display: "flex",
+      alignItems: "center",
+      gap: 16,
+    }}>
+      <div style={{
+        width: 56, height: 56, borderRadius: 14, flexShrink: 0,
+        background: `${urgentColor}18`,
+        border: `2px solid ${urgentColor}44`,
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      }}>
+        <span style={{ fontSize: 9, fontWeight: 700, color: urgentColor, textTransform: "uppercase", letterSpacing: 0.5 }}>
+          {arrived ? "Here!" : "Days"}
+        </span>
+        <span style={{ fontSize: arrived ? 18 : 22, fontWeight: 900, color: urgentColor, lineHeight: 1.1 }}>
+          {arrived ? "🇬🇧" : Math.abs(arrivalDays)}
+        </span>
+      </div>
+      <div>
+        <div style={{ fontSize: 14, fontWeight: 800, color: "#EEF2F7", marginBottom: 3 }}>
+          {arrived ? "You're in the UK!" : `${Math.abs(arrivalDays)} Days Until UK Arrival`}
+        </div>
+        <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.4)", lineHeight: 1.5 }}>
+          {arrived
+            ? "Welcome! Complete your settlement tasks below."
+            : arrivalDays < 30
+            ? "⚠️ Less than a month to go — stay on top of tasks."
+            : arrivalDays < 90
+            ? "Keep up momentum — you're getting close."
+            : "Plenty of time — stay consistent and plan ahead."}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// COMPONENT: Next Best Action (improvement #3)
+// ============================================================
+function NextBestAction({ sg, onStart }) {
+  const urgencyColors = {
+    critical: { bg: "rgba(232,91,91,0.08)", border: "rgba(232,91,91,0.3)", badge: "#E85B5B", badgeBg: "rgba(232,91,91,0.15)" },
+    high: { bg: "rgba(232,168,56,0.08)", border: "rgba(232,168,56,0.3)", badge: "#E8A838", badgeBg: "rgba(232,168,56,0.15)" },
+    medium: { bg: "rgba(91,141,239,0.06)", border: "rgba(91,141,239,0.2)", badge: "#5B8DEF", badgeBg: "rgba(91,141,239,0.15)" },
+  };
+  const uc = urgencyColors[sg.deadlineUrgency] || urgencyColors.medium;
+
+  return (
+    <div style={{
+      background: uc.bg,
+      border: `1px solid ${uc.border}`,
+      borderRadius: 16,
+      padding: "16px",
+      marginBottom: 18,
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+        <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: 0.8, color: sg.accentBtn }}>
+          🎯 Next Action
+        </span>
+        <span style={{
+          fontSize: 9.5, fontWeight: 700,
+          color: uc.badge,
+          background: uc.badgeBg,
+          padding: "2px 8px", borderRadius: 20,
+          textTransform: "uppercase", letterSpacing: 0.4,
+        }}>
+          {sg.deadlineUrgency === "critical" ? "🔴 Urgent" : sg.deadlineUrgency === "high" ? "🟡 This Week" : "🔵 Upcoming"}
+        </span>
+      </div>
+      <div style={{ fontSize: 17, fontWeight: 900, marginBottom: 6, color: "#EEF2F7", lineHeight: 1.3 }}>
+        {sg.nextAction}
+      </div>
+      <div style={{
+        fontSize: 11.5, color: "rgba(255,255,255,0.5)", marginBottom: 14,
+        display: "flex", alignItems: "center", gap: 5,
+      }}>
+        <span>🕒</span>
+        <span>{sg.deadline}</span>
+      </div>
+      <button
+        onClick={onStart}
+        style={{
+          width: "100%", padding: "9px 0",
+          background: sg.accentBtn,
+          border: "none", borderRadius: 10,
+          color: "#fff", fontSize: 13.5, fontWeight: 800,
+          cursor: "pointer",
+          boxShadow: `0 3px 12px ${sg.accentBtn}44`,
+          letterSpacing: 0.3,
+        }}
+      >
+        Start Now →
+      </button>
+    </div>
+  );
+}
+
+// ============================================================
+// COMPONENT: Readiness Score (improvement #6 + Readiness Engine)
+// ============================================================
+function ReadinessScore({ stIdx, taskDone, docChecked, sg }) {
+  const total = STAGES.reduce((sum, s) => sum + s.tasks.length, 0);
+  const completedTasks = Object.values(taskDone).filter(Boolean).length;
+  const completedDocs = Object.values(docChecked).filter(Boolean).length;
+  const taskScore = Math.round((completedTasks / total) * 50);
+  const docScore = Math.round((completedDocs / DOCS.length) * 30);
+  const stageScore = Math.round((stIdx / (ALL_STAGE_NAMES.length - 1)) * 20);
+  const total_score = taskScore + docScore + stageScore;
+
+  const label = total_score >= 80 ? "Excellent" : total_score >= 60 ? "On Track" : total_score >= 40 ? "Good Start" : "Getting Started";
+  const labelColor = total_score >= 80 ? "#3DB88B" : total_score >= 60 ? "#5B8DEF" : total_score >= 40 ? "#E8A838" : "rgba(255,255,255,0.35)";
+
+  // Next milestone hints
+  const nextTarget = total_score >= 80 ? null : total_score >= 60 ? 80 : total_score >= 40 ? 60 : 40;
+  const hints = [];
+  if (nextTarget) {
+    if (completedTasks < 3) hints.push("Complete priority tasks");
+    if (completedDocs < 4) hints.push("Upload key documents");
+    if (stIdx < 2) hints.push("Progress your application stage");
+  }
+
+  return (
+    <div style={{
+      marginBottom: 18,
+      padding: "14px 16px",
+      background: "rgba(255,255,255,0.03)",
+      border: "1px solid rgba(255,255,255,0.07)",
+      borderRadius: 16,
+    }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+        <div>
+          <div style={{ fontSize: 12, fontWeight: 800, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: 0.5 }}>
+            Readiness Score
+          </div>
+          <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.25)", marginTop: 2 }}>
+            Tasks · Docs · Stage progress
+          </div>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <span style={{ fontSize: 28, fontWeight: 900, color: labelColor }}>{total_score}</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.25)" }}>/100</span>
+        </div>
+      </div>
+
+      {/* Score bar — with segment markers */}
+      <div style={{ position: "relative", height: 8, background: "rgba(255,255,255,0.07)", borderRadius: 8, overflow: "hidden", marginBottom: 8 }}>
+        <div style={{
+          height: "100%",
+          width: `${total_score}%`,
+          background: total_score >= 80
+            ? "linear-gradient(90deg,#3DB88B,#5BE8AC)"
+            : total_score >= 60
+            ? "linear-gradient(90deg,#5B8DEF,#3DB88B)"
+            : total_score >= 40
+            ? "linear-gradient(90deg,#E8A838,#5B8DEF)"
+            : "linear-gradient(90deg,#534AB7,#E8A838)",
+          borderRadius: 8,
+          transition: "width 0.6s ease",
+        }} />
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: hints.length ? 10 : 0 }}>
+        <div style={{ display: "flex", gap: 10 }}>
+          <span style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)" }}>✅ {completedTasks} tasks</span>
+          <span style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)" }}>📄 {completedDocs} docs</span>
+        </div>
+        <span style={{ fontSize: 11, fontWeight: 800, color: labelColor }}>{label}</span>
+      </div>
+
+      {/* Readiness Engine hints */}
+      {nextTarget && hints.length > 0 && (
+        <div style={{
+          marginTop: 10, padding: "9px 12px",
+          background: "rgba(255,255,255,0.03)",
+          border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: 10,
+        }}>
+          <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>
+            To reach {nextTarget}/100
+          </div>
+          {hints.slice(0, 2).map((h, i) => (
+            <div key={i} style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", display: "flex", alignItems: "center", gap: 6, marginBottom: i < hints.length - 1 ? 4 : 0 }}>
+              <span style={{ color: sg.accentBtn, fontSize: 10 }}>▸</span> {h}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
 // MAIN APP
 // ============================================================
 export default function App() {
@@ -194,7 +571,8 @@ export default function App() {
   const [docChecked, setDocChecked] = useState(() => loadLS("settleuk_docs", {}));
   const [tab, setTab] = useState("home");
   const [showSettings, setShowSettings] = useState(false);
-  const [editProfile, setEditProfile] = useState({ name: "", statusId: 0, arrival: "" });
+  const [editProfile, setEditProfile] = useState({ name: "", arrival: "" });
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => { saveLS("settleuk_profile", profile); }, [profile]);
   useEffect(() => { saveLS("settleuk_tasks", taskDone); }, [taskDone]);
@@ -202,6 +580,7 @@ export default function App() {
 
   const toggleTask = (id) => setTaskDone(p => ({ ...p, [id]: !p[id] }));
   const toggleDoc = (id) => setDocChecked(p => ({ ...p, [id]: !p[id] }));
+  const changeStatus = (id) => setProfile(p => ({ ...p, statusId: id }));
 
   const inputStyle = {
     width: "100%", padding: "12px 16px", marginBottom: 16,
@@ -209,7 +588,6 @@ export default function App() {
     borderRadius: 10, color: "#fff", fontSize: 15, outline: "none",
     fontFamily: "inherit", boxSizing: "border-box"
   };
-
   const btnStyle = (bg) => ({
     width: "100%", padding: "14px 0", background: bg, border: "none",
     borderRadius: 12, color: "#fff", fontSize: 16, fontWeight: 700,
@@ -218,6 +596,7 @@ export default function App() {
 
   // ── SETTINGS MODAL ──────────────────────────────────────────
   if (showSettings) {
+    const hasChanges = editProfile.name !== profile.name || editProfile.arrival !== profile.arrival;
     return (
       <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
         <div style={{ width: "100%", maxWidth: 420, background: "rgba(255,255,255,0.05)", borderRadius: 24, padding: "32px 28px", border: "1px solid rgba(255,255,255,0.1)" }}>
@@ -225,45 +604,41 @@ export default function App() {
             <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>⚙️ Settings</h2>
             <button onClick={() => setShowSettings(false)} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: 20 }}>✕</button>
           </div>
-
           <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>Your Name</label>
           <input value={editProfile.name} onChange={e => setEditProfile(p => ({ ...p, name: e.target.value }))} placeholder="Enter your name" style={inputStyle} />
-
-          <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>Current Status</label>
-          <div style={{ marginBottom: 16 }}>
-            {STATUSES.map(s => (
-              <button key={s.id} onClick={() => setEditProfile(p => ({ ...p, statusId: s.id }))} style={{
-                width: "100%", display: "flex", alignItems: "center", gap: 12,
-                padding: "12px 16px", marginBottom: 8,
-                background: editProfile.statusId === s.id ? "rgba(61,184,139,0.2)" : "rgba(255,255,255,0.05)",
-                border: `1px solid ${editProfile.statusId === s.id ? "#3DB88B" : "rgba(255,255,255,0.1)"}`,
-                borderRadius: 12, color: "#fff", fontSize: 14, cursor: "pointer", textAlign: "left"
-              }}>
-                {s.emoji} {s.label}
-              </button>
-            ))}
-          </div>
-
-          <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>UK Arrival Date (estimated)</label>
+          <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", display: "block", marginBottom: 6 }}>📅 UK Arrival Date (estimated)</label>
           <input type="date" value={editProfile.arrival} onChange={e => setEditProfile(p => ({ ...p, arrival: e.target.value }))} style={inputStyle} />
-
-          <button onClick={() => {
-            if (editProfile.name.trim()) {
-              setProfile(p => ({ ...p, ...editProfile }));
-              setShowSettings(false);
-            }
-          }} style={btnStyle(editProfile.name.trim() ? "#3DB88B" : "#333")}>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 20, padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 10 }}>
+            💡 To change your journey stage, go to <strong>Home</strong> and tap the status dropdown.
+          </div>
+          <button
+            disabled={!editProfile.name.trim() || !hasChanges}
+            onClick={() => {
+              if (editProfile.name.trim()) {
+                setProfile(p => ({ ...p, ...editProfile }));
+                setShowToast(true);
+                setTimeout(() => { setShowToast(false); setShowSettings(false); }, 1100);
+              }
+            }}
+            style={btnStyle(editProfile.name.trim() && hasChanges ? "#3DB88B" : "#333")}>
             Save Changes ✓
           </button>
-
+          <button onClick={() => setShowSettings(false)} style={{ ...btnStyle("transparent"), marginTop: 10, border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.6)" }}>
+            Cancel
+          </button>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "24px 0" }} />
           <button onClick={() => {
-            if (window.confirm("Reset all progress and start over?")) {
-              localStorage.clear();
-              window.location.reload();
+            if (window.confirm("Are you sure? This will permanently delete all your progress, tasks, and documents. This action cannot be undone.")) {
+              localStorage.clear(); window.location.reload();
             }
-          }} style={{ ...btnStyle("rgba(232,91,91,0.2)"), marginTop: 10, border: "1px solid rgba(232,91,91,0.4)", color: "#E85B5B" }}>
+          }} style={{ width: "100%", padding: "12px 0", background: "transparent", border: "1px solid rgba(232,91,91,0.35)", borderRadius: 12, color: "#E85B5B", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
             Reset All Progress
           </button>
+          {showToast && (
+            <div style={{ position: "fixed", bottom: 30, left: "50%", transform: "translateX(-50%)", background: "#3DB88B", color: "#08111C", padding: "10px 24px", borderRadius: 30, fontSize: 13, fontWeight: 700, boxShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>
+              ✓ Changes Saved
+            </div>
+          )}
         </div>
       </div>
     );
@@ -273,11 +648,7 @@ export default function App() {
   if (screen === "onboard") {
     const step = profile.step;
     return (
-      <div style={{
-        minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-        background: "linear-gradient(160deg,#0B1E35 0%,#0D2A1F 50%,#1A0D2E 100%)",
-        fontFamily: "Arial, sans-serif", padding: 20
-      }}>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(160deg,#0B1E35 0%,#0D2A1F 50%,#1A0D2E 100%)", fontFamily: "Arial, sans-serif", padding: 20 }}>
         <div style={{ width: "100%", maxWidth: 420 }}>
           {step === 0 && (
             <div style={{ textAlign: "center" }}>
@@ -306,13 +677,13 @@ export default function App() {
             <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 24, padding: "32px 28px", border: "1px solid rgba(255,255,255,0.1)" }}>
               <button onClick={() => setProfile(p => ({ ...p, step: 1 }))} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13, marginBottom: 16, padding: 0 }}>← Back</button>
               <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 8 }}>📍 Where are you now?</h2>
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 20 }}>This helps us build your personalised roadmap</p>
+              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 18 }}>This helps us build your personalised roadmap</p>
               {STATUSES.map(s => (
-                <button key={s.id} onClick={() => setProfile(p => ({ ...p, statusId: s.id, step: 3 }))} style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "13px 16px", marginBottom: 8, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", fontSize: 14, cursor: "pointer", textAlign: "left" }}>
-                  <span style={{ fontSize: 20 }}>{s.emoji}</span>
+                <button key={s.id} onClick={() => setProfile(p => ({ ...p, statusId: s.id, step: 3 }))} style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "11px 14px", marginBottom: 6, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, color: "#fff", fontSize: 13, cursor: "pointer", textAlign: "left" }}>
+                  <span style={{ fontSize: 17 }}>{s.emoji}</span>
                   <span>
                     <div style={{ fontWeight: 700 }}>{s.label}</div>
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{s.sub}</div>
+                    <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.4)" }}>{s.sub}</div>
                   </span>
                 </button>
               ))}
@@ -344,153 +715,174 @@ export default function App() {
     : null;
 
   const insightIcon = (type) => type === "warn" ? "⚠️" : type === "tip" ? "💡" : "ℹ️";
-  const insightBg = (type) => type === "warn" ? "rgba(232,168,56,0.08)" : type === "tip" ? "rgba(61,184,139,0.08)" : "rgba(91,141,239,0.08)";
-  const insightBorder = (type) => type === "warn" ? "rgba(232,168,56,0.25)" : type === "tip" ? "rgba(61,184,139,0.25)" : "rgba(91,141,239,0.25)";
-  const insightColor = (type) => type === "warn" ? "#E8A838" : type === "tip" ? "#3DB88B" : "#5B8DEF";
+  const insightBg = (type) => type === "warn" ? "rgba(232,91,91,0.07)" : type === "tip" ? "rgba(61,184,139,0.07)" : "rgba(91,141,239,0.07)";
+  const insightBorder = (type) => type === "warn" ? "rgba(232,91,91,0.25)" : type === "tip" ? "rgba(61,184,139,0.22)" : "rgba(91,141,239,0.22)";
+  const insightColor = (type) => type === "warn" ? "#E85B5B" : type === "tip" ? "#3DB88B" : "#5B8DEF";
+  const insightBadge = (type) => type === "warn"
+    ? { label: "🔴 Urgent", color: "#E85B5B", bg: "rgba(232,91,91,0.15)" }
+    : type === "tip"
+    ? { label: "🟢 Tip", color: "#3DB88B", bg: "rgba(61,184,139,0.13)" }
+    : { label: "🟡 Important", color: "#E8A838", bg: "rgba(232,168,56,0.13)" };
 
   const completedTasksCount = sg.tasks.filter(t => taskDone[t.id]).length;
   const docsReadyCount = Object.values(docChecked).filter(Boolean).length;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", paddingBottom: 72 }}>
+    <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", paddingBottom: 80 }}>
 
       {/* HEADER */}
-      <div style={{ background: "linear-gradient(135deg,#0B1E35,#0D2A1F)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "16px 20px 0" }}>
+      <div style={{ background: "linear-gradient(135deg,#0B1E35 0%,#0D2A1F 100%)", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "14px 20px 0" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-            <div style={{ fontSize: 28 }}>🇬🇧</div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 19, fontWeight: 800 }}>
-                Settle<span style={{ color: "#3DB88B" }}>UK</span>
-                {profile.name && <span style={{ fontSize: 14, fontWeight: 400, color: "rgba(255,255,255,0.6)", marginLeft: 8 }}>· Hello, {profile.name}!</span>}
+
+          {/* Top row: avatar + brand + greeting + settings */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+            {/* GB avatar circle */}
+            <div style={{
+              width: 38, height: 38, borderRadius: 10, flexShrink: 0,
+              background: "linear-gradient(135deg,#1a3a5c,#0d4a2f)",
+              border: "1.5px solid rgba(61,184,139,0.3)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 12, fontWeight: 900, color: "#EEF2F7", letterSpacing: 0.5,
+            }}>
+              {profile.name ? profile.name.slice(0,2).toUpperCase() : "GB"}
+            </div>
+
+            {/* Brand + greeting */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "nowrap" }}>
+                <span style={{ fontSize: 17, fontWeight: 900, color: "#EEF2F7", whiteSpace: "nowrap" }}>
+                  Settle<span style={{ color: "#3DB88B" }}>UK</span>
+                </span>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>·</span>
+                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  Hello, {profile.name}!
+                </span>
               </div>
               {arrivalDays !== null && (
-                <div style={{ fontSize: 12, color: arrivalDays > 0 ? "#E8A838" : "#3DB88B" }}>
-                  {arrivalDays > 0 ? `${arrivalDays} days to arrival` : "You're in the UK now!"}
+                <div style={{ fontSize: 11, fontWeight: 700, color: arrivalDays > 0 ? "#3DB88B" : "#3DB88B", marginTop: 1 }}>
+                  {arrivalDays > 0 ? `${arrivalDays} days to arrival` : "You're in the UK now! 🇬🇧"}
                 </div>
               )}
             </div>
-            <button onClick={() => { setEditProfile({ name: profile.name, statusId: profile.statusId, arrival: profile.arrival }); setShowSettings(true); }}
-              style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 18, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+            {/* Settings icon */}
+            <button
+              onClick={() => { setEditProfile({ name: profile.name, arrival: profile.arrival }); setShowSettings(true); }}
+              style={{
+                background: "rgba(255,255,255,0.07)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: 8, color: "rgba(255,255,255,0.5)",
+                cursor: "pointer", fontSize: 15,
+                width: 34, height: 34, flexShrink: 0,
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}>
               ⚙️
             </button>
           </div>
 
-          <div style={{ marginBottom: 12 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, background: sg.chipBg, color: sg.chipColor, padding: "4px 12px", borderRadius: 20 }}>
-              📍 {sg.name} stage
+          {/* Stage pill */}
+          <div style={{ marginBottom: 10 }}>
+            <span style={{
+              display: "inline-flex", alignItems: "center", gap: 5,
+              padding: "4px 12px",
+              background: "rgba(255,255,255,0.07)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              borderRadius: 20,
+              fontSize: 11.5, fontWeight: 700, color: "#EEF2F7",
+            }}>
+              📍 {sg.name}
             </span>
           </div>
 
-          <div style={{ display: "flex", gap: 2, overflowX: "auto", paddingBottom: 1 }}>
-            {[["home", "🏠 Home"], ["tasks", "✅ Tasks"], ["docs", "📄 Documents"], ["guides", "📖 Guides"]].map(([id, lbl]) => (
-              <button key={id} onClick={() => setTab(id)} style={{ flex: "none", padding: "9px 14px", background: "transparent", border: "none", borderBottom: tab === id ? "2px solid #3DB88B" : "2px solid transparent", color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.45)", fontSize: 13, fontWeight: tab === id ? 700 : 400, cursor: "pointer", whiteSpace: "nowrap" }}>{lbl}</button>
+          {/* Nav tabs */}
+          <div style={{ display: "flex", gap: 0, overflowX: "auto" }}>
+            {[["home", "🏠", "Home"], ["tasks", "✅", "Tasks"], ["docs", "📄", "Documents"], ["guides", "📖", "Guides"]].map(([id, em, lbl]) => (
+              <button key={id} onClick={() => setTab(id)} style={{
+                flex: "none", padding: "8px 14px",
+                background: "transparent", border: "none",
+                borderBottom: tab === id ? "2px solid #3DB88B" : "2px solid transparent",
+                color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.4)",
+                fontSize: 12.5, fontWeight: tab === id ? 700 : 400,
+                cursor: "pointer", whiteSpace: "nowrap",
+                display: "flex", alignItems: "center", gap: 5,
+              }}>
+                <span style={{ fontSize: 13 }}>{em}</span> {lbl}
+              </button>
             ))}
           </div>
         </div>
       </div>
 
-      <div style={{ maxWidth: 640, margin: "0 auto", padding: "20px 16px" }}>
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "16px 20px" }}>
 
         {/* HOME TAB */}
         {tab === "home" && (
           <div>
-            {/* Emotional support banner */}
-            <div style={{ background: "rgba(61,184,139,0.08)", border: "1px solid rgba(61,184,139,0.25)", borderRadius: 14, padding: "12px 16px", marginBottom: 14, display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 20 }}>😊</span>
-              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.5 }}>{sg.emotion}</span>
-            </div>
-
-            {/* Next best action */}
-            <div style={{ background: sg.accentBg + "22", border: `1px solid ${sg.accentBg}55`, borderRadius: 16, padding: "16px", marginBottom: 20 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: sg.accentBtn, marginBottom: 6 }}>⚡ Next best action</div>
-              <div style={{ fontSize: 16, fontWeight: 800, marginBottom: 4 }}>{sg.nextAction}</div>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 12 }}>🕒 {sg.deadline}</div>
-              <button onClick={() => setTab("tasks")} style={{ width: "100%", padding: "10px 0", background: sg.accentBtn, border: "none", borderRadius: 10, color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
-                Start Now →
-              </button>
-            </div>
-
-            {/* Journey map */}
-            <h3 style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>Your journey</h3>
-            <div style={{ marginBottom: 20 }}>
-              {ALL_STAGE_NAMES.map((name, i) => {
-                const isDone = i < stIdx;
-                const isNow = i === stIdx;
-                const isLast = i === ALL_STAGE_NAMES.length - 1;
-                return (
-                  <div key={i} style={{ display: "flex", gap: 12 }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: 28, flexShrink: 0 }}>
-                      <div style={{
-                        width: 28, height: 28, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, flexShrink: 0,
-                        background: isDone ? "#3DB88B22" : isNow ? sg.accentBtn : "rgba(255,255,255,0.05)",
-                        border: `1px solid ${isDone ? "#3DB88B" : isNow ? sg.accentBtn : "rgba(255,255,255,0.15)"}`,
-                        color: isDone ? "#3DB88B" : isNow ? "#fff" : "rgba(255,255,255,0.3)"
-                      }}>
-                        {isDone ? "✓" : isNow ? "●" : i + 1}
-                      </div>
-                      {!isLast && <div style={{ width: 2, height: 24, background: isDone ? "#3DB88B" : "rgba(255,255,255,0.1)", margin: "2px 0" }} />}
-                    </div>
-                    <div style={{ paddingTop: 3, paddingBottom: isLast ? 0 : 16 }}>
-                      <div style={{
-                        fontSize: 13, fontWeight: 700,
-                        color: isDone ? "rgba(255,255,255,0.35)" : isNow ? sg.accentText === "#085041" ? "#3DB88B" : "#fff" : "rgba(255,255,255,0.4)",
-                        textDecoration: isDone ? "line-through" : "none"
-                      }}>
-                        {name}
-                        {isNow && <span style={{ fontSize: 10, fontWeight: 700, background: sg.chipBg, color: sg.chipColor, padding: "2px 8px", borderRadius: 10, marginLeft: 8 }}>You are here</span>}
-                      </div>
-                      {isDone && <div style={{ fontSize: 11, color: "#3DB88B", marginTop: 2 }}>✓ Completed</div>}
-                      {isNow && <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{sg.sub}</div>}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Insights & risk alerts */}
-            <h3 style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>Insights & risk alerts</h3>
-            {sg.insights.map((ins, i) => (
-              <div key={i} style={{ display: "flex", gap: 12, background: insightBg(ins.type), border: `1px solid ${insightBorder(ins.type)}`, borderRadius: 14, padding: "12px 14px", marginBottom: 8 }}>
-                <span style={{ fontSize: 18 }}>{insightIcon(ins.type)}</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: insightColor(ins.type), marginBottom: 2 }}>{ins.title}</div>
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>{ins.sub}</div>
-                </div>
+            {/* ── Welcome + Status Dropdown ── */}
+            <div style={{ marginBottom: 18 }}>
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 18, fontWeight: 800 }}>Welcome back, {profile.name} 👋</div>
               </div>
-            ))}
+
+              {/* Status Dropdown sits right under welcome */}
+              <StatusDropdown statusId={statusId} onChange={changeStatus} />
+            </div>
+
+            {/* Countdown Card */}
+            <CountdownCard arrivalDays={arrivalDays} />
+
+            {/* Stepper Progress Bar */}
+            <StepperBar stIdx={stIdx} sg={sg} />
+
+            {/* Readiness Score */}
+            <ReadinessScore stIdx={stIdx} taskDone={taskDone} docChecked={docChecked} sg={sg} />
+
+            {/* Motivational banner */}
+            <div style={{ background: "rgba(61,184,139,0.07)", border: "1px solid rgba(61,184,139,0.18)", borderRadius: 12, padding: "10px 14px", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontSize: 18 }}>😊</span>
+              <span style={{ fontSize: 12.5, color: "rgba(255,255,255,0.65)", lineHeight: 1.5 }}>{sg.emotion}</span>
+            </div>
+
+            {/* Next Best Action */}
+            <NextBestAction sg={sg} onStart={() => setTab("tasks")} />
+
+            {/* Insights — with priority badges */}
+            <h3 style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>Insights & Risk Alerts</h3>
+            {sg.insights.map((ins, i) => {
+              const badge = insightBadge(ins.type);
+              return (
+                <div key={i} style={{ display: "flex", gap: 10, background: insightBg(ins.type), border: `1px solid ${insightBorder(ins.type)}`, borderRadius: 12, padding: "10px 12px", marginBottom: 7 }}>
+                  <span style={{ fontSize: 16, flexShrink: 0, marginTop: 1 }}>{insightIcon(ins.type)}</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3, flexWrap: "wrap" }}>
+                      <span style={{ fontSize: 12.5, fontWeight: 800, color: insightColor(ins.type) }}>{ins.title}</span>
+                      <span style={{ fontSize: 9, fontWeight: 700, color: badge.color, background: badge.bg, padding: "2px 7px", borderRadius: 20, letterSpacing: 0.3 }}>
+                        {badge.label}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{ins.sub}</div>
+                  </div>
+                </div>
+              );
+            })}
 
             {/* Quick actions */}
-            <h3 style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.4)", margin: "20px 0 12px" }}>Quick actions</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-              <div onClick={() => setTab("docs")} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 22 }}>📄</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700 }}>Documents</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{docsReadyCount} of {DOCS.length} ready</div>
+            <h3 style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.3)", margin: "18px 0 10px" }}>Quick Actions</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              {[
+                { icon: "📄", title: "Documents", sub: `${docsReadyCount} of ${DOCS.length} ready`, dest: "docs" },
+                { icon: "✅", title: "Tasks", sub: `${completedTasksCount} of ${sg.tasks.length} done`, dest: "tasks" },
+                { icon: "🏦", title: "Banking guide", sub: "Open Monzo", dest: "guides" },
+                { icon: "🏥", title: "NHS guide", sub: "Register with GP", dest: "guides" },
+              ].map((a, i) => (
+                <div key={i} onClick={() => setTab(a.dest)} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: 9 }}>
+                  <span style={{ fontSize: 20 }}>{a.icon}</span>
+                  <div>
+                    <div style={{ fontSize: 12.5, fontWeight: 700 }}>{a.title}</div>
+                    <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.4)" }}>{a.sub}</div>
+                  </div>
                 </div>
-              </div>
-              <div onClick={() => setTab("tasks")} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 22 }}>✅</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700 }}>Tasks</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{completedTasksCount} of {sg.tasks.length} done</div>
-                </div>
-              </div>
-              <div onClick={() => setTab("guides")} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 22 }}>🏦</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700 }}>Banking guide</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>Open Monzo</div>
-                </div>
-              </div>
-              <div onClick={() => setTab("guides")} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 22 }}>🏥</span>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700 }}>NHS guide</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>Register with GP</div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         )}
@@ -498,24 +890,23 @@ export default function App() {
         {/* TASKS TAB */}
         {tab === "tasks" && (
           <div>
-            <h2 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 800 }}>{sg.name} tasks</h2>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{completedTasksCount} of {sg.tasks.length} completed · {sg.deadline}</p>
+            <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>{sg.name} tasks</h2>
+            <p style={{ margin: "0 0 14px", fontSize: 12.5, color: "rgba(255,255,255,0.4)" }}>{completedTasksCount} of {sg.tasks.length} completed · {sg.deadline}</p>
             {sg.tasks.map(task => (
-              <div key={task.id} onClick={() => toggleTask(task.id)} style={{ display: "flex", gap: 14, padding: "14px 16px", marginBottom: 8, background: taskDone[task.id] ? "rgba(61,184,139,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${taskDone[task.id] ? "#3DB88B44" : "rgba(255,255,255,0.06)"}`, borderRadius: 14, cursor: "pointer", alignItems: "flex-start" }}>
-                <div style={{ width: 22, height: 22, borderRadius: 7, flexShrink: 0, marginTop: 2, border: `2px solid ${taskDone[task.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: taskDone[task.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13 }}>
+              <div key={task.id} onClick={() => toggleTask(task.id)} style={{ display: "flex", gap: 12, padding: "13px 14px", marginBottom: 7, background: taskDone[task.id] ? "rgba(61,184,139,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${taskDone[task.id] ? "#3DB88B44" : "rgba(255,255,255,0.06)"}`, borderRadius: 12, cursor: "pointer", alignItems: "flex-start" }}>
+                <div style={{ width: 20, height: 20, borderRadius: 6, flexShrink: 0, marginTop: 2, border: `2px solid ${taskDone[task.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: taskDone[task.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>
                   {taskDone[task.id] && "✓"}
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                    <span style={{ fontSize: 14, fontWeight: 700, textDecoration: taskDone[task.id] ? "line-through" : "none", color: taskDone[task.id] ? "rgba(255,255,255,0.3)" : "#EEF2F7" }}>{task.text}</span>
-                    {task.priority && !taskDone[task.id] && (<span style={{ fontSize: 10, fontWeight: 700, color: "#E8A838", background: "#E8A83822", padding: "2px 7px", borderRadius: 8 }}>PRIORITY</span>)}
+                    <span style={{ fontSize: 13.5, fontWeight: 700, textDecoration: taskDone[task.id] ? "line-through" : "none", color: taskDone[task.id] ? "rgba(255,255,255,0.3)" : "#EEF2F7" }}>{task.text}</span>
+                    {task.priority && !taskDone[task.id] && (<span style={{ fontSize: 9.5, fontWeight: 700, color: "#E8A838", background: "#E8A83822", padding: "2px 7px", borderRadius: 8 }}>PRIORITY</span>)}
                   </div>
                 </div>
               </div>
             ))}
-
-            <div style={{ marginTop: 20, padding: "12px 16px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, fontSize: 12, color: "rgba(255,255,255,0.4)", textAlign: "center" }}>
-              💡 Your tasks update automatically based on your current stage. Change your status in ⚙️ Settings as you progress.
+            <div style={{ marginTop: 16, padding: "11px 14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, fontSize: 11.5, color: "rgba(255,255,255,0.4)", textAlign: "center" }}>
+              💡 Tasks update automatically based on your stage. Change it anytime on the Home tab.
             </div>
           </div>
         )}
@@ -523,20 +914,20 @@ export default function App() {
         {/* DOCS TAB */}
         {tab === "docs" && (
           <div>
-            <h2 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 800 }}>📄 Document Vault</h2>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{docsReadyCount} of {DOCS.length} documents ready</p>
-            <div style={{ background: "rgba(232,168,56,0.08)", border: "1px solid rgba(232,168,56,0.25)", borderRadius: 14, padding: "12px 16px", marginBottom: 20, fontSize: 13, color: "rgba(255,255,255,0.65)" }}>
+            <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>📄 Document Vault</h2>
+            <p style={{ margin: "0 0 14px", fontSize: 12.5, color: "rgba(255,255,255,0.4)" }}>{docsReadyCount} of {DOCS.length} documents ready</p>
+            <div style={{ background: "rgba(232,168,56,0.08)", border: "1px solid rgba(232,168,56,0.25)", borderRadius: 12, padding: "10px 14px", marginBottom: 16, fontSize: 12.5, color: "rgba(255,255,255,0.65)" }}>
               💡 <strong style={{ color: "#E8A838" }}>Tip:</strong> Scan everything and upload to Google Drive. Never carry all originals in one bag.
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
               {DOCS.map(doc => (
-                <div key={doc.id} onClick={() => toggleDoc(doc.id)} style={{ padding: "14px", borderRadius: 14, cursor: "pointer", background: docChecked[doc.id] ? "rgba(61,184,139,0.08)" : "rgba(255,255,255,0.03)", border: `1px solid ${docChecked[doc.id] ? "#3DB88B55" : "rgba(255,255,255,0.07)"}` }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                    <span style={{ fontSize: 22 }}>{doc.icon}</span>
-                    <div style={{ marginLeft: "auto", width: 18, height: 18, borderRadius: 5, border: `2px solid ${docChecked[doc.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: docChecked[doc.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>{docChecked[doc.id] && "✓"}</div>
+                <div key={doc.id} onClick={() => toggleDoc(doc.id)} style={{ padding: "12px", borderRadius: 12, cursor: "pointer", background: docChecked[doc.id] ? "rgba(61,184,139,0.08)" : "rgba(255,255,255,0.03)", border: `1px solid ${docChecked[doc.id] ? "#3DB88B55" : "rgba(255,255,255,0.07)"}` }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                    <span style={{ fontSize: 20 }}>{doc.icon}</span>
+                    <div style={{ marginLeft: "auto", width: 16, height: 16, borderRadius: 5, border: `2px solid ${docChecked[doc.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: docChecked[doc.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10 }}>{docChecked[doc.id] && "✓"}</div>
                   </div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: docChecked[doc.id] ? "rgba(255,255,255,0.4)" : "#EEF2F7", textDecoration: docChecked[doc.id] ? "line-through" : "none" }}>{doc.name}</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{doc.hint}</div>
+                  <div style={{ fontSize: 12.5, fontWeight: 700, color: docChecked[doc.id] ? "rgba(255,255,255,0.4)" : "#EEF2F7", textDecoration: docChecked[doc.id] ? "line-through" : "none" }}>{doc.name}</div>
+                  <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{doc.hint}</div>
                 </div>
               ))}
             </div>
@@ -546,16 +937,16 @@ export default function App() {
         {/* GUIDES TAB */}
         {tab === "guides" && (
           <div>
-            <h2 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 800 }}>📖 Guides & Resources</h2>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Official links and step-by-step guides for life in UK</p>
+            <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>📖 Guides & Resources</h2>
+            <p style={{ margin: "0 0 14px", fontSize: 12.5, color: "rgba(255,255,255,0.4)" }}>Official links and step-by-step guides for life in UK</p>
             {GUIDES.map((g, i) => (
-              <a key={i} href={g.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 16px", marginBottom: 8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, textDecoration: "none", color: "#EEF2F7" }}>
-                <span style={{ fontSize: 24 }}>{g.icon}</span>
+              <a key={i} href={g.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 12, padding: "13px 14px", marginBottom: 7, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, textDecoration: "none", color: "#EEF2F7" }}>
+                <span style={{ fontSize: 22 }}>{g.icon}</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700 }}>{g.title}</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{g.sub}</div>
+                  <div style={{ fontSize: 13.5, fontWeight: 700 }}>{g.title}</div>
+                  <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{g.sub}</div>
                 </div>
-                <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 16 }}>↗</span>
+                <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 15 }}>↗</span>
               </a>
             ))}
           </div>
@@ -564,7 +955,7 @@ export default function App() {
       </div>
 
       {/* BOTTOM NAV */}
-      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "rgba(8,17,28,0.95)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", padding: "8px 0 12px" }}>
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "rgba(8,17,28,0.96)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", padding: "8px 0 14px" }}>
         {[["home", "🏠", "Home"], ["tasks", "✅", "Tasks"], ["docs", "📄", "Docs"], ["guides", "📖", "Guides"]].map(([id, em, lbl]) => (
           <button key={id} onClick={() => setTab(id)} style={{ flex: 1, background: "transparent", border: "none", cursor: "pointer", padding: "4px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
             <span style={{ fontSize: 20 }}>{em}</span>
