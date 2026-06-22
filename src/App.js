@@ -15,7 +15,6 @@ const STATUSES = [
 
 const ALL_STAGE_NAMES = ["Research", "Apply", "Offer", "CAS", "Visa", "Approved", "UK"];
 
-// Task ID → status it auto-advances to when completed
 const AUTO_ADVANCE = {
   "t0-2": 1,
   "t1-1": 2,
@@ -32,11 +31,11 @@ const STAGES = [
     emotion: "Great time to start! Early preparation means better university options.",
     accentBtn: "#185FA5", chipColor: "#185FA5",
     tasks: [
-      { id: "t0-1", text: "Research UK universities on UCAS", priority: true },
-      { id: "t0-2", text: "Register for IELTS or PTE Academic", priority: true, autoAdvance: true },
-      { id: "t0-3", text: "Prepare personal statement draft" },
-      { id: "t0-4", text: "Check tuition fees and scholarship options" },
-      { id: "t0-5", text: "Contact university admissions teams" },
+      { id: "t0-1", text: "Research UK universities on UCAS", priority: true, desc: "Browse UK universities, compare courses, rankings, and entry requirements all in one place. This is the official UK university search portal.", link: "https://www.ucas.com/explore/search/results" },
+      { id: "t0-2", text: "Register for IELTS or PTE Academic", priority: true, autoAdvance: true, desc: "Most UK universities require an English proficiency score. IELTS Academic (6.0-7.0) is the most widely accepted. Book through British Council or IDP.", link: "https://www.ielts.org/book-a-test" },
+      { id: "t0-3", text: "Prepare personal statement draft", desc: "A 500-word essay explaining why you want to study your chosen course. Universities use this to assess motivation and fit — start drafting early and revise multiple times.", link: "https://www.ucas.com/undergraduate/applying-university/how-write-ucas-undergraduate-personal-statement" },
+      { id: "t0-4", text: "Check tuition fees and scholarship options", desc: "Compare tuition costs across shortlisted universities and check for Chevening, GREAT, or university-specific scholarships for Bangladeshi students.", link: "https://www.chevening.org/scholarships" },
+      { id: "t0-5", text: "Contact university admissions teams", desc: "Email the international admissions office directly with questions about entry requirements, deadlines, or scholarships — many respond within a few days.", link: "https://www.ukcisa.org.uk" },
     ],
     insights: [
       { type: "tip",  title: "Start early",    sub: "Universities with September intake usually open applications 12 months ahead." },
@@ -49,11 +48,11 @@ const STAGES = [
     emotion: "Application submitted! Most universities reply within 4-8 weeks. Stay patient.",
     accentBtn: "#534AB7", chipColor: "#534AB7",
     tasks: [
-      { id: "t1-1", text: "Log in to portal & confirm offer received", priority: true, autoAdvance: true },
-      { id: "t1-2", text: "Prepare for possible interview", priority: true },
-      { id: "t1-3", text: "Gather financial documents early" },
-      { id: "t1-4", text: "Research student accommodation options" },
-      { id: "t1-5", text: "Connect with current students on LinkedIn" },
+      { id: "t1-1", text: "Log in to portal & confirm offer received", priority: true, autoAdvance: true, desc: "Check your university's applicant portal regularly — offer letters are often sent there before email. Look for both conditional and unconditional offer types.", link: "https://www.ucas.com/track" },
+      { id: "t1-2", text: "Prepare for possible interview", priority: true, desc: "Some courses (especially Medicine, Law, or competitive Master's programs) require an interview. Practice common questions about your motivation and career goals.", link: "https://www.ukcisa.org.uk" },
+      { id: "t1-3", text: "Gather financial documents early", desc: "Start collecting bank statements, sponsorship letters, or scholarship confirmations now — visa applications later require very specific, recent documentation.", link: "https://www.gov.uk/student-visa/money" },
+      { id: "t1-4", text: "Research student accommodation options", desc: "Compare university halls vs private student accommodation vs shared housing. Book early as popular options fill up fast, especially for September intake.", link: "https://www.studentcrowd.com" },
+      { id: "t1-5", text: "Connect with current students on LinkedIn", desc: "Search your university name + course on LinkedIn to find current students. They can give honest insights about teaching quality, city life, and costs.", link: "https://www.linkedin.com" },
     ],
     insights: [
       { type: "tip",  title: "Be reachable", sub: "Universities may email or call for interviews — check spam folder regularly." },
@@ -66,11 +65,11 @@ const STAGES = [
     emotion: "Congratulations! Time to accept your offer and prepare for CAS.",
     accentBtn: "#0F6E56", chipColor: "#0F6E56",
     tasks: [
-      { id: "t2-1", text: "Accept unconditional offer formally",  priority: true },
-      { id: "t2-2", text: "Pay tuition deposit to secure place",  priority: true },
-      { id: "t2-3", text: "Request CAS number from university",   priority: true, autoAdvance: true },
-      { id: "t2-4", text: "Start saving bank statement (28 days)" },
-      { id: "t2-5", text: "Book TB test appointment (Bangladesh)" },
+      { id: "t2-1", text: "Accept unconditional offer formally",  priority: true, desc: "Once all conditions (grades, English score) are met, formally accept your offer through the university portal. This locks in your place for the intake.", link: "https://www.ucas.com/track" },
+      { id: "t2-2", text: "Pay tuition deposit to secure place",  priority: true, desc: "Most universities require a deposit (£500-£3000) to confirm your place and begin CAS processing. Keep the payment receipt — you'll need it for your visa.", link: "https://www.gov.uk/student-visa" },
+      { id: "t2-3", text: "Request CAS number from university",   priority: true, autoAdvance: true, desc: "CAS (Confirmation of Acceptance for Studies) is a unique reference number required for your visa application. Request it once your deposit is paid and conditions met.", link: "https://www.gov.uk/guidance/sponsorship-immigration-rules" },
+      { id: "t2-4", text: "Start saving bank statement (28 days)", desc: "UKVI requires proof of funds covering tuition + living costs maintained for 28 consecutive days without dipping below the required amount. Start this clock now.", link: "https://www.gov.uk/student-visa/money" },
+      { id: "t2-5", text: "Book TB test appointment (Bangladesh)", desc: "Bangladesh is on the UK's TB testing list. You must get tested at an approved clinic before applying for your visa. Results are valid for 6 months.", link: "https://www.gov.uk/tb-test-visa" },
     ],
     insights: [
       { type: "warn", title: "Conditional offer?",    sub: "Make sure you meet all conditions before requesting CAS." },
@@ -83,12 +82,12 @@ const STAGES = [
     emotion: "CAS received — this is the most critical stage. Apply for visa immediately.",
     accentBtn: "#993C1D", chipColor: "#993C1D",
     tasks: [
-      { id: "t3-1", text: "Pay Immigration Health Surcharge (IHS)",   priority: true },
-      { id: "t3-2", text: "Complete & submit online visa application", priority: true, autoAdvance: true },
-      { id: "t3-3", text: "Prepare 28-day bank statement",            priority: true },
-      { id: "t3-4", text: "Book biometric appointment at UKVCAS",     priority: true },
-      { id: "t3-5", text: "Collect TB test certificate" },
-      { id: "t3-6", text: "Book flights once visa is submitted" },
+      { id: "t3-1", text: "Pay Immigration Health Surcharge (IHS)",   priority: true, desc: "The IHS gives you access to the NHS while studying in the UK. Pay it as part of your visa application — the amount depends on your course duration.", link: "https://www.gov.uk/healthcare-immigration-application" },
+      { id: "t3-2", text: "Complete & submit online visa application", priority: true, autoAdvance: true, desc: "Apply for your Student visa online using your CAS number, passport, and financial documents. This is the official UK government application portal.", link: "https://www.gov.uk/student-visa/apply" },
+      { id: "t3-3", text: "Prepare 28-day bank statement",            priority: true, desc: "Submit a bank statement showing the required funds held for 28 consecutive days, dated within 31 days of your visa application.", link: "https://www.gov.uk/student-visa/money" },
+      { id: "t3-4", text: "Book biometric appointment at UKVCAS",     priority: true, desc: "After applying online, you must visit a UK Visa and Citizenship Application Services centre in Bangladesh to give fingerprints and a photo.", link: "https://www.ukvi-international.com" },
+      { id: "t3-5", text: "Collect TB test certificate", desc: "Pick up your TB clearance certificate from the approved clinic — this must be uploaded as part of your visa application.", link: "https://www.gov.uk/tb-test-visa" },
+      { id: "t3-6", text: "Book flights once visa is submitted", desc: "You can book flights provisionally once your visa is submitted, but avoid non-refundable tickets until the visa is actually approved.", link: "https://www.skyscanner.net" },
     ],
     insights: [
       { type: "warn", title: "Bank statement risk",  sub: "Must show funds for 28 consecutive days. Any dip restarts the count." },
@@ -102,12 +101,12 @@ const STAGES = [
     emotion: "Visa submitted! Average decision time: 3 weeks. Use this time to prep for departure.",
     accentBtn: "#854F0B", chipColor: "#854F0B",
     tasks: [
-      { id: "t4-1", text: "Book flights — visa approved, time to fly!", priority: true, autoAdvance: true },
-      { id: "t4-2", text: "Confirm university accommodation booking",    priority: true },
-      { id: "t4-3", text: "Order eSIM (GiffGaff, Lebara)" },
-      { id: "t4-4", text: "Get travel insurance" },
-      { id: "t4-5", text: "Pack essentials — clothes for cold weather" },
-      { id: "t4-6", text: "Inform home bank about travel" },
+      { id: "t4-1", text: "Book flights — visa approved, time to fly!", priority: true, autoAdvance: true, desc: "Now that your visa is approved, book your flight to the UK. Try to arrive a few days before your course starts to settle in and sort accommodation.", link: "https://www.skyscanner.net" },
+      { id: "t4-2", text: "Confirm university accommodation booking",    priority: true, desc: "Finalize your room booking with the university or private provider. Confirm move-in dates align with your flight arrival.", link: "https://www.studentcrowd.com" },
+      { id: "t4-3", text: "Order eSIM (GiffGaff, Lebara)", desc: "Get a UK eSIM or physical SIM ready before you land so you have data and a UK number from day one. GiffGaff and Lebara are popular budget options.", link: "https://www.giffgaff.com" },
+      { id: "t4-4", text: "Get travel insurance", desc: "Cover flight delays, lost luggage, and emergencies during travel. Some banks or credit cards include this — check before buying separately.", link: "https://www.gocompare.com/travel-insurance/" },
+      { id: "t4-5", text: "Pack essentials — clothes for cold weather", desc: "UK winters are cold and wet. Pack a warm coat, waterproof shoes, and layers — buying these in the UK can be expensive initially.", link: "https://www.metoffice.gov.uk" },
+      { id: "t4-6", text: "Inform home bank about travel", desc: "Notify your Bangladeshi bank of your travel dates so international card transactions aren't flagged or blocked while you're abroad.", link: "https://www.bb.org.bd" },
     ],
     insights: [
       { type: "tip",  title: "Use the waiting time well", sub: "Visa decisions take about 3 weeks — perfect time to prep for departure." },
@@ -120,12 +119,12 @@ const STAGES = [
     emotion: "Visa approved! You are going to the UK. Final preparations — almost there!",
     accentBtn: "#0F6E56", chipColor: "#0F6E56",
     tasks: [
-      { id: "t5-1", text: "Noted BRP Post Office — I have arrived in UK!", priority: true, autoAdvance: true },
-      { id: "t5-2", text: "Download bank app (Monzo/Starling)" },
-      { id: "t5-3", text: "Join university Facebook/WhatsApp groups" },
-      { id: "t5-4", text: "Pack documents in hand luggage only" },
-      { id: "t5-5", text: "Confirm airport pickup or transport" },
-      { id: "t5-6", text: "Exchange some cash to GBP" },
+      { id: "t5-1", text: "Noted BRP Post Office — I have arrived in UK!", priority: true, autoAdvance: true, desc: "Check your visa vignette sticker — it states which Post Office branch you must collect your Biometric Residence Permit (BRP) from after arrival.", link: "https://www.gov.uk/biometric-residence-permits" },
+      { id: "t5-2", text: "Download bank app (Monzo/Starling)", desc: "Monzo and Starling allow you to open a UK bank account quickly, even before you have a permanent address — useful in your first days.", link: "https://monzo.com" },
+      { id: "t5-3", text: "Join university Facebook/WhatsApp groups", desc: "Search your university name + intake year on Facebook to find official and student-run groups. Great for asking arrival questions and finding flatmates.", link: "https://www.facebook.com" },
+      { id: "t5-4", text: "Pack documents in hand luggage only", desc: "Never check in your passport, visa, CAS, offer letter, or financial documents. Keep all originals in your hand luggage in case checked bags are delayed or lost.", link: "https://www.gov.uk/student-visa" },
+      { id: "t5-5", text: "Confirm airport pickup or transport", desc: "Arrange in advance how you'll get from the airport to your accommodation — university shuttle, pre-booked taxi, or public transport with luggage in mind.", link: "https://www.nationalexpress.com" },
+      { id: "t5-6", text: "Exchange some cash to GBP", desc: "Carry a small amount of GBP cash (£100-200) for your first few days before your UK bank account is fully active.", link: "https://wise.com" },
     ],
     insights: [
       { type: "warn", title: "BRP collection deadline", sub: "You must collect your BRP within 10 days of arrival or as stated on your visa." },
@@ -138,12 +137,12 @@ const STAGES = [
     emotion: "Welcome to the UK! Complete these tasks in order — do not delay BRP collection.",
     accentBtn: "#0F6E56", chipColor: "#0F6E56",
     tasks: [
-      { id: "t6-1", text: "Collect BRP from Post Office",            priority: true },
-      { id: "t6-2", text: "Open Monzo or Starling bank account",     priority: true },
-      { id: "t6-3", text: "Register at university — get student ID", priority: true },
-      { id: "t6-4", text: "Register with local NHS GP surgery" },
-      { id: "t6-5", text: "Apply for NI Number (call 0800 141 2075)" },
-      { id: "t6-6", text: "Get council tax exemption letter" },
+      { id: "t6-1", text: "Collect BRP from Post Office",            priority: true, desc: "Visit the specific Post Office named on your visa vignette within 10 days of arrival, bringing your passport. This card is your legal proof of residence status.", link: "https://www.gov.uk/biometric-residence-permits" },
+      { id: "t6-2", text: "Open Monzo or Starling bank account",     priority: true, desc: "These apps let you open an account with just your passport and UK address — no need to wait for a traditional bank's longer process.", link: "https://monzo.com" },
+      { id: "t6-3", text: "Register at university — get student ID", priority: true, desc: "Complete in-person enrolment at your university to receive your official student ID card, needed for library access, discounts, and proof of status.", link: "https://www.ukcisa.org.uk" },
+      { id: "t6-4", text: "Register with local NHS GP surgery", desc: "Find and register with a local GP (doctor) near your accommodation — this is free since you paid the Immigration Health Surcharge already.", link: "https://www.nhs.uk/service-search/find-a-gp" },
+      { id: "t6-5", text: "Apply for NI Number (call 0800 141 2075)", desc: "A National Insurance Number is required to work legally and pay tax in the UK. Apply by phone — it can take 4-8 weeks to arrive by post.", link: "https://www.gov.uk/apply-national-insurance-number" },
+      { id: "t6-6", text: "Get council tax exemption letter", desc: "Full-time students are usually exempt from council tax. Request an exemption certificate from your university to avoid being billed.", link: "https://www.gov.uk/council-tax/who-has-to-pay" },
     ],
     insights: [
       { type: "warn", title: "BRP first!",           sub: "Collect your BRP within 10 days — delays can cause legal issues." },
@@ -153,18 +152,18 @@ const STAGES = [
 ];
 
 const DOCS = [
-  { id: "d1",  name: "Passport",           hint: "Valid 6+ months",           icon: "🛂" },
-  { id: "d2",  name: "Offer Letter",        hint: "Conditional/unconditional", icon: "📄" },
-  { id: "d3",  name: "CAS Number",          hint: "From university",           icon: "🎓" },
-  { id: "d4",  name: "IELTS Certificate",   hint: "Score 6.0+ usually",        icon: "📝" },
-  { id: "d5",  name: "Bank Statement",      hint: "28 consecutive days",       icon: "💷" },
-  { id: "d6",  name: "TB Test Result",      hint: "From approved clinic",      icon: "🩺" },
-  { id: "d7",  name: "Passport Photos",     hint: "2 recent photos",           icon: "🖼️" },
-  { id: "d8",  name: "IHS Receipt",         hint: "After payment",             icon: "🛡️" },
-  { id: "d9",  name: "Personal Statement",  hint: "For visa form",             icon: "✍️" },
-  { id: "d10", name: "Accommodation Proof", hint: "Uni halls or rental",       icon: "🏠" },
-  { id: "d11", name: "BRP / Visa Vignette", hint: "After visa approval",       icon: "🪪" },
-  { id: "d12", name: "NI Number Letter",    hint: "From HMRC",                 icon: "🔢" },
+  { id: "d1",  name: "Passport",           hint: "Valid 6+ months",           icon: "🛂", desc: "Your passport must be valid for at least 6 months beyond your intended stay in the UK. Renew early if it's close to expiring — this is required for every stage from visa application to BRP collection.", link: "https://www.passport.gov.bd" },
+  { id: "d2",  name: "Offer Letter",        hint: "Conditional/unconditional", icon: "📄", desc: "Issued by your university confirming your place on a course. A conditional offer requires you to meet certain requirements (grades, English score) before it becomes unconditional.", link: "https://www.ucas.com/track" },
+  { id: "d3",  name: "CAS Number",          hint: "From university",           icon: "🎓", desc: "Confirmation of Acceptance for Studies — a unique reference number from your university required to apply for your Student visa. Issued after you accept your offer and pay any deposit.", link: "https://www.gov.uk/guidance/sponsorship-immigration-rules" },
+  { id: "d4",  name: "IELTS Certificate",   hint: "Score 6.0+ usually",        icon: "📝", desc: "Proof of English proficiency required by most UK universities and for the visa application. Most courses need an overall score of 6.0-7.0, with no band below a set minimum.", link: "https://www.ielts.org" },
+  { id: "d5",  name: "Bank Statement",      hint: "28 consecutive days",       icon: "💷", desc: "Must show funds covering tuition and living costs maintained for 28 consecutive days, dated within 31 days of your visa application. Any dip below the required amount restarts the 28-day clock.", link: "https://www.gov.uk/student-visa/money" },
+  { id: "d6",  name: "TB Test Result",      hint: "From approved clinic",      icon: "🩺", desc: "Bangladesh is on the UK's TB testing list, so this certificate is mandatory for the visa. Must be from a UK-approved clinic and is valid for 6 months.", link: "https://www.gov.uk/tb-test-visa" },
+  { id: "d7",  name: "Passport Photos",     hint: "2 recent photos",           icon: "🖼️", desc: "Recent passport-style photos meeting UK visa specifications (plain background, no glasses glare, neutral expression) — needed for visa forms and BRP application.", link: "https://www.gov.uk/photos-for-passports" },
+  { id: "d8",  name: "IHS Receipt",         hint: "After payment",             icon: "🛡️", desc: "Proof of payment for the Immigration Health Surcharge, which gives you NHS access while studying. Keep this receipt safe — you may need to show it to register with a GP.", link: "https://www.gov.uk/healthcare-immigration-application" },
+  { id: "d9",  name: "Personal Statement",  hint: "For visa form",             icon: "✍️", desc: "A written explanation of your study plans and reasons for choosing the UK and your course — sometimes requested as supporting evidence in the visa application.", link: "https://www.ucas.com/undergraduate/applying-university/how-write-ucas-undergraduate-personal-statement" },
+  { id: "d10", name: "Accommodation Proof", hint: "Uni halls or rental",       icon: "🏠", desc: "Confirmation letter or tenancy agreement showing where you'll live in the UK — useful for visa support and for registering with a GP or bank.", link: "https://www.studentcrowd.com" },
+  { id: "d11", name: "BRP / Visa Vignette", hint: "After visa approval",       icon: "🪪", desc: "Your Biometric Residence Permit is your physical proof of visa status in the UK. Collect it from the Post Office named on your visa sticker within 10 days of arrival.", link: "https://www.gov.uk/biometric-residence-permits" },
+  { id: "d12", name: "NI Number Letter",    hint: "From HMRC",                 icon: "🔢", desc: "Official letter confirming your National Insurance Number, required to work legally and pay tax in the UK. Apply by phone after arrival — it can take 4-8 weeks.", link: "https://www.gov.uk/apply-national-insurance-number" },
 ];
 
 const GUIDES = [
@@ -178,6 +177,128 @@ const GUIDES = [
   { title: "UKCISA Student Support", sub: "International student advice", icon: "🎓", url: "https://www.ukcisa.org.uk" },
   { title: "GiffGaff UK SIM",        sub: "Order eSIM before flying",     icon: "📱", url: "https://www.giffgaff.com" },
   { title: "Wise — Send Money",      sub: "Best exchange rates",          icon: "💸", url: "https://wise.com" },
+];
+
+// ============================================================
+// DATA: Packing Planner
+// ============================================================
+const PACKING_CATEGORIES = [
+  {
+    id: "docs", name: "Documents", icon: "📄", color: "#5B8DEF",
+    items: [
+      { id: "p-doc-1", name: "Passport", weight: 0 },
+      { id: "p-doc-2", name: "BRP / Visa vignette", weight: 0 },
+      { id: "p-doc-3", name: "CAS letter", weight: 0 },
+      { id: "p-doc-4", name: "Offer letter", weight: 0 },
+      { id: "p-doc-5", name: "IELTS certificate", weight: 0 },
+      { id: "p-doc-6", name: "Academic transcripts & certificates", weight: 0.3 },
+      { id: "p-doc-7", name: "TB test certificate", weight: 0 },
+      { id: "p-doc-8", name: "Bank statements (printed)", weight: 0.1 },
+      { id: "p-doc-9", name: "Passport photos", weight: 0 },
+      { id: "p-doc-10", name: "Accommodation confirmation", weight: 0 },
+    ],
+  },
+  {
+    id: "winter", name: "Winter Clothes", icon: "🧥", color: "#06b6d4",
+    items: [
+      { id: "p-win-1", name: "Heavy winter coat", weight: 1.5 },
+      { id: "p-win-2", name: "Waterproof jacket", weight: 0.6 },
+      { id: "p-win-3", name: "Sweaters / jumpers (3-4)", weight: 1.2 },
+      { id: "p-win-4", name: "Thermal innerwear", weight: 0.4 },
+      { id: "p-win-5", name: "Warm socks (5+ pairs)", weight: 0.3 },
+      { id: "p-win-6", name: "Gloves", weight: 0.1 },
+      { id: "p-win-7", name: "Scarf / muffler", weight: 0.15 },
+      { id: "p-win-8", name: "Beanie / winter hat", weight: 0.1 },
+      { id: "p-win-9", name: "Waterproof shoes/boots", weight: 1.0 },
+    ],
+  },
+  {
+    id: "regular", name: "Regular Clothes", icon: "👕", color: "#84cc16",
+    items: [
+      { id: "p-reg-1", name: "T-shirts / shirts (6-8)", weight: 1.0 },
+      { id: "p-reg-2", name: "Trousers / jeans (4-5)", weight: 1.5 },
+      { id: "p-reg-3", name: "Formal wear (1-2 sets)", weight: 0.8 },
+      { id: "p-reg-4", name: "Sleepwear", weight: 0.3 },
+      { id: "p-reg-5", name: "Undergarments (10+)", weight: 0.4 },
+      { id: "p-reg-6", name: "Regular shoes / sneakers", weight: 0.7 },
+      { id: "p-reg-7", name: "Belt", weight: 0.1 },
+    ],
+  },
+  {
+    id: "electronics", name: "Electronics", icon: "🔌", color: "#a78bfa",
+    items: [
+      { id: "p-ele-1", name: "Laptop + charger", weight: 1.8 },
+      { id: "p-ele-2", name: "Phone + charger", weight: 0.2 },
+      { id: "p-ele-3", name: "UK plug adapter (Type G)", weight: 0.1 },
+      { id: "p-ele-4", name: "Power bank", weight: 0.3 },
+      { id: "p-ele-5", name: "Headphones/earbuds", weight: 0.1 },
+      { id: "p-ele-6", name: "Multi-port charger/extension", weight: 0.2 },
+    ],
+  },
+  {
+    id: "toiletries", name: "Toiletries", icon: "🧴", color: "#f43f5e",
+    items: [
+      { id: "p-toi-1", name: "Toothbrush & toothpaste", weight: 0.1 },
+      { id: "p-toi-2", name: "Skincare basics", weight: 0.3 },
+      { id: "p-toi-3", name: "Travel-size shampoo/soap", weight: 0.2 },
+      { id: "p-toi-4", name: "Razor / shaving kit", weight: 0.1 },
+      { id: "p-toi-5", name: "Sanitary products (few weeks' supply)", weight: 0.3 },
+      { id: "p-toi-6", name: "Towel (quick-dry travel towel)", weight: 0.3 },
+    ],
+  },
+  {
+    id: "kitchen", name: "Kitchen & Food", icon: "🍳", color: "#fb923c",
+    items: [
+      { id: "p-kit-1", name: "Favourite spices (sealed)", weight: 0.5 },
+      { id: "p-kit-2", name: "Instant noodles / snacks", weight: 0.5 },
+      { id: "p-kit-3", name: "Small cooking utensil set", weight: 0.4 },
+      { id: "p-kit-4", name: "Reusable water bottle", weight: 0.2 },
+      { id: "p-kit-5", name: "Lunch box / tiffin", weight: 0.2 },
+    ],
+  },
+  {
+    id: "academic", name: "Academic Supplies", icon: "📚", color: "#f59e0b",
+    items: [
+      { id: "p-aca-1", name: "Notebooks & stationery", weight: 0.4 },
+      { id: "p-aca-2", name: "Calculator (if needed)", weight: 0.2 },
+      { id: "p-aca-3", name: "Backpack/laptop bag", weight: 0.6 },
+      { id: "p-aca-4", name: "USB drive", weight: 0.05 },
+    ],
+  },
+  {
+    id: "money", name: "Money & Cards", icon: "💳", color: "#00c896",
+    items: [
+      { id: "p-mon-1", name: "GBP cash (£100-200)", weight: 0 },
+      { id: "p-mon-2", name: "International debit/credit card", weight: 0 },
+      { id: "p-mon-3", name: "Travel money card (Wise/Revolut)", weight: 0 },
+    ],
+  },
+  {
+    id: "health", name: "Health & Medicine", icon: "💊", color: "#ec4899",
+    items: [
+      { id: "p-hea-1", name: "Prescription medicines (with letter)", weight: 0.2 },
+      { id: "p-hea-2", name: "Basic first-aid items", weight: 0.2 },
+      { id: "p-hea-3", name: "Spare glasses/contact lenses", weight: 0.1 },
+      { id: "p-hea-4", name: "Vitamins/supplements", weight: 0.2 },
+    ],
+  },
+  {
+    id: "misc", name: "Miscellaneous", icon: "🎒", color: "#7d8590",
+    items: [
+      { id: "p-mis-1", name: "Photos of family", weight: 0.05 },
+      { id: "p-mis-2", name: "Small gift items / souvenirs", weight: 0.3 },
+      { id: "p-mis-3", name: "Lock for luggage", weight: 0.1 },
+      { id: "p-mis-4", name: "Umbrella (compact)", weight: 0.3 },
+      { id: "p-mis-5", name: "Reusable shopping bag", weight: 0.05 },
+    ],
+  },
+];
+
+const LUGGAGE_PRESETS = [
+  { id: "23", label: "23 kg (Standard checked bag)", limit: 23 },
+  { id: "30", label: "30 kg (Extra baggage)", limit: 30 },
+  { id: "32", label: "32 kg (Max single bag - most airlines)", limit: 32 },
+  { id: "custom", label: "Custom limit", limit: null },
 ];
 
 // ============================================================
@@ -209,6 +330,34 @@ const SEARCH_LINKS = [
   { name: "British Council",      icon: "🇬🇧", url: "https://www.britishcouncil.org/study-work-abroad/in-uk" },
 ];
 
+// ============================================================
+// COST CALCULATOR + EXPENSE TRACKER — data
+// ============================================================
+const COST_FIXED = { ielts: 200, visa: 490, cas: 150, deposit: 1334, bio: 19 };
+const UNI_TUITION_MAP = { northumbria: 12000, manchester: 22000, sheffield: 18000, coventry: 13500, huddersfield: 14000 };
+
+const EXPENSE_CAT_META = {
+  visa:      { icon: "🛂", color: "#4a9eff" },
+  ielts:     { icon: "📝", color: "#00c896" },
+  travel:    { icon: "✈️", color: "#f59e0b" },
+  tuition:   { icon: "🎓", color: "#a78bfa" },
+  living:    { icon: "🏠", color: "#fb923c" },
+  food:      { icon: "🍜", color: "#f43f5e" },
+  mobile:    { icon: "📱", color: "#06b6d4" },
+  transport: { icon: "🚌", color: "#84cc16" },
+  health:    { icon: "💊", color: "#ec4899" },
+  other:     { icon: "📦", color: "#7d8590" },
+};
+
+const fmtGBP = (v) => "£" + parseFloat(v || 0).toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const gbp2bdt = (v, rate) => "৳ " + Math.round((v || 0) * rate).toLocaleString("en-IN");
+const formatMonth = (mmyyyy) => {
+  const parts = mmyyyy.split("/");
+  if (parts.length !== 2) return mmyyyy;
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return months[parseInt(parts[0]) - 1] + " " + parts[1];
+};
+
 
 function loadLS(key, fallback) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
@@ -226,19 +375,14 @@ function ReadinessRing({ score, color }) {
   const filled = circ * (score / 100);
   return (
     <svg width={cx * 2} height={cy * 2} viewBox={`0 0 ${cx * 2} ${cy * 2}`} style={{ flexShrink: 0 }}>
-      {/* Track */}
       <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="7" />
-      {/* UK flag arc at 100% position — decorative dot */}
       <circle cx={cx} cy={cy - r} r={4} fill="rgba(255,255,255,0.12)" />
-      {/* Fill */}
       <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} strokeWidth="7"
         strokeDasharray={`${filled} ${circ}`} strokeLinecap="round"
         transform={`rotate(-90 ${cx} ${cy})`}
         style={{ transition: "stroke-dasharray 0.8s ease" }} />
-      {/* Score number */}
       <text x={cx} y={cy - 4} textAnchor="middle" fill="#EEF2F7" fontSize="16" fontWeight="800">{score}</text>
       <text x={cx} y={cy + 9} textAnchor="middle" fill="rgba(255,255,255,0.28)" fontSize="8">/100</text>
-      {/* UK flag mini at top */}
       <text x={cx} y={cy - r - 10} textAnchor="middle" fontSize="10">🇬🇧</text>
     </svg>
   );
@@ -290,7 +434,6 @@ function ReadinessScore({ stIdx, taskDone, docChecked, sg }) {
         <div style={{ fontSize: 10.5, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 4 }}>
           Readiness Score
         </div>
-        {/* "X of 100 · Label" — not scary */}
         <div style={{ fontSize: 13, fontWeight: 800, color: labelColor, marginBottom: 7, lineHeight: 1.3 }}>
           {score} of 100 points
           <span style={{
@@ -301,7 +444,6 @@ function ReadinessScore({ stIdx, taskDone, docChecked, sg }) {
           }}>{label}</span>
         </div>
 
-        {/* Progress bar */}
         <div style={{ height: 5, background: "rgba(255,255,255,0.07)", borderRadius: 5, overflow: "hidden", marginBottom: 7 }}>
           <div style={{ height: "100%", width: `${score}%`, background: barGradient, borderRadius: 5, transition: "width 0.6s ease" }} />
         </div>
@@ -311,7 +453,6 @@ function ReadinessScore({ stIdx, taskDone, docChecked, sg }) {
           <span style={{ fontSize: 10.5, color: "rgba(255,255,255,0.28)" }}>📄 {completedDocs} docs</span>
         </div>
 
-        {/* Readiness engine hints */}
         {nextTarget && hints.length > 0 && (
           <div style={{ padding: "7px 10px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 9 }}>
             <div style={{ fontSize: 9.5, fontWeight: 700, color: "rgba(255,255,255,0.22)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 4 }}>
@@ -346,7 +487,6 @@ function StatusDropdown({ statusId, onChange }) {
 
   return (
     <div ref={ref} style={{ marginBottom: 16, position: "relative" }}>
-      {/* Label row */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
         <span style={{ fontSize: 10.5, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6, color: "rgba(255,255,255,0.3)" }}>
           Current Status
@@ -354,7 +494,6 @@ function StatusDropdown({ statusId, onChange }) {
         <span style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", fontStyle: "italic" }}>tap to change</span>
       </div>
 
-      {/* Trigger button — bright border, glow */}
       <button
         onClick={() => setOpen(o => !o)}
         style={{
@@ -367,7 +506,6 @@ function StatusDropdown({ statusId, onChange }) {
           boxShadow: "0 0 0 4px rgba(61,184,139,0.1), 0 2px 12px rgba(61,184,139,0.15)",
         }}
       >
-        {/* Animated pulse dot */}
         <style>{`@keyframes sdpulse{0%,100%{transform:scale(1);opacity:0.85}50%{transform:scale(2.5);opacity:0}}`}</style>
         <span style={{ position: "relative", width: 10, height: 10, flexShrink: 0 }}>
           <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#3DB88B", animation: "sdpulse 2s infinite" }} />
@@ -384,7 +522,6 @@ function StatusDropdown({ statusId, onChange }) {
         }}>▼</span>
       </button>
 
-      {/* Dropdown */}
       {open && (
         <div style={{
           position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 200,
@@ -557,11 +694,42 @@ function QuickCard({ icon, title, sub, pct, onClick }) {
 }
 
 // ============================================================
-// COMPONENT: University Finder Flow (popup/bottom-sheet)
-// Steps: intro -> level confirm -> academic form -> results
+// COMPONENT: Inline info expand panel — used by Tasks & Docs
 // ============================================================
+function InfoExpand({ desc, link, accent }) {
+  return (
+    <div style={{
+      marginTop: 8, marginLeft: 32,
+      padding: "10px 12px",
+      background: "rgba(255,255,255,0.03)",
+      border: `1px solid ${accent}33`,
+      borderRadius: 10,
+      animation: "infoFadeIn 0.18s ease",
+    }}>
+      <style>{`@keyframes infoFadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}`}</style>
+      <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.55, marginBottom: link ? 9 : 0 }}>
+        {desc}
+      </div>
+      {link && (
+        <a href={link} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{
+          display: "inline-flex", alignItems: "center", gap: 5,
+          fontSize: 11, fontWeight: 700, color: accent,
+          textDecoration: "none",
+          padding: "5px 11px",
+          background: accent + "18",
+          border: `1px solid ${accent}40`,
+          borderRadius: 8,
+        }}>
+          🔗 Learn more / Official link ↗
+        </a>
+      )}
+    </div>
+  );
+}
+
+
 function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
-  const [step, setStep] = useState("intro"); // intro | level | form | results
+  const [step, setStep] = useState("intro");
   const [level, setLevel] = useState(savedAcademic?.level || "");
   const [form, setForm] = useState(savedAcademic || {
     ssc: "", hsc: "", bachelorSubject: "", cgpa: "", ielts: "", course: "", budget: "",
@@ -596,10 +764,8 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", zIndex: 999, display: "flex", alignItems: "flex-end", justifyContent: "center", fontFamily: "Arial, sans-serif" }} onClick={(e) => { if (e.target === e.currentTarget) handleSkip(); }}>
       <div style={{ width: "100%", maxWidth: 460, background: "#0D1E2F", borderRadius: "24px 24px 0 0", padding: "24px 22px 28px", border: "1px solid rgba(255,255,255,0.1)", maxHeight: "88vh", overflowY: "auto" }}>
 
-        {/* Drag handle */}
         <div style={{ width: 40, height: 4, background: "rgba(255,255,255,0.2)", borderRadius: 4, margin: "0 auto 18px" }} />
 
-        {/* ── INTRO ── */}
         {step === "intro" && (
           <div>
             <div style={{ fontSize: 34, marginBottom: 10, textAlign: "center" }}>🎓</div>
@@ -612,19 +778,18 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
           </div>
         )}
 
-        {/* ── LEVEL CONFIRM ── */}
         {step === "level" && (
           <div>
             <button onClick={() => setStep("intro")} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13, marginBottom: 14, padding: 0 }}>← Back</button>
             <h2 style={{ color: "#fff", fontSize: 18, fontWeight: 800, marginBottom: 6 }}>Which level are you applying for?</h2>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 12.5, marginBottom: 18 }}>This determines which grades we'll ask for next.</p>
 
-            <button onClick={() => { setLevel("bachelor"); setStep("form"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px", marginBottom: 10, background: level === "bachelor" ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.05)", border: `1.5px solid ${level === "bachelor" ? "#3DB88B" : "rgba(255,255,255,0.1)"}`, borderRadius: 14, color: "#fff", cursor: "pointer", textAlign: "left" }}>
+            <button onClick={() => { setLevel("bachelor"); setStep("form"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px", marginBottom: 10, background: level === "bachelor" ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.05)", border: level === "bachelor" ? "1.5px solid #3DB88B" : "1.5px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", cursor: "pointer", textAlign: "left" }}>
               <span style={{ fontSize: 22 }}>🎓</span>
               <span><div style={{ fontWeight: 800, fontSize: 14 }}>Bachelor's Degree</div><div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.4)" }}>Undergraduate — based on SSC & HSC GPA</div></span>
             </button>
 
-            <button onClick={() => { setLevel("masters"); setStep("form"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px", background: level === "masters" ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.05)", border: `1.5px solid ${level === "masters" ? "#3DB88B" : "rgba(255,255,255,0.1)"}`, borderRadius: 14, color: "#fff", cursor: "pointer", textAlign: "left" }}>
+            <button onClick={() => { setLevel("masters"); setStep("form"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px", background: level === "masters" ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.05)", border: level === "masters" ? "1.5px solid #3DB88B" : "1.5px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", cursor: "pointer", textAlign: "left" }}>
               <span style={{ fontSize: 22 }}>📘</span>
               <span><div style={{ fontWeight: 800, fontSize: 14 }}>Master's Degree</div><div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.4)" }}>Postgraduate — based on Bachelor's CGPA</div></span>
             </button>
@@ -633,7 +798,6 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
           </div>
         )}
 
-        {/* ── ACADEMIC FORM ── */}
         {step === "form" && (
           <div>
             <button onClick={() => setStep("level")} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13, marginBottom: 14, padding: 0 }}>← Back</button>
@@ -674,7 +838,6 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
           </div>
         )}
 
-        {/* ── RESULTS ── */}
         {step === "results" && band && (
           <div>
             <button onClick={() => setStep("form")} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13, marginBottom: 14, padding: 0 }}>← Edit profile</button>
@@ -717,6 +880,984 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
 }
 
 
+// ============================================================
+// COMPONENT: Costs Tab — Calculator + Expense Tracker
+// ============================================================
+function CostsTab() {
+  const [panel, setPanel] = useState("calc");
+
+  // ── Calculator state ──
+  const [duration, setDuration] = useState(2);
+  const [dependents, setDependents] = useState(0);
+  const [uniPreset, setUniPreset] = useState("custom");
+  const [tuition, setTuition] = useState(28000);              // TOTAL tuition for full course
+  const [tuitionPaidPct, setTuitionPaidPct] = useState(100);   // % of tuition paid upfront
+  const [rate, setRate] = useState(153);
+
+  // ── Tracker state ──
+  const [expenses, setExpenses] = useState(() => loadLS("settleuk_expenses", []));
+  const [phase, setPhase] = useState("all");
+  const [cat, setCat] = useState("all");
+  const [expName, setExpName] = useState("");
+  const [expAmt, setExpAmt] = useState("");
+  const [expCat, setExpCat] = useState("visa");
+  const [expPhase, setExpPhase] = useState("bd");
+
+  useEffect(() => { saveLS("settleuk_expenses", expenses); }, [expenses]);
+
+  useEffect(() => {
+    if (uniPreset !== "custom" && UNI_TUITION_MAP[uniPreset]) {
+      setTuition(UNI_TUITION_MAP[uniPreset] * duration);
+    }
+  }, [uniPreset, duration]);
+
+  // ── Calculator derived values ──
+  const totalTuition    = parseFloat(tuition) || 0;          // total tuition for WHOLE course
+  const dur              = duration;
+  const dep              = dependents;
+  const ihsDur            = dur + 0.5;  // IHS visa duration = course length + 0.5 year
+  const ihsTotal          = 776 * ihsDur * (1 + dep);
+  const airTotal          = 600 * (1 + dep);
+  const tuitionPayable    = totalTuition * (tuitionPaidPct / 100); // amount paid NOW based on %
+  const tuitionRemaining  = totalTuition - tuitionPayable;
+  const depVisa           = dep * 490;
+  const depIHS            = dep * 776 * ihsDur;
+  const fixedTotal        = COST_FIXED.ielts + COST_FIXED.visa + ihsTotal + COST_FIXED.cas + airTotal + COST_FIXED.deposit + COST_FIXED.bio;
+  const variableTotal     = tuitionPayable + depVisa + depIHS;
+  const grandTotal        = fixedTotal + variableTotal;
+
+  const row = (icon, dotClass, label, sub, gbp) => ({ icon, dotClass, label, sub, gbp });
+  const rows = [
+    row("●", "", "IELTS Exam Fee", "British Council / IDP", COST_FIXED.ielts),
+    row("●", "", "UK Visa Application", "Student visa fee", COST_FIXED.visa),
+    row("●", "", "Immigration Health Surcharge", `£776/yr × ${ihsDur} yr${ihsDur > 1 ? "s" : ""} × ${1 + dep} person${1 + dep > 1 ? "s" : ""}`, ihsTotal),
+    row("●", "", "CAS & Admin Fees", "University document charges", COST_FIXED.cas),
+    row("●", "", "Air Ticket (DAC → UK)", dep ? `Applicant + ${dep} dep.` : "Applicant only", airTotal),
+    row("●", "", "Initial Cash Deposit", "UKVI savings evidence", COST_FIXED.deposit),
+    row("●", "", "Biometric (eVisa)", "Visa application centre", COST_FIXED.bio),
+  ];
+  const variableRows = [
+    row("◆", "variable", `Tuition Payment (${tuitionPaidPct}%)`, `£${totalTuition.toLocaleString()} total × ${tuitionPaidPct}%`, tuitionPayable),
+    row("◇", "optional", "Dependent Visa(s)", dep ? `£490 × ${dep} dependent${dep > 1 ? "s" : ""}` : "N/A", depVisa),
+    row("◇", "optional", "Dependent IHS", dep ? `£776 × ${ihsDur}yr × ${dep} dep.` : "N/A", depIHS),
+  ];
+
+  // ── Tracker derived values ──
+  const filteredExpenses = expenses.filter(e => (phase === "all" || e.phase === phase) && (cat === "all" || e.cat === cat));
+  const byMonth = {};
+  [...filteredExpenses].reverse().forEach(exp => {
+    const m = exp.date.slice(3);
+    if (!byMonth[m]) byMonth[m] = [];
+    byMonth[m].push(exp);
+  });
+
+  const totalSpent = expenses.reduce((s, e) => s + e.amt, 0);
+  const preSpent    = expenses.filter(e => e.phase === "bd").reduce((s, e) => s + e.amt, 0);
+  const ukSpent     = expenses.filter(e => e.phase === "uk").reduce((s, e) => s + e.amt, 0);
+  const budgetPct   = grandTotal > 0 ? Math.min(100, (totalSpent / grandTotal) * 100) : 0;
+  const remaining   = Math.max(0, grandTotal - totalSpent);
+  const barColor    = budgetPct < 50 ? "#00c896" : budgetPct < 80 ? "#f59e0b" : "#ef4444";
+
+  const catTotals = {};
+  expenses.forEach(e => { catTotals[e.cat] = (catTotals[e.cat] || 0) + e.amt; });
+  const maxCat = Math.max(...Object.values(catTotals), 1);
+
+  const addExpense = () => {
+    const amt = parseFloat(expAmt);
+    if (!expName.trim() || !amt || amt <= 0) return;
+    setExpenses(p => [...p, {
+      id: Date.now(), name: expName.trim(), amt, cat: expCat, phase: expPhase,
+      date: new Date().toLocaleDateString("en-GB"),
+    }]);
+    setExpName(""); setExpAmt("");
+  };
+  const deleteExpense = (id) => setExpenses(p => p.filter(e => e.id !== id));
+
+  const C = {
+    surface: "#161b22", surface2: "#1c2330", border: "#2a3441",
+    green: "#00c896", greenDim: "rgba(0,200,150,0.12)",
+    blue: "#4a9eff", blueDim: "rgba(74,158,255,0.12)",
+    amber: "#f59e0b", red: "#ef4444",
+    text: "#e6edf3", textMuted: "#7d8590", textDim: "#4d5560",
+  };
+  const card = { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 14, padding: 16, marginBottom: 14 };
+  const selectStyle = {
+    width: "100%", background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 8,
+    color: C.text, fontSize: 13, padding: "8px 10px", fontFamily: "inherit", outline: "none",
+  };
+  const fInput = { flex: 1, background: "#0d1117", border: `1px solid ${C.border}`, borderRadius: 8, color: C.text, fontSize: 13, padding: "9px 10px", fontFamily: "inherit", outline: "none", minWidth: 0 };
+
+  return (
+    <div>
+      <div style={{ display: "flex", gap: 6, marginBottom: 16 }}>
+        <div onClick={() => setPanel("calc")} style={{
+          flex: 1, padding: "10px 8px", background: panel === "calc" ? C.greenDim : C.surface2,
+          border: `1px solid ${panel === "calc" ? C.green : C.border}`, borderRadius: 10,
+          cursor: "pointer", fontSize: 12, fontWeight: 700, textAlign: "center",
+          color: panel === "calc" ? C.green : C.textMuted,
+        }}>🧮 Calculate Your Cost</div>
+        <div onClick={() => setPanel("track")} style={{
+          flex: 1, padding: "10px 8px", background: panel === "track" ? C.greenDim : C.surface2,
+          border: `1px solid ${panel === "track" ? C.green : C.border}`, borderRadius: 10,
+          cursor: "pointer", fontSize: 12, fontWeight: 700, textAlign: "center",
+          color: panel === "track" ? C.green : C.textMuted,
+        }}>📊 Expense Tracker</div>
+      </div>
+
+      {panel === "calc" && (
+        <div>
+          <div style={card}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: C.text }}>📋 Your Criteria</div>
+              <div style={{ fontSize: 11, fontWeight: 600, padding: "3px 8px", borderRadius: 20, background: C.greenDim, color: C.green, border: "1px solid rgba(0,200,150,.3)" }}>Set your plan</div>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 4 }}>
+              <div>
+                <div style={{ fontSize: 11, color: C.textMuted, marginBottom: 5, textTransform: "uppercase", letterSpacing: 0.5 }}>Course Duration</div>
+                <select value={duration} onChange={e => setDuration(parseInt(e.target.value))} style={selectStyle}>
+                  <option value={1}>1 Year</option>
+                  <option value={2}>2 Years</option>
+                  <option value={3}>3 Years</option>
+                  <option value={4}>4 Years</option>
+                </select>
+              </div>
+              <div>
+                <div style={{ fontSize: 11, color: C.textMuted, marginBottom: 5, textTransform: "uppercase", letterSpacing: 0.5 }}>Dependent?</div>
+                <select value={dependents} onChange={e => setDependents(parseInt(e.target.value))} style={selectStyle}>
+                  <option value={0}>No Dependent</option>
+                  <option value={1}>1 Dependent</option>
+                  <option value={2}>2 Dependents</option>
+                </select>
+              </div>
+              <div style={{ gridColumn: "1 / -1" }}>
+                <div style={{ fontSize: 11, color: C.textMuted, marginBottom: 5, textTransform: "uppercase", letterSpacing: 0.5 }}>University (tuition preset)</div>
+                <select value={uniPreset} onChange={e => setUniPreset(e.target.value)} style={selectStyle}>
+                  <option value="custom">Enter manually below</option>
+                  <option value="northumbria">Northumbria University (~£12,000/yr)</option>
+                  <option value="manchester">University of Manchester (~£22,000/yr)</option>
+                  <option value="sheffield">University of Sheffield (~£18,000/yr)</option>
+                  <option value="coventry">Coventry University (~£13,500/yr)</option>
+                  <option value="huddersfield">University of Huddersfield (~£14,000/yr)</option>
+                </select>
+              </div>
+              <div style={{ gridColumn: "1 / -1" }}>
+                <div style={{ fontSize: 11, color: C.textMuted, marginBottom: 5, textTransform: "uppercase", letterSpacing: 0.5 }}>Total Tuition Fee (£ for full course)</div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <input type="number" value={tuition} onChange={e => setTuition(e.target.value)} style={{ flex: 1, background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 8, color: C.text, fontSize: 13, padding: "8px 10px", fontFamily: "inherit", outline: "none" }} />
+                  <div style={{ background: C.greenDim, border: "1px solid rgba(0,200,150,.3)", color: C.green, fontSize: 11, fontWeight: 700, padding: "0 10px", borderRadius: 8, display: "flex", alignItems: "center" }}>£ total</div>
+                </div>
+              </div>
+              <div style={{ gridColumn: "1 / -1" }}>
+                <div style={{ fontSize: 11, color: C.textMuted, marginBottom: 5, textTransform: "uppercase", letterSpacing: 0.5 }}>First-Time Payment (% of total tuition)</div>
+                <select value={tuitionPaidPct} onChange={e => setTuitionPaidPct(parseInt(e.target.value))} style={selectStyle}>
+                  <option value={50}>50%</option>
+                  <option value={60}>60%</option>
+                  <option value={70}>70%</option>
+                  <option value={100}>100% (full course)</option>
+                </select>
+                <div style={{ fontSize: 10.5, color: C.textDim, marginTop: 5, lineHeight: 1.5 }}>
+                  💡 Calculation is based on your selected %. Select <strong style={{ color: C.green }}>100%</strong> to see the full course cost.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style={card}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: C.text }}>📌 Cost Breakdown</div>
+              <div style={{ fontSize: 11, fontWeight: 600, padding: "3px 8px", borderRadius: 20, background: C.greenDim, color: C.green, border: "1px solid rgba(0,200,150,.3)" }}>Auto-calculated</div>
+            </div>
+
+            <div style={{ position: "relative" }}>
+              <div style={{ position: "absolute", left: 13, top: 4, bottom: 4, width: 2, backgroundImage: `repeating-linear-gradient(to bottom, ${C.border} 0, ${C.border} 6px, transparent 6px, transparent 12px)` }} />
+
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr>
+                    <th colSpan={2} style={{ textAlign: "left", paddingLeft: 24, fontSize: 10, fontWeight: 600, color: C.textDim, textTransform: "uppercase", letterSpacing: 0.5, paddingBottom: 8, borderBottom: `1px solid ${C.border}` }}>Item</th>
+                    <th style={{ textAlign: "right", fontSize: 10, fontWeight: 600, color: C.green, textTransform: "uppercase", letterSpacing: 0.5, paddingBottom: 8, borderBottom: `1px solid ${C.border}`, minWidth: 72 }}>GBP (£)</th>
+                    <th style={{ textAlign: "right", fontSize: 10, fontWeight: 600, color: C.blue, textTransform: "uppercase", letterSpacing: 0.5, paddingBottom: 8, borderBottom: `1px solid ${C.border}`, minWidth: 90 }}>BDT (৳)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((r, i) => (
+                    <tr key={i}>
+                      <td style={{ width: 28, textAlign: "center", padding: "9px 0", borderTop: i > 0 ? `1px solid rgba(42,52,65,.5)` : "none" }}>
+                        <div style={{ width: 14, height: 14, borderRadius: "50%", border: `2px solid ${C.green}`, background: "#0d1117", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 7, color: C.green, position: "relative", zIndex: 1 }}>{r.icon}</div>
+                      </td>
+                      <td style={{ paddingLeft: 8, padding: "9px 0 9px 8px", borderTop: i > 0 ? `1px solid rgba(42,52,65,.5)` : "none" }}>
+                        <div style={{ fontSize: 13, color: C.text, fontWeight: 500 }}>{r.label}</div>
+                        <div style={{ fontSize: 11, color: C.textMuted, marginTop: 1 }}>{r.sub}</div>
+                      </td>
+                      <td style={{ textAlign: "right", fontSize: 13, fontWeight: 700, color: C.green, whiteSpace: "nowrap", paddingRight: 8, borderTop: i > 0 ? `1px solid rgba(42,52,65,.5)` : "none" }}>{fmtGBP(r.gbp)}</td>
+                      <td style={{ textAlign: "right", fontSize: 11, color: C.blue, whiteSpace: "nowrap", padding: "9px 0", borderTop: i > 0 ? `1px solid rgba(42,52,65,.5)` : "none" }}>{gbp2bdt(r.gbp, rate)}</td>
+                    </tr>
+                  ))}
+
+                  <tr>
+                    <td colSpan={4} style={{ padding: "10px 0 6px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 10, color: C.textDim, textTransform: "uppercase", letterSpacing: 0.6 }}>
+                        <span style={{ flex: 1, height: 1, background: C.border }} />
+                        Variable / Recurring
+                        <span style={{ flex: 1, height: 1, background: C.border }} />
+                      </div>
+                    </td>
+                  </tr>
+
+                  {variableRows.map((r, i) => {
+                    const dotColor = r.dotClass === "variable" ? C.blue : C.amber;
+                    return (
+                      <tr key={i}>
+                        <td style={{ width: 28, textAlign: "center", padding: "9px 0" }}>
+                          <div style={{ width: 14, height: 14, borderRadius: "50%", border: `2px solid ${dotColor}`, background: "#0d1117", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 7, color: dotColor, position: "relative", zIndex: 1 }}>{r.icon}</div>
+                        </td>
+                        <td style={{ padding: "9px 0 9px 8px" }}>
+                          <div style={{ fontSize: 13, color: C.text, fontWeight: 500 }}>{r.label}</div>
+                          <div style={{ fontSize: 11, color: C.textMuted, marginTop: 1 }}>{r.sub}</div>
+                        </td>
+                        <td style={{ textAlign: "right", fontSize: 13, fontWeight: 700, color: C.green, whiteSpace: "nowrap", paddingRight: 8 }}>{fmtGBP(r.gbp)}</td>
+                        <td style={{ textAlign: "right", fontSize: 11, color: C.blue, whiteSpace: "nowrap", padding: "9px 0" }}>{gbp2bdt(r.gbp, rate)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <div style={{ display: "flex", gap: 14, marginTop: 12, paddingTop: 12, borderTop: `1px solid ${C.border}` }}>
+              <span style={{ fontSize: 11, color: C.textMuted, display: "flex", alignItems: "center", gap: 4 }}><span style={{ color: C.green }}>●</span> Fixed</span>
+              <span style={{ fontSize: 11, color: C.textMuted, display: "flex", alignItems: "center", gap: 4 }}><span style={{ color: C.blue }}>◆</span> Variable</span>
+              <span style={{ fontSize: 11, color: C.textMuted, display: "flex", alignItems: "center", gap: 4 }}><span style={{ color: C.amber }}>◇</span> If applicable</span>
+            </div>
+          </div>
+
+          <div style={{ background: "linear-gradient(135deg, rgba(0,200,150,.08), rgba(74,158,255,.06))", border: "1px solid rgba(0,200,150,.25)", borderRadius: 12, padding: 14 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div>
+                <div style={{ fontSize: 12, color: C.textMuted, marginBottom: 4 }}>ESTIMATED TOTAL COST</div>
+                <div style={{ fontSize: 11, color: C.textDim }}>{dur}-yr · {dep === 0 ? "No dependent" : `${dep} dependent${dep > 1 ? "s" : ""}`}</div>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 20, fontWeight: 800, color: C.green }}>{fmtGBP(grandTotal)}</div>
+                <div style={{ fontSize: 13, color: C.blue, marginTop: 1 }}>{gbp2bdt(grandTotal, rate)}</div>
+              </div>
+            </div>
+            <hr style={{ border: "none", borderTop: `1px solid ${C.border}`, margin: "10px 0" }} />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              <div style={{ background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 8, padding: 10 }}>
+                <div style={{ fontSize: 10, color: C.textMuted, marginBottom: 3 }}>FIXED COSTS</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: C.green }}>{fmtGBP(fixedTotal)}</div>
+                <div style={{ fontSize: 11, color: C.blue }}>{gbp2bdt(fixedTotal, rate)}</div>
+              </div>
+              <div style={{ background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 8, padding: 10 }}>
+                <div style={{ fontSize: 10, color: C.textMuted, marginBottom: 3 }}>TUITION + DEP</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: C.blue }}>{fmtGBP(variableTotal)}</div>
+                <div style={{ fontSize: 11, color: C.blue }}>{gbp2bdt(variableTotal, rate)}</div>
+              </div>
+            </div>
+            {tuitionRemaining > 0 && (
+              <div style={{ marginTop: 10, background: "rgba(232,168,56,0.08)", border: "1px solid rgba(232,168,56,0.25)", borderRadius: 8, padding: "8px 10px", fontSize: 11, color: C.textMuted, lineHeight: 1.5 }}>
+                ⚠️ <strong style={{ color: "#E8A838" }}>Remaining tuition not included above:</strong> {fmtGBP(tuitionRemaining)} ({gbp2bdt(tuitionRemaining, rate)}) — payable later during your course.
+              </div>
+            )}
+            <div style={{ fontSize: 11, color: C.textMuted, textAlign: "center", marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
+              💱 £1 =
+              <input type="number" value={rate} onChange={e => setRate(parseFloat(e.target.value) || 153)} style={{ width: 52, background: "none", border: "none", borderBottom: `1px solid ${C.border}`, color: C.blue, fontSize: 11, textAlign: "center", padding: "0 2px", fontFamily: "inherit", outline: "none" }} />
+              BDT
+            </div>
+          </div>
+        </div>
+      )}
+
+      {panel === "track" && (
+        <div>
+          <div style={{ display: "flex", background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 10, padding: 3, gap: 3, marginBottom: 14 }}>
+            {[["all", "🌐 All Journey", C.green], ["bd", "🇧🇩 Pre-Arrival", C.amber], ["uk", "🇬🇧 In UK", C.blue]].map(([id, lbl, color]) => (
+              <button key={id} onClick={() => setPhase(id)} style={{
+                flex: 1, padding: "8px 4px", border: "none", borderRadius: 8, fontSize: 11, fontWeight: 600,
+                cursor: "pointer", background: phase === id ? C.surface : "none",
+                color: phase === id ? color : C.textMuted,
+                boxShadow: phase === id ? "0 1px 4px rgba(0,0,0,.4)" : "none",
+              }}>{lbl}</button>
+            ))}
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8, marginBottom: 14 }}>
+            <div style={{ background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 10, padding: "10px 8px" }}>
+              <div style={{ fontSize: 9, color: C.textMuted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 3 }}>Total Spent</div>
+              <div style={{ fontSize: 15, fontWeight: 800, color: C.green }}>{fmtGBP(totalSpent)}</div>
+              <div style={{ fontSize: 10, color: C.textMuted, marginTop: 1 }}>{gbp2bdt(totalSpent, rate)}</div>
+            </div>
+            <div style={{ background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 10, padding: "10px 8px" }}>
+              <div style={{ fontSize: 9, color: C.textMuted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 3 }}>🇧🇩 Pre-Arrival</div>
+              <div style={{ fontSize: 15, fontWeight: 800, color: C.amber }}>{fmtGBP(preSpent)}</div>
+              <div style={{ fontSize: 10, color: C.textMuted, marginTop: 1 }}>{gbp2bdt(preSpent, rate)}</div>
+            </div>
+            <div style={{ background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 10, padding: "10px 8px" }}>
+              <div style={{ fontSize: 9, color: C.textMuted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 3 }}>🇬🇧 In UK</div>
+              <div style={{ fontSize: 15, fontWeight: 800, color: C.blue }}>{fmtGBP(ukSpent)}</div>
+              <div style={{ fontSize: 10, color: C.textMuted, marginTop: 1 }}>{gbp2bdt(ukSpent, rate)}</div>
+            </div>
+          </div>
+
+          <div style={{ ...card, padding: "12px 14px" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, marginBottom: 8, textTransform: "uppercase", letterSpacing: 0.5 }}>Budget vs Estimated</div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5, fontSize: 11, color: C.textMuted }}>
+              <span>Spent: {fmtGBP(totalSpent)}</span>
+              <span>Budget: {fmtGBP(grandTotal)}</span>
+            </div>
+            <div style={{ height: 6, background: C.surface2, borderRadius: 3, overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${budgetPct}%`, background: barColor, borderRadius: 3, transition: "width 0.5s ease" }} />
+            </div>
+            <div style={{ fontSize: 10, color: C.textDim, marginTop: 4 }}>{budgetPct.toFixed(1)}% used · {fmtGBP(remaining)} remaining</div>
+          </div>
+
+          <div style={{ ...card, padding: "12px 14px" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, marginBottom: 10, textTransform: "uppercase", letterSpacing: 0.5 }}>By Category</div>
+            {Object.keys(catTotals).length === 0 ? (
+              <div style={{ fontSize: 12, color: C.textDim, textAlign: "center", padding: "8px 0" }}>No expenses yet</div>
+            ) : (
+              Object.entries(catTotals).sort((a, b) => b[1] - a[1]).map(([c, amt]) => {
+                const meta = EXPENSE_CAT_META[c] || EXPENSE_CAT_META.other;
+                const pct = (amt / maxCat * 100).toFixed(0);
+                return (
+                  <div key={c} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: meta.color, flexShrink: 0 }} />
+                    <div style={{ fontSize: 12, color: C.textMuted, width: 70, flexShrink: 0 }}>{meta.icon} {c}</div>
+                    <div style={{ flex: 1, height: 5, background: C.surface2, borderRadius: 3, overflow: "hidden" }}>
+                      <div style={{ height: "100%", width: `${pct}%`, background: meta.color, borderRadius: 3, transition: "width 0.5s ease" }} />
+                    </div>
+                    <div style={{ fontSize: 11, fontWeight: 700, width: 52, textAlign: "right", flexShrink: 0, color: meta.color }}>{fmtGBP(amt)}</div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          <div style={{ display: "flex", gap: 6, overflowX: "auto", marginBottom: 12, paddingBottom: 2 }}>
+            {[["all", "All"], ["visa", "🛂 Visa"], ["ielts", "📝 IELTS"], ["travel", "✈️ Travel"], ["tuition", "🎓 Tuition"], ["living", "🏠 Living"], ["food", "🍜 Food"], ["mobile", "📱 Mobile"], ["transport", "🚌 Transport"], ["health", "💊 Health"], ["other", "📦 Other"]].map(([id, lbl]) => (
+              <div key={id} onClick={() => setCat(id)} style={{
+                flex: "0 0 auto", padding: "5px 12px", background: cat === id ? C.greenDim : C.surface2,
+                border: `1px solid ${cat === id ? C.green : C.border}`, borderRadius: 20, cursor: "pointer",
+                fontSize: 11, fontWeight: 600, color: cat === id ? C.green : C.textMuted, whiteSpace: "nowrap",
+              }}>{lbl}</div>
+            ))}
+          </div>
+
+          <div style={{ background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 12, padding: 14, marginBottom: 14 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: 0.6, marginBottom: 10 }}>+ Log New Expense</div>
+            <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+              <input value={expName} onChange={e => setExpName(e.target.value)} placeholder="Description (e.g. IELTS registration)" style={{ ...fInput, flex: 2 }} />
+              <div style={{ position: "relative", flex: 1 }}>
+                <span style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", fontSize: 12, fontWeight: 700, color: C.green, pointerEvents: "none" }}>£</span>
+                <input type="number" step="0.01" value={expAmt} onChange={e => setExpAmt(e.target.value)} placeholder="0.00" style={{ width: "100%", background: "#0d1117", border: `1px solid ${C.border}`, borderRadius: 8, color: C.text, fontSize: 13, padding: "9px 10px 9px 22px", fontFamily: "inherit", outline: "none" }} />
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <select value={expCat} onChange={e => setExpCat(e.target.value)} style={fInput}>
+                <option value="visa">🛂 Visa</option>
+                <option value="ielts">📝 IELTS</option>
+                <option value="travel">✈️ Travel</option>
+                <option value="tuition">🎓 Tuition</option>
+                <option value="living">🏠 Living</option>
+                <option value="food">🍜 Food</option>
+                <option value="mobile">📱 Mobile</option>
+                <option value="transport">🚌 Transport</option>
+                <option value="health">💊 Health</option>
+                <option value="other">📦 Other</option>
+              </select>
+              <select value={expPhase} onChange={e => setExpPhase(e.target.value)} style={fInput}>
+                <option value="bd">🇧🇩 Pre-Arrival (BD)</option>
+                <option value="uk">🇬🇧 In UK</option>
+              </select>
+              <button onClick={addExpense} style={{ background: C.green, color: "#000", border: "none", borderRadius: 8, padding: "9px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>Add</button>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {filteredExpenses.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "28px 16px", color: C.textMuted }}>
+                <div style={{ fontSize: 38, marginBottom: 8 }}>💳</div>
+                <p style={{ fontSize: 13, lineHeight: 1.5 }}>No expenses logged yet.<br />Track from your first IELTS payment<br />all the way through life in the UK.</p>
+              </div>
+            ) : (
+              Object.entries(byMonth).map(([month, exps]) => (
+                <div key={month}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: C.textDim, textTransform: "uppercase", letterSpacing: 0.6, padding: "6px 0 4px", marginTop: 4 }}>{formatMonth(month)}</div>
+                  {exps.map(exp => {
+                    const meta = EXPENSE_CAT_META[exp.cat] || EXPENSE_CAT_META.other;
+                    return (
+                      <div key={exp.id} style={{ background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 12, padding: "11px 12px", display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                        <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, flexShrink: 0, background: meta.color + "22" }}>{meta.icon}</div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: C.text }}>{exp.name}</div>
+                          <div style={{ fontSize: 10, color: C.textMuted, marginTop: 2, display: "flex", alignItems: "center", gap: 5 }}>
+                            <span style={{ display: "inline-block", fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 4, background: exp.phase === "uk" ? "rgba(74,158,255,.15)" : "rgba(245,158,11,.15)", color: exp.phase === "uk" ? C.blue : C.amber }}>
+                              {exp.phase === "uk" ? "🇬🇧 In UK" : "🇧🇩 Pre-Arrival"}
+                            </span>
+                            {exp.cat} · {exp.date}
+                          </div>
+                        </div>
+                        <div style={{ textAlign: "right", flexShrink: 0 }}>
+                          <div style={{ fontSize: 14, fontWeight: 800, color: C.green }}>{fmtGBP(exp.amt)}</div>
+                          <div style={{ fontSize: 10, color: C.blue, marginTop: 1 }}>{gbp2bdt(exp.amt, rate)}</div>
+                        </div>
+                        <button onClick={() => deleteExpense(exp.id)} style={{ background: "none", border: "none", color: C.textDim, cursor: "pointer", fontSize: 16, padding: 4, lineHeight: 1, flexShrink: 0 }}>×</button>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+// ============================================================
+// DATA: CAS & UKVI Preparation
+// ============================================================
+const CAS_QA = [
+  {
+    q: "Why did you choose this university?",
+    bn: "কেন এই বিশ্ববিদ্যালয় বেছে নিলেন?",
+    a: "I chose [University Name] because of its strong reputation in [your course], its industry partnerships, and the quality of research facilities. I also carefully reviewed the course modules, which align with my career goals in [your field].",
+    tip: "💡 University-র specific বৈশিষ্ট্য উল্লেখ করুন — ranking, course content, lecturers। Generic উত্তর এড়িয়ে চলুন।"
+  },
+  {
+    q: "Why did you choose this specific course?",
+    bn: "কেন এই নির্দিষ্ট কোর্স বেছে নিলেন?",
+    a: "My undergraduate background in [subject] gave me a strong foundation, and I want to specialise further in [course area]. This course covers [specific modules] which are directly relevant to my career plan of [goal].",
+    tip: "💡 আপনার academic background-এর সাথে কোর্সের সংযোগ দেখান। Career goal স্পষ্টভাবে বলুন।"
+  },
+  {
+    q: "How will you finance your studies?",
+    bn: "পড়াশোনার খরচ কীভাবে চালাবেন?",
+    a: "My studies will be funded by my family. My father/sponsor is a [profession] and has been saving specifically for this purpose. I have maintained the required funds in my bank account for more than 28 consecutive days as required by UKVI.",
+    tip: "💡 Bank statement-এর সাথে মিলিয়ে বলুন। টাকার source স্পষ্ট করুন — চাকরি, ব্যবসা বা সম্পত্তি।"
+  },
+  {
+    q: "What are your plans after completing the course?",
+    bn: "কোর্স শেষে আপনার পরিকল্পনা কী?",
+    a: "After completing my degree, I plan to return to Bangladesh and apply the skills and knowledge I have gained. I aim to work in [sector] where there is growing demand for [skill]. I have family and community ties that will bring me back.",
+    tip: "💡 UK-তে থেকে যাওয়ার intention নেই — এটা স্পষ্ট করুন। Bangladesh-এ ফিরে আসার কারণ দিন।"
+  },
+  {
+    q: "Do you have any family members in the UK?",
+    bn: "UK-তে আপনার কোনো পরিবার আছে?",
+    a: "No, I do not have any immediate family members in the UK. My parents and siblings all live in Bangladesh. My purpose of travelling is purely for education.",
+    tip: "💡 সত্য কথা বলুন। পরিবার থাকলে সেটা বলুন তবে সম্পর্ক এবং address উল্লেখ করুন।"
+  },
+  {
+    q: "Have you visited the UK before?",
+    bn: "আগে কি UK ভ্রমণ করেছেন?",
+    a: "No, this will be my first visit to the UK. I have, however, visited [other countries if applicable] and have always returned to Bangladesh as planned.",
+    tip: "💡 যদি আগে গিয়ে থাকেন — সঠিক তারিখ ও কারণ বলুন। যদি না গিয়ে থাকেন — সততার সাথে বলুন।"
+  },
+  {
+    q: "What is your English language proficiency?",
+    bn: "আপনার ইংরেজি দক্ষতা কেমন?",
+    a: "I have an IELTS Academic score of [your score], with individual band scores of [Reading/Writing/Listening/Speaking]. I am confident in academic and conversational English and have been communicating in English throughout my academic career.",
+    tip: "💡 আপনার actual IELTS score মুখস্থ রাখুন। Specific band scores জানা থাকা জরুরি।"
+  },
+  {
+    q: "Who is your CAS sponsor?",
+    bn: "আপনার CAS sponsor কে?",
+    a: "My CAS sponsor is [University Name], which is a UKVI-licensed sponsor. My CAS number is [your CAS number], and it was issued on [date]. The course start date is [date].",
+    tip: "💡 CAS letter সাথে রাখুন। CAS number, issue date, course start date মুখস্থ রাখুন।"
+  },
+];
+
+const UKVI_QA = [
+  {
+    q: "What is the purpose of your visit to the UK?",
+    bn: "UK ভ্রমণের উদ্দেশ্য কী?",
+    a: "I am travelling to the UK to pursue my [undergraduate/postgraduate] studies at [University Name]. I have been accepted onto the [Course Name] programme commencing [Month Year].",
+    tip: "💡 সংক্ষিপ্ত ও স্পষ্ট উত্তর দিন। University নাম ও course নাম সঠিকভাবে বলুন।"
+  },
+  {
+    q: "How long do you intend to stay in the UK?",
+    bn: "UK-তে কতদিন থাকার পরিকল্পনা?",
+    a: "I intend to stay for the duration of my course, which is [1/2/3] year(s). My visa is valid until [date], and I plan to return to Bangladesh upon completing my studies.",
+    tip: "💡 Visa validity-র বেশি থাকার কথা বলবেন না। Course duration স্পষ্ট করুন।"
+  },
+  {
+    q: "Where will you be living in the UK?",
+    bn: "UK-তে কোথায় থাকবেন?",
+    a: "I will be staying at [university accommodation name / private address]. I have already confirmed my accommodation booking and have the confirmation letter with me.",
+    tip: "💡 Accommodation letter সাথে রাখুন। Address মুখস্থ রাখুন।"
+  },
+  {
+    q: "How much money do you have to support yourself?",
+    bn: "নিজেকে সাপোর্ট করার জন্য কত টাকা আছে?",
+    a: "I have sufficient funds to cover my tuition fees and living expenses. My bank statement shows I have maintained [amount] for the required 28-day period. My sponsor is my [father/mother] who supports my education.",
+    tip: "💡 Bank statement-এর exact amount বলুন। UKVI requirement হলো tuition + £1,023-£1,334/month living cost।"
+  },
+  {
+    q: "Have you ever been refused a UK visa before?",
+    bn: "আগে কি UK visa refusal হয়েছিল?",
+    a: "Yes/No. [If yes: I was refused in [year] due to [reason]. Since then, I have [addressed the issue — e.g., improved finances, got IELTS, stronger ties to home country] and I believe my application is now much stronger.]",
+    tip: "💡 সত্য বলুন — মিথ্যা বললে permanent ban হতে পারে। Refusal-এর কারণ ও সমাধান explain করুন।"
+  },
+  {
+    q: "Do you intend to work while studying?",
+    bn: "পড়াশোনার পাশাপাশি কাজ করার পরিকল্পনা আছে?",
+    a: "Yes, my Student visa permits me to work up to 20 hours per week during term time and full-time during holidays. However, my primary purpose is studying, and any part-time work would be supplementary only.",
+    tip: "💡 Student visa-র 20 hour rule জানুন। Main purpose পড়াশোনা — এটা emphasise করুন।"
+  },
+  {
+    q: "What ties do you have to Bangladesh?",
+    bn: "Bangladesh-এর সাথে আপনার কী সম্পর্ক আছে?",
+    a: "I have strong ties to Bangladesh. My parents and family live there. My father runs a [business/works as] in Bangladesh, and I am expected to return and contribute to the family. I also have property interests / career opportunities waiting for me there.",
+    tip: "💡 এটাই সবচেয়ে গুরুত্বপূর্ণ প্রশ্ন। Strong ties prove করুন — family, property, job prospect, business।"
+  },
+  {
+    q: "Why not study in Bangladesh instead?",
+    bn: "Bangladesh-এ না পড়ে UK-তে কেন?",
+    a: "While Bangladesh has good universities, the specific programme I am interested in — [course name] — with the level of research, industry exposure, and international recognition offered by [University Name] is not available at the same standard in Bangladesh. This qualification will significantly enhance my career prospects upon return.",
+    tip: "💡 UK education-এর specific advantage বলুন — course quality, research, international recognition।"
+  },
+];
+
+const REFUSAL_REASONS = [
+  {
+    code: "V4.2(a)",
+    title: "Insufficient funds / Bank statement issues",
+    bn: "অপর্যাপ্ত ব্যাংক ব্যালেন্স",
+    desc: "UKVI was not satisfied that you have sufficient funds to cover tuition and living costs, OR funds were not held for the required 28 consecutive days.",
+    fix: "✅ সমাধান: Bank statement-এ required amount 28 দিন ধরে রাখুন। Fund-এর source document দিন (salary slip, business income, property documents)।"
+  },
+  {
+    code: "V4.2(e)",
+    title: "Genuine Student test failed",
+    bn: "Genuine Student প্রমাণে ব্যর্থ",
+    desc: "The Entry Clearance Officer was not convinced that your primary intention is to study, or that you will leave the UK at the end of your studies.",
+    fix: "✅ সমাধান: Strong ties to Bangladesh prove করুন। Future career plan লিখুন। Personal statement শক্তিশালী করুন।"
+  },
+  {
+    code: "V4.2(b)",
+    title: "Course / CAS issues",
+    bn: "CAS বা কোর্স সমস্যা",
+    desc: "The CAS details do not match your application, or the course does not meet the required academic progression.",
+    fix: "✅ সমাধান: CAS number, course name, start date verify করুন। Academic progression logical কিনা দেখুন।"
+  },
+  {
+    code: "V4.2(c)",
+    title: "English language not satisfied",
+    bn: "ইংরেজি দক্ষতা অপর্যাপ্ত",
+    desc: "Your IELTS or English qualification was not accepted, expired, or the score was below the university/UKVI requirement.",
+    fix: "✅ সমাধান: Valid IELTS score নিশ্চিত করুন (2 বছরের মধ্যে)। Required band scores check করুন।"
+  },
+  {
+    code: "V4.2(f)",
+    title: "Immigration history concerns",
+    bn: "আগের ভিসা রেকর্ড সমস্যা",
+    desc: "Previous overstay, refusal, or immigration violation was found in your travel history.",
+    fix: "✅ সমাধান: সব previous visa history সৎভাবে declare করুন। Immigration lawyer-এর সাহায্য নিন।"
+  },
+];
+
+// ============================================================
+// COMPONENT: Prep Tab — CAS & UKVI Preparation
+// ============================================================
+function PrepTab() {
+  const [section, setSection] = useState("cas");
+  const [openQ, setOpenQ] = useState(null);
+  const [pdfFiles, setPdfFiles] = useState(() => {
+    try {
+      const saved = localStorage.getItem("settleuk_pdfs_meta");
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
+  });
+  const [pdfData, setPdfData] = useState({});
+  const [viewingPdf, setViewingPdf] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file || file.type !== "application/pdf") return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target.result;
+      const id = Date.now().toString();
+      const meta = { id, name: file.name, size: (file.size / 1024).toFixed(0) + " KB", date: new Date().toLocaleDateString("en-GB") };
+      const newFiles = [...pdfFiles, meta];
+      setPdfFiles(newFiles);
+      setPdfData(p => ({ ...p, [id]: dataUrl }));
+      try { localStorage.setItem("settleuk_pdfs_meta", JSON.stringify(newFiles)); } catch {}
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const deletePdf = (id) => {
+    const newFiles = pdfFiles.filter(f => f.id !== id);
+    setPdfFiles(newFiles);
+    setPdfData(p => { const n = { ...p }; delete n[id]; return n; });
+    try { localStorage.setItem("settleuk_pdfs_meta", JSON.stringify(newFiles)); } catch {}
+    if (viewingPdf === id) setViewingPdf(null);
+  };
+
+  const C = { green: "#3DB88B", blue: "#5B8DEF", amber: "#E8A838", red: "#E85B5B" };
+
+  const SectionBtn = ({ id, icon, label }) => (
+    <button onClick={() => setSection(id)} style={{
+      flex: 1, padding: "9px 6px", border: "none", borderRadius: 10, cursor: "pointer",
+      background: section === id ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.04)",
+      borderBottom: section === id ? "2px solid #3DB88B" : "2px solid transparent",
+      color: section === id ? C.green : "rgba(255,255,255,0.4)",
+      fontSize: 11, fontWeight: section === id ? 800 : 500,
+      display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
+    }}>
+      <span style={{ fontSize: 16 }}>{icon}</span>{label}
+    </button>
+  );
+
+  const QACard = ({ item, i, accentColor }) => {
+    const isOpen = openQ === i;
+    return (
+      <div style={{ marginBottom: 8, borderRadius: 12, overflow: "hidden", border: `1px solid ${isOpen ? accentColor + "55" : "rgba(255,255,255,0.07)"}` }}>
+        <div onClick={() => setOpenQ(isOpen ? null : i)} style={{
+          padding: "13px 14px", cursor: "pointer",
+          background: isOpen ? accentColor + "0e" : "rgba(255,255,255,0.03)",
+          display: "flex", alignItems: "flex-start", gap: 10,
+        }}>
+          <div style={{ width: 22, height: 22, borderRadius: "50%", background: accentColor + "22", border: `1.5px solid ${accentColor}55`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: accentColor, flexShrink: 0, marginTop: 1 }}>
+            {i + 1}
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#EEF2F7", marginBottom: 2 }}>{item.q}</div>
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>{item.bn}</div>
+          </div>
+          <span style={{ color: accentColor, fontSize: 14, flexShrink: 0, transition: "transform 0.2s", display: "inline-block", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▾</span>
+        </div>
+
+        {isOpen && (
+          <div style={{ padding: "0 14px 14px", background: accentColor + "07", borderTop: `1px solid ${accentColor}22` }}>
+            <div style={{ marginTop: 12, marginBottom: 10 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.6, color: accentColor, marginBottom: 7 }}>📝 Sample Answer</div>
+              <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.7)", lineHeight: 1.65, padding: "10px 12px", background: "rgba(255,255,255,0.04)", borderRadius: 8, borderLeft: `3px solid ${accentColor}` }}>
+                {item.a}
+              </div>
+            </div>
+            <div style={{ padding: "9px 12px", background: "rgba(232,168,56,0.07)", border: "1px solid rgba(232,168,56,0.2)", borderRadius: 8, fontSize: 12, color: "rgba(255,255,255,0.58)", lineHeight: 1.5 }}>
+              {item.tip}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <div style={{ display: "flex", gap: 6, marginBottom: 18, background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 14, border: "1px solid rgba(255,255,255,0.07)" }}>
+        <SectionBtn id="cas"     icon="📋" label="CAS Interview" />
+        <SectionBtn id="ukvi"    icon="🎤" label="UKVI Interview" />
+        <SectionBtn id="refusal" icon="❌" label="Refusal Guide" />
+      </div>
+
+      {section === "cas" && (
+        <div>
+          <div style={{ background: "rgba(91,141,239,0.08)", border: "1px solid rgba(91,141,239,0.25)", borderRadius: 14, padding: "14px 16px", marginBottom: 16 }}>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "#EEF2F7", marginBottom: 6 }}>📋 CAS Interview কী?</div>
+            <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>
+              CAS (Confirmation of Acceptance for Studies) interview সাধারণত হয় না — এটা একটা document/number। তবে কিছু ক্ষেত্রে university বা UKVI আপনাকে <strong style={{ color: "#5B8DEF" }}>Genuine Student Interview</strong>-এর জন্য ডাকতে পারে। এই interview-এ তারা verify করে যে আপনি সত্যিই পড়তে আসছেন।
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 12 }}>
+              {[["🎯 কে নেয়?", "UKVI Entry Clearance Officer"], ["📍 কোথায়?", "VFS/UKVCAS Centre, Dhaka"], ["⏱️ কতক্ষণ?", "১০-২০ মিনিট"], ["📅 কখন?", "Visa application-এর পর"]].map(([label, val], i) => (
+                <div key={i} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 8, padding: "8px 10px" }}>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginBottom: 3 }}>{label}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#EEF2F7" }}>{val}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: "rgba(232,168,56,0.07)", border: "1px solid rgba(232,168,56,0.2)", borderRadius: 12, padding: "11px 14px", marginBottom: 14, fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.6 }}>
+            ⚠️ <strong style={{ color: "#E8A838" }}>Interview Tips:</strong> সব documents সাথে রাখুন। সত্য কথা বলুন। Clear ও confident হন। Nervous হলেও pause নিয়ে ভেবে উত্তর দিন।
+          </div>
+
+          <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 10 }}>
+            Possible Questions — tap to see answers
+          </div>
+          {CAS_QA.map((item, i) => <QACard key={i} item={item} i={i} accentColor={C.blue} />)}
+        </div>
+      )}
+
+      {section === "ukvi" && (
+        <div>
+          <div style={{ background: "rgba(61,184,139,0.08)", border: "1px solid rgba(61,184,139,0.25)", borderRadius: 14, padding: "14px 16px", marginBottom: 16 }}>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "#EEF2F7", marginBottom: 6 }}>🎤 UKVI Interview কী?</div>
+            <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>
+              UK Visas and Immigration (UKVI) কিছু applicant-কে <strong style={{ color: "#3DB88B" }}>Credibility Interview</strong>-এর জন্য ডাকে। এটা mandatory নয় — শুধু যাদের application-এ কোনো concern দেখা যায় তাদের ডাকা হয়। Interview-এ তারা জানতে চায় আপনি সত্যিকারের student কিনা।
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 12 }}>
+              {[["🎯 কে নেয়?", "UKVI ECO (Entry Clearance Officer)"], ["📍 কোথায়?", "Phone বা VFS Centre"], ["⏱️ কতক্ষণ?", "১৫-৩০ মিনিট"], ["📅 কখন?", "যেকোনো সময় visa process-এ"]].map(([label, val], i) => (
+                <div key={i} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 8, padding: "8px 10px" }}>
+                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginBottom: 3 }}>{label}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#EEF2F7" }}>{val}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: "rgba(232,91,91,0.07)", border: "1px solid rgba(232,91,91,0.2)", borderRadius: 12, padding: "11px 14px", marginBottom: 14, fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.6 }}>
+            🔴 <strong style={{ color: "#E85B5B" }}>সতর্কতা:</strong> UKVI interview-এ মিথ্যা বললে permanent ban হতে পারে। সব সময় সত্য কথা বলুন, এমনকি যদি তা আপনার বিরুদ্ধেও যায়।
+          </div>
+
+          <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 10 }}>
+            Common Questions — tap to see answers
+          </div>
+          {UKVI_QA.map((item, i) => <QACard key={i} item={item} i={i} accentColor={C.green} />)}
+        </div>
+      )}
+
+      {section === "refusal" && (
+        <div>
+          <div style={{ background: "rgba(232,91,91,0.07)", border: "1px solid rgba(232,91,91,0.25)", borderRadius: 14, padding: "14px 16px", marginBottom: 16 }}>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "#EEF2F7", marginBottom: 6 }}>❌ Visa Refusal — কী করবেন?</div>
+            <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>
+              Refusal letter-এ একটি <strong style={{ color: "#E85B5B" }}>refusal code</strong> থাকে যা কারণ নির্দেশ করে। এই code বুঝে পরবর্তী application শক্তিশালী করুন। নিচে সবচেয়ে সাধারণ refusal codes এবং সমাধান দেওয়া হলো।
+            </div>
+          </div>
+
+          <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 10 }}>Common Refusal Reasons</div>
+          {REFUSAL_REASONS.map((r, i) => (
+            <div key={i} style={{ marginBottom: 8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "12px 14px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                <span style={{ fontSize: 10, fontWeight: 800, color: "#E85B5B", background: "rgba(232,91,91,0.15)", padding: "2px 8px", borderRadius: 6, fontFamily: "monospace" }}>{r.code}</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#EEF2F7" }}>{r.title}</span>
+              </div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontStyle: "italic", marginBottom: 7 }}>{r.bn}</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.5, marginBottom: 8 }}>{r.desc}</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", lineHeight: 1.5, padding: "8px 10px", background: "rgba(61,184,139,0.07)", border: "1px solid rgba(61,184,139,0.2)", borderRadius: 8 }}>{r.fix}</div>
+            </div>
+          ))}
+
+          <div style={{ marginTop: 20 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 10 }}>📎 আপনার Refusal Letters / Documents</div>
+
+            <input ref={fileInputRef} type="file" accept=".pdf" onChange={handleFileUpload} style={{ display: "none" }} />
+            <button onClick={() => fileInputRef.current?.click()} style={{ width: "100%", padding: "13px", background: "rgba(91,141,239,0.08)", border: "2px dashed rgba(91,141,239,0.4)", borderRadius: 12, color: "#5B8DEF", fontSize: 13, fontWeight: 700, cursor: "pointer", marginBottom: 12 }}>
+              📄 Upload PDF (Refusal Letter / Document)
+            </button>
+
+            {pdfFiles.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "20px 16px", color: "rgba(255,255,255,0.25)", fontSize: 12.5 }}>
+                কোনো PDF upload হয়নি। আপনার refusal letter বা সংশ্লিষ্ট document এখানে upload করুন।
+              </div>
+            ) : (
+              pdfFiles.map(f => (
+                <div key={f.id}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 13px", marginBottom: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10 }}>
+                    <span style={{ fontSize: 22, flexShrink: 0 }}>📄</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: "#EEF2F7", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{f.name}</div>
+                      <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)", marginTop: 1 }}>{f.size} · Uploaded {f.date}</div>
+                    </div>
+                    <button onClick={() => setViewingPdf(viewingPdf === f.id ? null : f.id)} style={{ background: viewingPdf === f.id ? "rgba(61,184,139,0.15)" : "rgba(255,255,255,0.06)", border: "1px solid " + (viewingPdf === f.id ? "#3DB88B55" : "rgba(255,255,255,0.12)"), borderRadius: 7, color: viewingPdf === f.id ? "#3DB88B" : "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 700, cursor: "pointer", padding: "5px 10px", flexShrink: 0 }}>
+                      {viewingPdf === f.id ? "Close" : "View"}
+                    </button>
+                    <button onClick={() => deletePdf(f.id)} style={{ background: "none", border: "none", color: "rgba(232,91,91,0.5)", cursor: "pointer", fontSize: 18, lineHeight: 1, padding: "2px 4px", flexShrink: 0 }}>×</button>
+                  </div>
+
+                  {viewingPdf === f.id && pdfData[f.id] && (
+                    <div style={{ marginBottom: 10, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(91,141,239,0.3)" }}>
+                      <div style={{ background: "rgba(91,141,239,0.08)", padding: "8px 14px", fontSize: 12, color: "#5B8DEF", fontWeight: 700, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <span>📄 {f.name}</span>
+                        <a href={pdfData[f.id]} download={f.name} style={{ fontSize: 11, color: "#5B8DEF", textDecoration: "none", background: "rgba(91,141,239,0.15)", padding: "3px 10px", borderRadius: 6 }}>⬇ Download</a>
+                      </div>
+                      <iframe
+                        src={pdfData[f.id]}
+                        title={f.name}
+                        style={{ width: "100%", height: 480, border: "none", background: "#fff" }}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
+
+            <div style={{ marginTop: 8, fontSize: 11, color: "rgba(255,255,255,0.22)", textAlign: "center", lineHeight: 1.5 }}>
+              🔒 সব PDF শুধু আপনার device-এ সংরক্ষিত — কোনো server-এ upload হয় না
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// COMPONENT: Packing Planner Tab
+// ============================================================
+function PackingTab() {
+  const [checked, setChecked] = useState(() => loadLS("settleuk_packing_checked", {}));
+  const [customItems, setCustomItems] = useState(() => loadLS("settleuk_packing_custom", {}));
+  const [newItemName, setNewItemName] = useState({});
+  const [newItemWeight, setNewItemWeight] = useState({});
+  const [luggagePreset, setLuggagePreset] = useState(() => loadLS("settleuk_luggage_preset", "23"));
+  const [customLimit, setCustomLimit] = useState(() => loadLS("settleuk_luggage_custom", 23));
+  const [openCat, setOpenCat] = useState(PACKING_CATEGORIES[0].id);
+
+  useEffect(() => { saveLS("settleuk_packing_checked", checked); }, [checked]);
+  useEffect(() => { saveLS("settleuk_packing_custom", customItems); }, [customItems]);
+  useEffect(() => { saveLS("settleuk_luggage_preset", luggagePreset); }, [luggagePreset]);
+  useEffect(() => { saveLS("settleuk_luggage_custom", customLimit); }, [customLimit]);
+
+  const toggleItem = (id) => setChecked(p => ({ ...p, [id]: !p[id] }));
+
+  const addCustomItem = (catId) => {
+    const name = (newItemName[catId] || "").trim();
+    const weight = parseFloat(newItemWeight[catId]) || 0;
+    if (!name) return;
+    const id = `custom-${catId}-${Date.now()}`;
+    setCustomItems(p => ({ ...p, [catId]: [...(p[catId] || []), { id, name, weight }] }));
+    setNewItemName(p => ({ ...p, [catId]: "" }));
+    setNewItemWeight(p => ({ ...p, [catId]: "" }));
+  };
+
+  const deleteCustomItem = (catId, itemId) => {
+    setCustomItems(p => ({ ...p, [catId]: (p[catId] || []).filter(i => i.id !== itemId) }));
+    setChecked(p => { const n = { ...p }; delete n[itemId]; return n; });
+  };
+
+  const allCategories = PACKING_CATEGORIES.map(cat => ({
+    ...cat,
+    items: [...cat.items, ...(customItems[cat.id] || [])],
+  }));
+
+  const allItemsFlat = allCategories.flatMap(c => c.items);
+  const totalItems = allItemsFlat.length;
+  const checkedCount = allItemsFlat.filter(i => checked[i.id]).length;
+  const overallPct = totalItems > 0 ? Math.round((checkedCount / totalItems) * 100) : 0;
+
+  const totalWeight = allItemsFlat.filter(i => checked[i.id]).reduce((s, i) => s + (i.weight || 0), 0);
+  const limit = luggagePreset === "custom" ? (parseFloat(customLimit) || 23) : LUGGAGE_PRESETS.find(p => p.id === luggagePreset)?.limit || 23;
+  const weightPct = Math.min(100, (totalWeight / limit) * 100);
+  const weightColor = weightPct < 70 ? "#3DB88B" : weightPct < 95 ? "#E8A838" : "#E85B5B";
+
+  const C = { green: "#3DB88B", blue: "#5B8DEF", amber: "#E8A838", red: "#E85B5B", surface2: "#1c2330", border: "#2a3441", textMuted: "#7d8590" };
+
+  return (
+    <div>
+      <div style={{ background: "rgba(91,141,239,0.08)", border: "1px solid rgba(91,141,239,0.25)", borderRadius: 14, padding: "14px 16px", marginBottom: 16 }}>
+        <div style={{ fontSize: 15, fontWeight: 800, color: "#EEF2F7", marginBottom: 6 }}>🧳 Packing Planner</div>
+        <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.6 }}>
+          Plan and track everything you need to pack for the UK. Check off items as you pack them, and monitor your luggage weight against the airline limit.
+        </div>
+      </div>
+
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "14px 16px", marginBottom: 14 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+          <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: 0.5 }}>Packing Progress</span>
+          <span style={{ fontSize: 12, fontWeight: 800, color: "#3DB88B" }}>{checkedCount} / {totalItems} items</span>
+        </div>
+        <div style={{ height: 6, background: "rgba(255,255,255,0.07)", borderRadius: 6, overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${overallPct}%`, background: "linear-gradient(90deg,#534AB7,#3DB88B)", borderRadius: 6, transition: "width 0.4s" }} />
+        </div>
+      </div>
+
+      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "14px 16px", marginBottom: 18 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 10 }}>⚖️ Luggage Weight</div>
+        <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+          <select value={luggagePreset} onChange={e => setLuggagePreset(e.target.value)} style={{ flex: 1, background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 8, color: "#fff", fontSize: 12.5, padding: "8px 10px", fontFamily: "inherit", outline: "none" }}>
+            {LUGGAGE_PRESETS.map(p => <option key={p.id} value={p.id}>{p.label}</option>)}
+          </select>
+          {luggagePreset === "custom" && (
+            <input type="number" value={customLimit} onChange={e => setCustomLimit(e.target.value)} style={{ width: 70, background: "#0d1117", border: `1px solid ${C.border}`, borderRadius: 8, color: "#fff", fontSize: 12.5, padding: "8px 10px", fontFamily: "inherit", outline: "none" }} />
+          )}
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, fontSize: 12 }}>
+          <span style={{ color: "rgba(255,255,255,0.5)" }}>Packed weight: <strong style={{ color: weightColor }}>{totalWeight.toFixed(1)} kg</strong></span>
+          <span style={{ color: "rgba(255,255,255,0.35)" }}>Limit: {limit} kg</span>
+        </div>
+        <div style={{ height: 8, background: "rgba(255,255,255,0.07)", borderRadius: 6, overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${weightPct}%`, background: weightColor, borderRadius: 6, transition: "width 0.4s" }} />
+        </div>
+        {weightPct >= 95 && (
+          <div style={{ marginTop: 8, fontSize: 11.5, color: C.red, fontWeight: 600 }}>⚠️ You're near or over your luggage limit! Consider removing items.</div>
+        )}
+      </div>
+
+      {allCategories.map(cat => {
+        const isOpen = openCat === cat.id;
+        const catChecked = cat.items.filter(i => checked[i.id]).length;
+        return (
+          <div key={cat.id} style={{ marginBottom: 10, borderRadius: 14, overflow: "hidden", border: `1px solid ${isOpen ? cat.color + "55" : "rgba(255,255,255,0.08)"}` }}>
+            <div onClick={() => setOpenCat(isOpen ? null : cat.id)} style={{
+              padding: "13px 14px", cursor: "pointer", display: "flex", alignItems: "center", gap: 10,
+              background: isOpen ? cat.color + "0e" : "rgba(255,255,255,0.03)",
+            }}>
+              <span style={{ fontSize: 20 }}>{cat.icon}</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: "#EEF2F7" }}>{cat.name}</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{catChecked} / {cat.items.length} packed</div>
+              </div>
+              <span style={{ color: cat.color, fontSize: 14, transition: "transform 0.2s", display: "inline-block", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▾</span>
+            </div>
+
+            {isOpen && (
+              <div style={{ padding: "10px 14px 14px", background: cat.color + "07" }}>
+                {cat.items.map(item => {
+                  const isCustom = item.id.startsWith("custom-");
+                  return (
+                    <div key={item.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                      <div onClick={() => toggleItem(item.id)} style={{
+                        width: 18, height: 18, borderRadius: 5, flexShrink: 0, cursor: "pointer",
+                        border: `2px solid ${checked[item.id] ? cat.color : "rgba(255,255,255,0.2)"}`,
+                        background: checked[item.id] ? cat.color : "transparent",
+                        display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11,
+                      }}>
+                        {checked[item.id] && "✓"}
+                      </div>
+                      <div onClick={() => toggleItem(item.id)} style={{ flex: 1, cursor: "pointer" }}>
+                        <span style={{ fontSize: 13, color: checked[item.id] ? "rgba(255,255,255,0.35)" : "#EEF2F7", textDecoration: checked[item.id] ? "line-through" : "none" }}>{item.name}</span>
+                      </div>
+                      {item.weight > 0 && (
+                        <span style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)", flexShrink: 0 }}>{item.weight} kg</span>
+                      )}
+                      {isCustom && (
+                        <button onClick={() => deleteCustomItem(cat.id, item.id)} style={{ background: "none", border: "none", color: "rgba(232,91,91,0.5)", cursor: "pointer", fontSize: 15, padding: "0 2px", flexShrink: 0 }}>×</button>
+                      )}
+                    </div>
+                  );
+                })}
+
+                <div style={{ display: "flex", gap: 6, marginTop: 10 }}>
+                  <input
+                    value={newItemName[cat.id] || ""}
+                    onChange={e => setNewItemName(p => ({ ...p, [cat.id]: e.target.value }))}
+                    placeholder="Add your own item..."
+                    style={{ flex: 1, background: "#0d1117", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, color: "#fff", fontSize: 12.5, padding: "8px 10px", fontFamily: "inherit", outline: "none" }}
+                  />
+                  <input
+                    type="number" step="0.1"
+                    value={newItemWeight[cat.id] || ""}
+                    onChange={e => setNewItemWeight(p => ({ ...p, [cat.id]: e.target.value }))}
+                    placeholder="kg"
+                    style={{ width: 56, background: "#0d1117", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, color: "#fff", fontSize: 12.5, padding: "8px 10px", fontFamily: "inherit", outline: "none" }}
+                  />
+                  <button onClick={() => addCustomItem(cat.id)} style={{ background: cat.color, color: "#08111C", border: "none", borderRadius: 8, padding: "8px 14px", fontSize: 12.5, fontWeight: 700, cursor: "pointer", flexShrink: 0 }}>Add</button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      <div style={{ marginTop: 8, fontSize: 11, color: "rgba(255,255,255,0.22)", textAlign: "center", lineHeight: 1.5 }}>
+        🔒 Your packing list is saved only on this device
+      </div>
+    </div>
+  );
+}
+
+
 export default function App() {
   const [screen,        setScreen]        = useState(() => { const s = loadLS("settleuk_profile", null); return s && s.name ? "home" : "onboard"; });
   const [profile,       setProfile]       = useState(() => loadLS("settleuk_profile", { name: "", statusId: 0, arrival: "", step: 0 }));
@@ -730,6 +1871,9 @@ export default function App() {
   const [showUniFinder, setShowUniFinder] = useState(false);
   const [academicProfile, setAcademicProfile] = useState(() => loadLS("settleuk_academic", null));
   const [skipWarning,   setSkipWarning]   = useState(null);
+  const [expandedTask,  setExpandedTask]  = useState(null);
+  const [expandedDoc,   setExpandedDoc]   = useState(null);
+  const [showPackingFromSettings, setShowPackingFromSettings] = useState(false);
 
   useEffect(() => { saveLS("settleuk_profile", profile);    }, [profile]);
   useEffect(() => { saveLS("settleuk_tasks",   taskDone);   }, [taskDone]);
@@ -793,6 +1937,28 @@ export default function App() {
   const inputStyle = { width: "100%", padding: "12px 16px", marginBottom: 16, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 10, color: "#fff", fontSize: 15, outline: "none", fontFamily: "inherit", boxSizing: "border-box" };
   const btnStyle   = (bg) => ({ width: "100%", padding: "14px 0", background: bg, border: "none", borderRadius: 12, color: "#fff", fontSize: 16, fontWeight: 700, cursor: bg === "#333" ? "default" : "pointer" });
 
+  const statusId = profile.statusId || 0;
+
+  // Packing Planner visibility:
+  // - stage 4 (Visa applied) and stage 5 (Visa approved): visible in nav + triggers
+  // - stage 6 (Already in UK) and earlier stages: hidden from nav automatically, but reachable from Settings
+  const packingAutoVisible = statusId === 4 || statusId === 5;
+
+  // ── Packing Planner via Settings (always reachable) ────────
+  if (showPackingFromSettings) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", paddingBottom: 40 }}>
+        <div style={{ position: "sticky", top: 0, background: "#08111C", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "14px 20px", display: "flex", alignItems: "center", gap: 10, zIndex: 10 }}>
+          <button onClick={() => setShowPackingFromSettings(false)} style={{ background: "rgba(255,255,255,0.07)", border: "none", borderRadius: 8, color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 14, padding: "8px 12px" }}>← Back</button>
+          <h2 style={{ margin: 0, fontSize: 17, fontWeight: 800 }}>🧳 Packing Planner</h2>
+        </div>
+        <div style={{ maxWidth: 640, margin: "0 auto", padding: "16px 20px" }}>
+          <PackingTab />
+        </div>
+      </div>
+    );
+  }
+
   // ── Auto-advance modal ────────────────────────────────────
   if (advancePrompt) {
     const next = STATUSES[advancePrompt.toStatusId];
@@ -821,7 +1987,6 @@ export default function App() {
       <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "Arial, sans-serif" }}>
         <div style={{ width: "100%", maxWidth: 400, background: "#0D1E2F", borderRadius: 22, padding: "28px 24px", border: "2px solid rgba(232,91,91,0.4)", boxShadow: "0 0 40px rgba(232,91,91,0.15)" }}>
 
-          {/* Icon + title */}
           <div style={{ textAlign: "center", marginBottom: 16 }}>
             <div style={{ fontSize: 44, marginBottom: 10 }}>⚠️</div>
             <div style={{ fontSize: 18, fontWeight: 900, color: "#E85B5B", marginBottom: 6 }}>You're skipping ahead!</div>
@@ -830,7 +1995,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Incomplete tasks list */}
           <div style={{ marginBottom: 18, maxHeight: 200, overflowY: "auto" }}>
             {skipWarning.incompleteTasks.map((t, i) => (
               <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "9px 12px", marginBottom: 6, background: "rgba(232,91,91,0.07)", border: "1px solid rgba(232,91,91,0.2)", borderRadius: 10 }}>
@@ -843,12 +2007,10 @@ export default function App() {
             ))}
           </div>
 
-          {/* Warning note */}
           <div style={{ padding: "9px 12px", background: "rgba(232,168,56,0.08)", border: "1px solid rgba(232,168,56,0.22)", borderRadius: 10, marginBottom: 18, fontSize: 11.5, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>
             🕒 <strong style={{ color: "#E8A838" }}>Recommendation:</strong> Go back and complete these tasks first. Skipping may cause issues in your UK application journey.
           </div>
 
-          {/* Buttons */}
           <button
             onClick={() => setSkipWarning(null)}
             style={{ width: "100%", padding: "12px 0", background: "#3DB88B", border: "none", borderRadius: 12, color: "#fff", fontSize: 14, fontWeight: 800, cursor: "pointer", marginBottom: 10 }}>
@@ -885,7 +2047,19 @@ export default function App() {
             Save Changes ✓
           </button>
           <button onClick={() => setShowSettings(false)} style={{ ...btnStyle("transparent"), marginTop: 10, border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.6)" }}>Cancel</button>
+
           <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "24px 0" }} />
+
+          {/* Packing Planner — always reachable from Settings */}
+          <button onClick={() => { setShowSettings(false); setShowPackingFromSettings(true); }} style={{
+            width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", marginBottom: 12,
+            background: "rgba(91,141,239,0.08)", border: "1px solid rgba(91,141,239,0.25)", borderRadius: 12,
+            color: "#5B8DEF", fontSize: 14, fontWeight: 700, cursor: "pointer", textAlign: "left",
+          }}>
+            <span style={{ fontSize: 18 }}>🧳</span> Open Packing Planner
+          </button>
+
+          <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "12px 0 24px" }} />
           <button onClick={() => { if (window.confirm("Are you sure? This will permanently delete all your progress.")) { localStorage.clear(); window.location.reload(); } }} style={{ width: "100%", padding: "12px 0", background: "transparent", border: "1px solid rgba(232,91,91,0.35)", borderRadius: 12, color: "#E85B5B", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
             Reset All Progress
           </button>
@@ -956,7 +2130,6 @@ export default function App() {
   }
 
   // ── Main Home ─────────────────────────────────────────────
-  const statusId = profile.statusId || 0;
   const sg       = STAGES[statusId];
   const stIdx    = statusId;
   const arrivalDays = profile.arrival
@@ -984,36 +2157,25 @@ export default function App() {
       {/* ── HEADER ── */}
       <div style={{ background: "linear-gradient(135deg,#0B1E35 0%,#0D2A1F 100%)", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "14px 20px 0" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          {/* Top row */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-            {/* UK Flag avatar */}
-            <div style={{ width: 38, height: 38, borderRadius: 10, flexShrink: 0, background: "linear-gradient(135deg,#1a3a5c,#0d4a2f)", border: "1.5px solid rgba(61,184,139,0.35)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>
-              🇬🇧
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+            <div style={{ width: 38, height: 38, borderRadius: 10, flexShrink: 0, background: "linear-gradient(135deg,#c0398a,#7b3fb5)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 900, color: "#fff", letterSpacing: 0.3 }}>
+              GB
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                <span style={{ fontSize: 17, fontWeight: 900, color: "#EEF2F7", whiteSpace: "nowrap" }}>Settle<span style={{ color: "#3DB88B" }}>UK</span></span>
-                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.28)" }}>·</span>
-                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.48)", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Hello, {profile.name}!</span>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "#3DB88B", whiteSpace: "nowrap" }}>SettleUK</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 500, marginTop: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                Hello, {profile.name}! {arrivalDays !== null && (arrivalDays > 0 ? `· ${arrivalDays} days to arrival` : "· You're in the UK now! 🇬🇧")}
               </div>
-              {arrivalDays !== null && (
-                <div style={{ fontSize: 11, fontWeight: 700, marginTop: 1, color: arrivalDays <= 0 ? "#3DB88B" : arrivalDays < 20 ? "#E85B5B" : arrivalDays < 60 ? "#E8A838" : "#3DB88B" }}>
-                  {arrivalDays > 0 ? `${arrivalDays} days to arrival` : "You're in the UK now! 🇬🇧"}
-                </div>
-              )}
             </div>
+            <span style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", padding: "5px 13px", background: "rgba(61,184,139,0.1)", border: "1px solid rgba(61,184,139,0.4)", borderRadius: 20, fontSize: 11.5, fontWeight: 700, color: "#3DB88B", whiteSpace: "nowrap" }}>
+              {sg.name}
+            </span>
             <button onClick={() => { setEditProfile({ name: profile.name, arrival: profile.arrival }); setShowSettings(true); }} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, color: "rgba(255,255,255,0.45)", cursor: "pointer", fontSize: 15, width: 34, height: 34, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>⚙️</button>
           </div>
-          {/* Stage pill */}
-          <div style={{ marginBottom: 10 }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "4px 12px", background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.11)", borderRadius: 20, fontSize: 11.5, fontWeight: 700, color: "#EEF2F7" }}>
-              📍 {sg.name}
-            </span>
-          </div>
           {/* Nav tabs */}
-          <div style={{ display: "flex", overflowX: "auto" }}>
-            {[["home","🏠","Home"],["tasks","✅","Tasks"],["docs","📄","Documents"],["guides","📖","Guides"]].map(([id,em,lbl]) => (
-              <button key={id} onClick={() => setTab(id)} style={{ flex: "none", padding: "8px 14px", background: "transparent", border: "none", borderBottom: tab === id ? "2px solid #3DB88B" : "2px solid transparent", color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.38)", fontSize: 12.5, fontWeight: tab === id ? 700 : 400, cursor: "pointer", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 5 }}>
+          <div style={{ display: "flex", overflowX: "auto", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            {[["home","🏠","Home"],["tasks","✅","Tasks"],["costs","💷","Costs"],["docs","📄","Docs"],["prep","📚","CAS&UKVI"], ...(packingAutoVisible ? [["packing","🧳","Packing"]] : []), ["guides","📖","Guides"]].map(([id,em,lbl]) => (
+              <button key={id} onClick={() => setTab(id)} style={{ flex: "none", padding: "10px 14px", background: "transparent", border: "none", borderBottom: tab === id ? "2px solid #3DB88B" : "2px solid transparent", color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.38)", fontSize: 12.5, fontWeight: tab === id ? 700 : 400, cursor: "pointer", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 5 }}>
                 <span style={{ fontSize: 13 }}>{em}</span>{lbl}
               </button>
             ))}
@@ -1026,13 +2188,11 @@ export default function App() {
         {/* ── HOME TAB ── */}
         {tab === "home" && (
           <div>
-            {/* Welcome + Status Dropdown */}
             <div style={{ marginBottom: 14 }}>
               <div style={{ fontSize: 18, fontWeight: 800, marginBottom: 12 }}>Welcome back, {profile.name} 👋</div>
               <StatusDropdown statusId={statusId} onChange={changeStatus} />
             </div>
 
-            {/* Reminder card — only if researching stage and profile not completed */}
             {statusId === 0 && !academicProfile && (
               <div onClick={() => setShowUniFinder(true)} style={{
                 display: "flex", alignItems: "center", gap: 12,
@@ -1052,7 +2212,6 @@ export default function App() {
             <StepperBar stIdx={stIdx} sg={sg} />
             <ReadinessScore stIdx={stIdx} taskDone={taskDone} docChecked={docChecked} sg={sg} />
 
-            {/* Emotion banner */}
             <div style={{ background: "rgba(61,184,139,0.06)", border: "1px solid rgba(61,184,139,0.16)", borderRadius: 12, padding: "10px 14px", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ fontSize: 18 }}>😊</span>
               <span style={{ fontSize: 12.5, color: "rgba(255,255,255,0.62)", lineHeight: 1.5 }}>{sg.emotion}</span>
@@ -1060,7 +2219,29 @@ export default function App() {
 
             <NextBestAction sg={sg} onStart={() => setTab("tasks")} />
 
-            {/* Insights */}
+            {/* Priority Packing banner — Visa Approved stage only */}
+            {statusId === 5 && (
+              <div onClick={() => setTab("packing")} style={{
+                marginBottom: 16, padding: "14px 16px", borderRadius: 14, cursor: "pointer",
+                background: "rgba(232,168,56,0.1)", border: "1.5px solid rgba(232,168,56,0.4)",
+                boxShadow: "0 0 0 4px rgba(232,168,56,0.08)",
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                  <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: 0.8, color: "#E8A838" }}>⚡ Priority Action</span>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                  <span style={{ fontSize: 24 }}>🧳</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 15, fontWeight: 900, color: "#EEF2F7" }}>Complete Your Packing List</div>
+                    <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>You're flying soon! Check your luggage weight limit.</div>
+                  </div>
+                </div>
+                <button style={{ width: "100%", padding: "9px 0", background: "#E8A838", border: "none", borderRadius: 10, color: "#08111C", fontSize: 13.5, fontWeight: 800, cursor: "pointer" }}>
+                  Open Packing Planner →
+                </button>
+              </div>
+            )}
+
             <h3 style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 10 }}>Insights & Risk Alerts</h3>
             {sg.insights.map((ins, i) => {
               const m = insightMeta(ins.type);
@@ -1078,36 +2259,84 @@ export default function App() {
               );
             })}
 
-            {/* Quick Actions */}
             <h3 style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", margin: "18px 0 10px" }}>Quick Actions</h3>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
               <QuickCard icon="📄" title="Documents" sub={`${docsReadyCount} of ${DOCS.length} ready`}       pct={docPct}  onClick={() => setTab("docs")} />
               <QuickCard icon="✅" title="Tasks"     sub={`${completedTasksCount} of ${sg.tasks.length} done`} pct={taskPct} onClick={() => setTab("tasks")} />
+              <QuickCard icon="💷" title="Cost Calculator" sub="Plan your budget" onClick={() => setTab("costs")} />
+              <QuickCard icon="📚" title="CAS & UKVI Prep" sub="Interview Q&A guide" onClick={() => setTab("prep")} />
               <QuickCard icon="🏦" title="Banking guide" sub="Open Monzo"       onClick={() => setTab("guides")} />
               <QuickCard icon="🏥" title="NHS guide"     sub="Register with GP" onClick={() => setTab("guides")} />
             </div>
           </div>
         )}
 
+        {/* ── COSTS TAB ── */}
+        {tab === "costs" && <CostsTab />}
+
         {/* ── TASKS TAB ── */}
         {tab === "tasks" && (
           <div>
             <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>{sg.name} tasks</h2>
             <p style={{ margin: "0 0 14px", fontSize: 12.5, color: "rgba(255,255,255,0.38)" }}>{completedTasksCount} of {sg.tasks.length} completed · {sg.deadline}</p>
-            {sg.tasks.map(task => (
-              <div key={task.id} onClick={() => toggleTask(task.id)} style={{ display: "flex", gap: 12, padding: "13px 14px", marginBottom: 7, background: taskDone[task.id] ? "rgba(61,184,139,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${taskDone[task.id] ? "#3DB88B44" : "rgba(255,255,255,0.06)"}`, borderRadius: 12, cursor: "pointer", alignItems: "flex-start" }}>
-                <div style={{ width: 20, height: 20, borderRadius: 6, flexShrink: 0, marginTop: 2, border: `2px solid ${taskDone[task.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: taskDone[task.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>
-                  {taskDone[task.id] && "✓"}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
-                    <span style={{ fontSize: 13.5, fontWeight: 700, textDecoration: taskDone[task.id] ? "line-through" : "none", color: taskDone[task.id] ? "rgba(255,255,255,0.28)" : "#EEF2F7" }}>{task.text}</span>
-                    {task.priority    && !taskDone[task.id] && <span style={{ fontSize: 9.5, fontWeight: 700, color: "#E8A838", background: "#E8A83820", padding: "2px 7px", borderRadius: 8 }}>PRIORITY</span>}
-                    {task.autoAdvance && !taskDone[task.id] && <span style={{ fontSize: 9.5, fontWeight: 700, color: "#5B8DEF", background: "rgba(91,141,239,0.15)", padding: "2px 7px", borderRadius: 8 }}>AUTO-ADVANCE</span>}
+
+            {/* Unlock Packing Planner card — Visa Applied stage only */}
+            {statusId === 4 && (
+              <div onClick={() => setTab("packing")} style={{
+                marginBottom: 14, padding: "14px 16px", borderRadius: 14, cursor: "pointer",
+                background: "rgba(91,141,239,0.08)", border: "1px solid rgba(91,141,239,0.3)",
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
+                  <span style={{ fontSize: 22 }}>🧳</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 14, fontWeight: 800, color: "#5B8DEF" }}>Start Your Packing Planner</div>
+                    <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>Visa submitted! Time to plan what to pack for UK.</div>
                   </div>
                 </div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#5B8DEF", background: "rgba(91,141,239,0.15)", padding: "3px 10px", borderRadius: 20 }}>UNLOCK NOW</span>
+                  <span style={{ fontSize: 13, color: "#5B8DEF", fontWeight: 700 }}>Open Packing Planner →</span>
+                </div>
               </div>
-            ))}
+            )}
+
+            {sg.tasks.map(task => {
+              const isExpanded = expandedTask === task.id;
+              return (
+                <div key={task.id} style={{ marginBottom: 7 }}>
+                  <div style={{ display: "flex", gap: 12, padding: "13px 14px", background: taskDone[task.id] ? "rgba(61,184,139,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${taskDone[task.id] ? "#3DB88B44" : "rgba(255,255,255,0.06)"}`, borderRadius: 12, alignItems: "flex-start" }}>
+                    <div onClick={() => toggleTask(task.id)} style={{ width: 20, height: 20, borderRadius: 6, flexShrink: 0, marginTop: 2, cursor: "pointer", border: `2px solid ${taskDone[task.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: taskDone[task.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>
+                      {taskDone[task.id] && "✓"}
+                    </div>
+                    <div onClick={() => toggleTask(task.id)} style={{ flex: 1, cursor: "pointer" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
+                        <span style={{ fontSize: 13.5, fontWeight: 700, textDecoration: taskDone[task.id] ? "line-through" : "none", color: taskDone[task.id] ? "rgba(255,255,255,0.28)" : "#EEF2F7" }}>{task.text}</span>
+                        {task.priority    && !taskDone[task.id] && <span style={{ fontSize: 9.5, fontWeight: 700, color: "#E8A838", background: "#E8A83820", padding: "2px 7px", borderRadius: 8 }}>PRIORITY</span>}
+                        {task.autoAdvance && !taskDone[task.id] && <span style={{ fontSize: 9.5, fontWeight: 700, color: "#5B8DEF", background: "rgba(91,141,239,0.15)", padding: "2px 7px", borderRadius: 8 }}>AUTO-ADVANCE</span>}
+                      </div>
+                    </div>
+                    {task.desc && (
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setExpandedTask(isExpanded ? null : task.id); }}
+                        style={{
+                          flexShrink: 0, width: 24, height: 24, borderRadius: "50%",
+                          background: isExpanded ? "rgba(91,141,239,0.2)" : "rgba(255,255,255,0.06)",
+                          border: `1px solid ${isExpanded ? "#5B8DEF" : "rgba(255,255,255,0.12)"}`,
+                          color: isExpanded ? "#5B8DEF" : "rgba(255,255,255,0.4)",
+                          fontSize: 12, fontWeight: 700, cursor: "pointer",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                        }}
+                      >
+                        ℹ️
+                      </button>
+                    )}
+                  </div>
+                  {isExpanded && task.desc && (
+                    <InfoExpand desc={task.desc} link={task.link} accent="#5B8DEF" />
+                  )}
+                </div>
+              );
+            })}
             <div style={{ marginTop: 16, padding: "11px 14px", background: "rgba(61,184,139,0.05)", border: "1px solid rgba(61,184,139,0.14)", borderRadius: 12, fontSize: 11.5, color: "rgba(255,255,255,0.38)", textAlign: "center" }}>
               ✨ <strong style={{ color: "#5B8DEF" }}>AUTO-ADVANCE</strong> tasks will prompt to update your status automatically when completed.
             </div>
@@ -1125,18 +2354,61 @@ export default function App() {
             <div style={{ background: "rgba(232,168,56,0.08)", border: "1px solid rgba(232,168,56,0.22)", borderRadius: 12, padding: "10px 14px", marginBottom: 16, fontSize: 12.5, color: "rgba(255,255,255,0.62)" }}>
               💡 <strong style={{ color: "#E8A838" }}>Tip:</strong> Scan everything and upload to Google Drive. Never carry all originals in one bag.
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-              {DOCS.map(doc => (
-                <div key={doc.id} onClick={() => toggleDoc(doc.id)} style={{ padding: "12px", borderRadius: 12, cursor: "pointer", background: docChecked[doc.id] ? "rgba(61,184,139,0.08)" : "rgba(255,255,255,0.03)", border: `1px solid ${docChecked[doc.id] ? "#3DB88B55" : "rgba(255,255,255,0.07)"}` }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
-                    <span style={{ fontSize: 20 }}>{doc.icon}</span>
-                    <div style={{ marginLeft: "auto", width: 16, height: 16, borderRadius: 5, border: `2px solid ${docChecked[doc.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: docChecked[doc.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10 }}>{docChecked[doc.id] && "✓"}</div>
+            <div>
+              {DOCS.map(doc => {
+                const isExpanded = expandedDoc === doc.id;
+                return (
+                  <div key={doc.id} style={{ marginBottom: 8 }}>
+                    <div style={{ padding: "12px 14px", borderRadius: 12, display: "flex", alignItems: "center", gap: 10, background: docChecked[doc.id] ? "rgba(61,184,139,0.08)" : "rgba(255,255,255,0.03)", border: `1px solid ${docChecked[doc.id] ? "#3DB88B55" : "rgba(255,255,255,0.07)"}` }}>
+                      <span onClick={() => toggleDoc(doc.id)} style={{ fontSize: 22, cursor: "pointer", flexShrink: 0 }}>{doc.icon}</span>
+                      <div onClick={() => toggleDoc(doc.id)} style={{ flex: 1, cursor: "pointer", minWidth: 0 }}>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: docChecked[doc.id] ? "rgba(255,255,255,0.35)" : "#EEF2F7", textDecoration: docChecked[doc.id] ? "line-through" : "none" }}>{doc.name}</div>
+                        <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.28)", marginTop: 1 }}>{doc.hint}</div>
+                      </div>
+                      {doc.desc && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setExpandedDoc(isExpanded ? null : doc.id); }}
+                          style={{
+                            flexShrink: 0, width: 24, height: 24, borderRadius: "50%",
+                            background: isExpanded ? "rgba(91,141,239,0.2)" : "rgba(255,255,255,0.06)",
+                            border: `1px solid ${isExpanded ? "#5B8DEF" : "rgba(255,255,255,0.12)"}`,
+                            color: isExpanded ? "#5B8DEF" : "rgba(255,255,255,0.4)",
+                            fontSize: 12, fontWeight: 700, cursor: "pointer",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                          }}
+                        >
+                          ℹ️
+                        </button>
+                      )}
+                      <div onClick={() => toggleDoc(doc.id)} style={{ width: 18, height: 18, borderRadius: 5, flexShrink: 0, cursor: "pointer", border: `2px solid ${docChecked[doc.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: docChecked[doc.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>
+                        {docChecked[doc.id] && "✓"}
+                      </div>
+                    </div>
+                    {isExpanded && doc.desc && (
+                      <InfoExpand desc={doc.desc} link={doc.link} accent="#5B8DEF" />
+                    )}
                   </div>
-                  <div style={{ fontSize: 12.5, fontWeight: 700, color: docChecked[doc.id] ? "rgba(255,255,255,0.35)" : "#EEF2F7", textDecoration: docChecked[doc.id] ? "line-through" : "none" }}>{doc.name}</div>
-                  <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.28)", marginTop: 2 }}>{doc.hint}</div>
-                </div>
-              ))}
+                );
+              })}
             </div>
+          </div>
+        )}
+
+        {/* ── PREP TAB ── */}
+        {tab === "prep" && (
+          <div>
+            <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>📚 CAS & UKVI Preparation</h2>
+            <p style={{ margin: "0 0 16px", fontSize: 12.5, color: "rgba(255,255,255,0.38)" }}>Interview guide, sample Q&A, and refusal letter analysis</p>
+            <PrepTab />
+          </div>
+        )}
+
+        {/* ── PACKING TAB ── */}
+        {tab === "packing" && packingAutoVisible && (
+          <div>
+            <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>🧳 Packing Planner</h2>
+            <p style={{ margin: "0 0 16px", fontSize: 12.5, color: "rgba(255,255,255,0.38)" }}>Plan and track your luggage for the UK</p>
+            <PackingTab />
           </div>
         )}
 
@@ -1161,7 +2433,7 @@ export default function App() {
 
       {/* ── BOTTOM NAV ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "rgba(8,17,28,0.96)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", padding: "8px 0 14px" }}>
-        {[["home","🏠","Home"],["tasks","✅","Tasks"],["docs","📄","Docs"],["guides","📖","Guides"]].map(([id,em,lbl]) => (
+        {[["home","🏠","Home"],["tasks","✅","Tasks"],["costs","💷","Costs"],["docs","📄","Docs"],["prep","📚","Prep"], ...(packingAutoVisible ? [["packing","🧳","Packing"]] : []), ["guides","📖","Guides"]].map(([id,em,lbl]) => (
           <button key={id} onClick={() => setTab(id)} style={{ flex: 1, background: "transparent", border: "none", cursor: "pointer", padding: "4px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
             <span style={{ fontSize: 20 }}>{em}</span>
             <span style={{ fontSize: 10, fontWeight: 600, color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.28)" }}>{lbl}</span>
