@@ -184,7 +184,7 @@ const GUIDES = [
 // ============================================================
 const PACKING_CATEGORIES = [
   {
-    id: "docs", name: "Documents", icon: "📄", color: "#5B8DEF",
+    id: "docs", name: "Documents", icon: "📄", color: "#4A90D9",
     items: [
       { id: "p-doc-1", name: "Passport", weight: 0 },
       { id: "p-doc-2", name: "BRP / Visa vignette", weight: 0 },
@@ -381,7 +381,7 @@ function ReadinessRing({ score, color }) {
         strokeDasharray={`${filled} ${circ}`} strokeLinecap="round"
         transform={`rotate(-90 ${cx} ${cy})`}
         style={{ transition: "stroke-dasharray 0.8s ease" }} />
-      <text x={cx} y={cy - 4} textAnchor="middle" fill="#EEF2F7" fontSize="16" fontWeight="800">{score}</text>
+      <text x={cx} y={cy - 4} textAnchor="middle" fill="#F0F4FF" fontSize="16" fontWeight="800">{score}</text>
       <text x={cx} y={cy + 9} textAnchor="middle" fill="rgba(255,255,255,0.28)" fontSize="8">/100</text>
       <text x={cx} y={cy - r - 10} textAnchor="middle" fontSize="10">🇬🇧</text>
     </svg>
@@ -402,7 +402,7 @@ function ReadinessScore({ stIdx, taskDone, docChecked, sg }) {
   );
 
   const label      = score >= 80 ? "Excellent" : score >= 60 ? "On Track" : score >= 40 ? "Good Start" : "Getting Started";
-  const labelColor = score >= 80 ? "#3DB88B"   : score >= 60 ? "#5B8DEF"  : score >= 40 ? "#E8A838"    : "#6B8FA8";
+  const labelColor = score >= 80 ? "#1D9E6A"   : score >= 60 ? "#4A90D9"  : score >= 40 ? "#E8A838"    : "#6B8FA8";
   const nextTarget = score >= 80 ? null        : score >= 60 ? 80         : score >= 40 ? 60           : 40;
 
   const hints = [];
@@ -413,11 +413,11 @@ function ReadinessScore({ stIdx, taskDone, docChecked, sg }) {
   }
 
   const barGradient = score >= 80
-    ? "linear-gradient(90deg,#3DB88B,#5BE8AC)"
+    ? "linear-gradient(90deg,#1D9E6A,#5BE8AC)"
     : score >= 60
-    ? "linear-gradient(90deg,#5B8DEF,#3DB88B)"
+    ? "linear-gradient(90deg,#4A90D9,#1D9E6A)"
     : score >= 40
-    ? "linear-gradient(90deg,#E8A838,#5B8DEF)"
+    ? "linear-gradient(90deg,#E8A838,#4A90D9)"
     : "linear-gradient(90deg,#534AB7,#E8A838)";
 
   return (
@@ -500,18 +500,18 @@ function StatusDropdown({ statusId, onChange }) {
           width: "100%", display: "flex", alignItems: "center", gap: 10,
           padding: "12px 14px",
           background: "rgba(61,184,139,0.09)",
-          border: "2px solid #3DB88B",
+          border: "2px solid #1D9E6A",
           borderRadius: 14, cursor: "pointer", textAlign: "left",
-          color: "#EEF2F7",
+          color: "#F0F4FF",
           boxShadow: "0 0 0 4px rgba(61,184,139,0.1), 0 2px 12px rgba(61,184,139,0.15)",
         }}
       >
         <style>{`@keyframes sdpulse{0%,100%{transform:scale(1);opacity:0.85}50%{transform:scale(2.5);opacity:0}}`}</style>
         <span style={{ position: "relative", width: 10, height: 10, flexShrink: 0 }}>
-          <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#3DB88B", animation: "sdpulse 2s infinite" }} />
-          <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#3DB88B" }} />
+          <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#1D9E6A", animation: "sdpulse 2s infinite" }} />
+          <span style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#1D9E6A" }} />
         </span>
-        <span style={{ flex: 1, fontSize: 14.5, fontWeight: 800, color: "#3DB88B" }}>
+        <span style={{ flex: 1, fontSize: 14.5, fontWeight: 800, color: "#1D9E6A" }}>
           {current.emoji} {current.label}
         </span>
         <span style={{
@@ -525,7 +525,7 @@ function StatusDropdown({ statusId, onChange }) {
       {open && (
         <div style={{
           position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 200,
-          background: "#0D1E2F",
+          background: "#0A2545",
           border: "1.5px solid rgba(61,184,139,0.3)",
           borderRadius: 14, overflow: "hidden",
           boxShadow: "0 20px 50px rgba(0,0,0,0.65)",
@@ -536,13 +536,13 @@ function StatusDropdown({ statusId, onChange }) {
               padding: "11px 14px",
               background: s.id === statusId ? "rgba(61,184,139,0.12)" : "transparent",
               border: "none", borderBottom: "1px solid rgba(255,255,255,0.05)",
-              color: s.id === statusId ? "#3DB88B" : "rgba(255,255,255,0.6)",
+              color: s.id === statusId ? "#1D9E6A" : "rgba(255,255,255,0.6)",
               fontSize: 13, fontWeight: s.id === statusId ? 800 : 500,
               cursor: "pointer", textAlign: "left",
             }}>
               <span style={{ fontSize: 16 }}>{s.emoji}</span>
               <span style={{ flex: 1 }}>{s.label}</span>
-              {s.id === statusId && <span style={{ color: "#3DB88B", fontSize: 13 }}>✓</span>}
+              {s.id === statusId && <span style={{ color: "#1D9E6A", fontSize: 13 }}>✓</span>}
             </button>
           ))}
         </div>
@@ -557,10 +557,10 @@ function StatusDropdown({ statusId, onChange }) {
 function CountdownCard({ arrivalDays }) {
   if (arrivalDays === null) return null;
   const arrived = arrivalDays <= 0;
-  const color = arrived ? "#3DB88B"
-    : arrivalDays < 20  ? "#E85B5B"
+  const color = arrived ? "#1D9E6A"
+    : arrivalDays < 20  ? "#CF142B"
     : arrivalDays < 60  ? "#E8A838"
-    : "#3DB88B";
+    : "#1D9E6A";
   const msg = arrived
     ? "Welcome! Complete your settlement tasks."
     : arrivalDays < 20  ? "⚠️ Very soon — make sure everything is ready!"
@@ -589,7 +589,7 @@ function CountdownCard({ arrivalDays }) {
         }
       </div>
       <div>
-        <div style={{ fontSize: 14, fontWeight: 800, color: "#EEF2F7", marginBottom: 3 }}>
+        <div style={{ fontSize: 14, fontWeight: 800, color: "#F0F4FF", marginBottom: 3 }}>
           {arrived ? "You're in the UK! 🎉" : `${arrivalDays} Days Until UK Arrival`}
         </div>
         <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.38)", lineHeight: 1.5 }}>{msg}</div>
@@ -608,14 +608,14 @@ function StepperBar({ stIdx, sg }) {
     <div style={{ marginBottom: 16, padding: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
         <div>
-          <div style={{ fontSize: 13, fontWeight: 800, color: "#EEF2F7", marginBottom: 2 }}>{ALL_STAGE_NAMES[stIdx]}</div>
+          <div style={{ fontSize: 13, fontWeight: 800, color: "#F0F4FF", marginBottom: 2 }}>{ALL_STAGE_NAMES[stIdx]}</div>
           <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.32)", fontWeight: 600 }}>Step {stIdx + 1} of {total}</div>
         </div>
         <span style={{ fontSize: 12, fontWeight: 800, color: sg.accentBtn, background: sg.accentBtn + "22", padding: "4px 11px", borderRadius: 20 }}>{pct}% Complete</span>
       </div>
       <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ position: "absolute", top: "38%", left: 10, right: 10, height: 3, background: "rgba(255,255,255,0.07)", transform: "translateY(-50%)", borderRadius: 3, zIndex: 0 }}>
-          <div style={{ height: "100%", width: stIdx === 0 ? "0%" : `${(stIdx / (total - 1)) * 100}%`, background: `linear-gradient(90deg,${sg.accentBtn},#3DB88B)`, borderRadius: 3, transition: "width 0.5s ease" }} />
+          <div style={{ height: "100%", width: stIdx === 0 ? "0%" : `${(stIdx / (total - 1)) * 100}%`, background: `linear-gradient(90deg,${sg.accentBtn},#1D9E6A)`, borderRadius: 3, transition: "width 0.5s ease" }} />
         </div>
         {ALL_STAGE_NAMES.map((name, i) => {
           const done = i < stIdx, cur = i === stIdx;
@@ -623,8 +623,8 @@ function StepperBar({ stIdx, sg }) {
             <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5, zIndex: 1 }}>
               <div style={{
                 width: cur ? 26 : 18, height: cur ? 26 : 18, borderRadius: "50%",
-                border: `2.5px solid ${done ? "#3DB88B" : cur ? sg.accentBtn : "rgba(255,255,255,0.14)"}`,
-                background: done ? "#3DB88B" : cur ? sg.accentBtn + "30" : "rgba(255,255,255,0.04)",
+                border: `2.5px solid ${done ? "#1D9E6A" : cur ? sg.accentBtn : "rgba(255,255,255,0.14)"}`,
+                background: done ? "#1D9E6A" : cur ? sg.accentBtn + "30" : "rgba(255,255,255,0.04)",
                 display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: cur ? 11 : 9, color: done ? "#fff" : cur ? sg.accentBtn : "rgba(255,255,255,0.22)",
                 fontWeight: 800, boxShadow: cur ? `0 0 0 4px ${sg.accentBtn}22` : "none", transition: "all 0.3s",
@@ -647,9 +647,9 @@ function StepperBar({ stIdx, sg }) {
 // ============================================================
 function NextBestAction({ sg, onStart }) {
   const uc = {
-    critical: { bg: "rgba(232,91,91,0.08)",   border: "rgba(232,91,91,0.3)",   badge: "#E85B5B", badgeBg: "rgba(232,91,91,0.15)",   label: "🔴 Urgent" },
+    critical: { bg: "rgba(232,91,91,0.08)",   border: "rgba(232,91,91,0.3)",   badge: "#CF142B", badgeBg: "rgba(232,91,91,0.15)",   label: "🔴 Urgent" },
     high:     { bg: "rgba(232,168,56,0.08)",  border: "rgba(232,168,56,0.3)",  badge: "#E8A838", badgeBg: "rgba(232,168,56,0.15)",  label: "🟡 This Week" },
-    medium:   { bg: "rgba(91,141,239,0.06)",  border: "rgba(91,141,239,0.2)",  badge: "#5B8DEF", badgeBg: "rgba(91,141,239,0.15)",  label: "🔵 Upcoming" },
+    medium:   { bg: "rgba(91,141,239,0.06)",  border: "rgba(91,141,239,0.2)",  badge: "#4A90D9", badgeBg: "rgba(91,141,239,0.15)",  label: "🔵 Upcoming" },
   }[sg.deadlineUrgency] || {};
   return (
     <div style={{ background: uc.bg, border: `1px solid ${uc.border}`, borderRadius: 16, padding: "14px 16px", marginBottom: 16 }}>
@@ -657,7 +657,7 @@ function NextBestAction({ sg, onStart }) {
         <span style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: 0.8, color: sg.accentBtn }}>🎯 Next Action</span>
         <span style={{ fontSize: 9.5, fontWeight: 700, color: uc.badge, background: uc.badgeBg, padding: "2px 8px", borderRadius: 20, textTransform: "uppercase", letterSpacing: 0.4 }}>{uc.label}</span>
       </div>
-      <div style={{ fontSize: 16, fontWeight: 900, marginBottom: 5, color: "#EEF2F7", lineHeight: 1.3 }}>{sg.nextAction}</div>
+      <div style={{ fontSize: 16, fontWeight: 900, marginBottom: 5, color: "#F0F4FF", lineHeight: 1.3 }}>{sg.nextAction}</div>
       <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.4)", marginBottom: 12, display: "flex", alignItems: "center", gap: 5 }}>
         <span>🕒</span><span>{sg.deadline}</span>
       </div>
@@ -684,7 +684,7 @@ function QuickCard({ icon, title, sub, pct, onClick }) {
       {pct !== undefined && (
         <>
           <div style={{ height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 3, overflow: "hidden", marginBottom: 3 }}>
-            <div style={{ height: "100%", width: `${pct}%`, background: pct === 100 ? "#3DB88B" : "linear-gradient(90deg,#534AB7,#3DB88B)", borderRadius: 3, transition: "width 0.4s" }} />
+            <div style={{ height: "100%", width: `${pct}%`, background: pct === 100 ? "#1D9E6A" : "linear-gradient(90deg,#534AB7,#1D9E6A)", borderRadius: 3, transition: "width 0.4s" }} />
           </div>
           <div style={{ fontSize: 9.5, color: "rgba(255,255,255,0.25)", textAlign: "right" }}>{pct}%</div>
         </>
@@ -762,7 +762,7 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", zIndex: 999, display: "flex", alignItems: "flex-end", justifyContent: "center", fontFamily: "Arial, sans-serif" }} onClick={(e) => { if (e.target === e.currentTarget) handleSkip(); }}>
-      <div style={{ width: "100%", maxWidth: 460, background: "#0D1E2F", borderRadius: "24px 24px 0 0", padding: "24px 22px 28px", border: "1px solid rgba(255,255,255,0.1)", maxHeight: "88vh", overflowY: "auto" }}>
+      <div style={{ width: "100%", maxWidth: 460, background: "#0A2545", borderRadius: "24px 24px 0 0", padding: "24px 22px 28px", border: "1px solid rgba(255,255,255,0.1)", maxHeight: "88vh", overflowY: "auto" }}>
 
         <div style={{ width: 40, height: 4, background: "rgba(255,255,255,0.2)", borderRadius: 4, margin: "0 auto 18px" }} />
 
@@ -773,7 +773,7 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
             <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 13, lineHeight: 1.6, marginBottom: 22, textAlign: "center" }}>
               Complete your academic profile to receive university and course suggestions based on your grades.
             </p>
-            <button onClick={() => setStep("level")} style={btn("#3DB88B")}>🔵 Complete Profile</button>
+            <button onClick={() => setStep("level")} style={btn("#1D9E6A")}>🔵 Complete Profile</button>
             <button onClick={handleSkip} style={{ ...btn("transparent"), marginTop: 10, border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)" }}>⚪ Skip for Now</button>
           </div>
         )}
@@ -784,12 +784,12 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
             <h2 style={{ color: "#fff", fontSize: 18, fontWeight: 800, marginBottom: 6 }}>Which level are you applying for?</h2>
             <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 12.5, marginBottom: 18 }}>This determines which grades we'll ask for next.</p>
 
-            <button onClick={() => { setLevel("bachelor"); setStep("form"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px", marginBottom: 10, background: level === "bachelor" ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.05)", border: level === "bachelor" ? "1.5px solid #3DB88B" : "1.5px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", cursor: "pointer", textAlign: "left" }}>
+            <button onClick={() => { setLevel("bachelor"); setStep("form"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px", marginBottom: 10, background: level === "bachelor" ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.05)", border: level === "bachelor" ? "1.5px solid #1D9E6A" : "1.5px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", cursor: "pointer", textAlign: "left" }}>
               <span style={{ fontSize: 22 }}>🎓</span>
               <span><div style={{ fontWeight: 800, fontSize: 14 }}>Bachelor's Degree</div><div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.4)" }}>Undergraduate — based on SSC & HSC GPA</div></span>
             </button>
 
-            <button onClick={() => { setLevel("masters"); setStep("form"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px", background: level === "masters" ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.05)", border: level === "masters" ? "1.5px solid #3DB88B" : "1.5px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", cursor: "pointer", textAlign: "left" }}>
+            <button onClick={() => { setLevel("masters"); setStep("form"); }} style={{ width: "100%", display: "flex", alignItems: "center", gap: 12, padding: "14px", background: level === "masters" ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.05)", border: level === "masters" ? "1.5px solid #1D9E6A" : "1.5px solid rgba(255,255,255,0.1)", borderRadius: 14, color: "#fff", cursor: "pointer", textAlign: "left" }}>
               <span style={{ fontSize: 22 }}>📘</span>
               <span><div style={{ fontWeight: 800, fontSize: 14 }}>Master's Degree</div><div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.4)" }}>Postgraduate — based on Bachelor's CGPA</div></span>
             </button>
@@ -833,7 +833,7 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
             {label("Budget per year, £ (optional)")}
             <input type="number" min="0" value={form.budget} onChange={e => setForm(f => ({ ...f, budget: e.target.value }))} placeholder="e.g. 15000" style={inputStyle} />
 
-            <button disabled={!gpaOk} onClick={() => setStep("results")} style={{ ...btn("#3DB88B", !gpaOk), marginTop: 6 }}>See My Recommendations →</button>
+            <button disabled={!gpaOk} onClick={() => setStep("results")} style={{ ...btn("#1D9E6A", !gpaOk), marginTop: 6 }}>See My Recommendations →</button>
             <button onClick={handleSkip} style={{ ...btn("transparent"), marginTop: 10, border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.4)", fontSize: 13 }}>⚪ Skip for Now</button>
           </div>
         )}
@@ -844,7 +844,7 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
 
             <div style={{ background: "rgba(61,184,139,0.08)", border: "1px solid rgba(61,184,139,0.3)", borderRadius: 16, padding: "16px", marginBottom: 16, textAlign: "center" }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>Your Band</div>
-              <div style={{ fontSize: 18, fontWeight: 900, color: "#3DB88B", marginBottom: 6 }}>{band.label}</div>
+              <div style={{ fontSize: 18, fontWeight: 900, color: "#1D9E6A", marginBottom: 6 }}>{band.label}</div>
               <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>{band.desc}</div>
             </div>
 
@@ -853,7 +853,7 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
               {band.examples.map((u, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", marginBottom: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10 }}>
                   <span style={{ fontSize: 15 }}>🏛️</span>
-                  <span style={{ fontSize: 13, fontWeight: 600, color: "#EEF2F7" }}>{u}</span>
+                  <span style={{ fontSize: 13, fontWeight: 600, color: "#F0F4FF" }}>{u}</span>
                 </div>
               ))}
             </div>
@@ -864,14 +864,14 @@ function UniversityFinderFlow({ onClose, onSaveProfile, savedAcademic }) {
 
             <h3 style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>Search real courses & universities</h3>
             {SEARCH_LINKS.map((s, i) => (
-              <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 13px", marginBottom: 7, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, textDecoration: "none", color: "#EEF2F7" }}>
+              <a key={i} href={s.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 13px", marginBottom: 7, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, textDecoration: "none", color: "#F0F4FF" }}>
                 <span style={{ fontSize: 17 }}>{s.icon}</span>
                 <span style={{ flex: 1, fontSize: 13, fontWeight: 600 }}>{s.name}</span>
                 <span style={{ color: "rgba(255,255,255,0.25)", fontSize: 13 }}>↗</span>
               </a>
             ))}
 
-            <button onClick={handleSaveAndClose} style={{ ...btn("#3DB88B"), marginTop: 16 }}>Save Profile & Continue ✓</button>
+            <button onClick={handleSaveAndClose} style={{ ...btn("#1D9E6A"), marginTop: 16 }}>Save Profile & Continue ✓</button>
           </div>
         )}
       </div>
@@ -1323,103 +1323,334 @@ function CostsTab() {
 const CAS_QA = [
   {
     q: "Why did you choose this university?",
+    cat: "University",
     bn: "কেন এই বিশ্ববিদ্যালয় বেছে নিলেন?",
     a: "I chose [University Name] because of its strong reputation in [your course], its industry partnerships, and the quality of research facilities. I also carefully reviewed the course modules, which align with my career goals in [your field].",
     tip: "💡 University-র specific বৈশিষ্ট্য উল্লেখ করুন — ranking, course content, lecturers। Generic উত্তর এড়িয়ে চলুন।"
   },
   {
     q: "Why did you choose this specific course?",
+    cat: "Course Module",
     bn: "কেন এই নির্দিষ্ট কোর্স বেছে নিলেন?",
     a: "My undergraduate background in [subject] gave me a strong foundation, and I want to specialise further in [course area]. This course covers [specific modules] which are directly relevant to my career plan of [goal].",
     tip: "💡 আপনার academic background-এর সাথে কোর্সের সংযোগ দেখান। Career goal স্পষ্টভাবে বলুন।"
   },
   {
     q: "How will you finance your studies?",
+    cat: "Financial Sponsorship",
     bn: "পড়াশোনার খরচ কীভাবে চালাবেন?",
     a: "My studies will be funded by my family. My father/sponsor is a [profession] and has been saving specifically for this purpose. I have maintained the required funds in my bank account for more than 28 consecutive days as required by UKVI.",
     tip: "💡 Bank statement-এর সাথে মিলিয়ে বলুন। টাকার source স্পষ্ট করুন — চাকরি, ব্যবসা বা সম্পত্তি।"
   },
   {
     q: "What are your plans after completing the course?",
+    cat: "Future Plans",
     bn: "কোর্স শেষে আপনার পরিকল্পনা কী?",
     a: "After completing my degree, I plan to return to Bangladesh and apply the skills and knowledge I have gained. I aim to work in [sector] where there is growing demand for [skill]. I have family and community ties that will bring me back.",
     tip: "💡 UK-তে থেকে যাওয়ার intention নেই — এটা স্পষ্ট করুন। Bangladesh-এ ফিরে আসার কারণ দিন।"
   },
   {
     q: "Do you have any family members in the UK?",
+    cat: "Family",
     bn: "UK-তে আপনার কোনো পরিবার আছে?",
     a: "No, I do not have any immediate family members in the UK. My parents and siblings all live in Bangladesh. My purpose of travelling is purely for education.",
     tip: "💡 সত্য কথা বলুন। পরিবার থাকলে সেটা বলুন তবে সম্পর্ক এবং address উল্লেখ করুন।"
   },
   {
     q: "Have you visited the UK before?",
+    cat: "Personal Information",
     bn: "আগে কি UK ভ্রমণ করেছেন?",
     a: "No, this will be my first visit to the UK. I have, however, visited [other countries if applicable] and have always returned to Bangladesh as planned.",
     tip: "💡 যদি আগে গিয়ে থাকেন — সঠিক তারিখ ও কারণ বলুন। যদি না গিয়ে থাকেন — সততার সাথে বলুন।"
   },
   {
     q: "What is your English language proficiency?",
+    cat: "Personal Information",
     bn: "আপনার ইংরেজি দক্ষতা কেমন?",
     a: "I have an IELTS Academic score of [your score], with individual band scores of [Reading/Writing/Listening/Speaking]. I am confident in academic and conversational English and have been communicating in English throughout my academic career.",
     tip: "💡 আপনার actual IELTS score মুখস্থ রাখুন। Specific band scores জানা থাকা জরুরি।"
   },
   {
     q: "Who is your CAS sponsor?",
+    cat: "University",
     bn: "আপনার CAS sponsor কে?",
     a: "My CAS sponsor is [University Name], which is a UKVI-licensed sponsor. My CAS number is [your CAS number], and it was issued on [date]. The course start date is [date].",
     tip: "💡 CAS letter সাথে রাখুন। CAS number, issue date, course start date মুখস্থ রাখুন।"
+  },
+  {
+    q: "What facilities does this institute offer that attracted you?",
+    cat: "University",
+    bn: "এই প্রতিষ্ঠানের কোন সুবিধা আপনাকে আকর্ষণ করেছে?",
+    a: "[University Name] offers modern libraries open 24/7, advanced computing facilities, dedicated research support, and well-equipped study spaces. It is also ranked [ranking detail] for [skills development / facilities / student support], which gave me confidence in the quality of education I will receive.",
+    tip: "💡 অন্তত ৩টি specific facility + একটি official ranking/স্বীকৃতি উল্লেখ করুন — শুধু 'good environment' বললে চলবে না।"
+  },
+  {
+    q: "Did you consider studying at any other institutes? If so, which ones?",
+    cat: "University",
+    bn: "আর কোনো প্রতিষ্ঠান বিবেচনা করেছিলেন?",
+    a: "Yes, I also researched [Other University 1] and [Other University 2]. However, when I compared the course modules and rankings, [University Name] offered a stronger focus on [your specific area, e.g. digital management/research], which directly aligns with my career goal of becoming a [job title].",
+    tip: "💡 'না, এটাই দেখেছি' বললে আগ্রহ কম মনে হবে। তাই অন্য ২টি university-র নাম বলে comparison করুন কেন এটাই সেরা।"
+  },
+  {
+    q: "Do you know the address/location of your university?",
+    cat: "University",
+    bn: "আপনার ইউনিভার্সিটির লোকেশন জানেন?",
+    a: "Yes, [University Name] is located at [campus address/city]. The campus is well-connected, with the city centre/station about [X] minutes away, which makes travel and daily life convenient.",
+    tip: "💡 Campus address ও nearest station/city মুখস্থ রাখুন।"
+  },
+  {
+    q: "Why did you choose your particular area of study?",
+    cat: "Course Module",
+    bn: "এই নির্দিষ্ট বিষয় কেন বেছে নিলেন?",
+    a: "I have chosen this area because of the growing demand for professionals with knowledge in [field]. My academic background in [previous subject] gave me a strong foundation, and through [experience/work], I realised how important this field is for modern organisations.",
+    tip: "💡 Personal motivation + market demand দুটোই উল্লেখ করুন।"
+  },
+  {
+    q: "Tell me about your course modules and how the course is structured.",
+    cat: "Course Module",
+    bn: "কোর্সের মডিউল ও স্ট্রাকচার সম্পর্কে বলুন।",
+    a: "My course is structured into [taught modules / research stages]. The core modules include [Module 1], [Module 2], and [Module 3], each carrying [credit] credits. [If applicable: There is also a major independent research project worth [credit] credits.] Together these build my knowledge in [subject] and develop my [skills, e.g. research and analytical skills].",
+    tip: "💡 কমপক্ষে ৩টা মডিউলের নাম ও credit সংখ্যা মুখস্থ রাখুন। University website থেকে দেখে নিন।"
+  },
+  {
+    q: "How is your course assessed?",
+    cat: "Course Module",
+    bn: "কোর্সটি কীভাবে assess করা হয়?",
+    a: "My course is assessed through [assignments, presentations, research reports / written exams and coursework]. A major part of the assessment is [dissertation/final project], where I will apply what I have learned to a real research question or business case.",
+    tip: "💡 University-র course page থেকে assessment method confirm করে নিন।"
+  },
+  {
+    q: "How is this course related to your previous education?",
+    cat: "Course Module",
+    bn: "এই কোর্স আপনার আগের শিক্ষার সাথে কীভাবে সম্পর্কিত?",
+    a: "My previous degree in [subject] gave me a strong foundation in [relevant area]. This course is a natural progression, as it builds on that knowledge while developing more specialised, advanced skills in [field], directly supporting my long-term career plan.",
+    tip: "💡 Logical progression দেখান — আগের পড়াশোনা থেকে এই কোর্সে আসার যুক্তি স্পষ্ট করুন।"
+  },
+  {
+    q: "Did you consider studying any other courses?",
+    cat: "Course Module",
+    bn: "অন্য কোনো কোর্স বিবেচনা করেছিলেন?",
+    a: "I did briefly consider [alternative course], but I chose [Course Name] because it more closely matches my academic background and career goal of becoming a [job title], with a stronger focus on [specific strength of the course].",
+    tip: "💡 শুধু 'না' না বলে একটা সৎ comparison করুন।"
+  },
+  {
+    q: "What is the profession of your financial sponsor, and what is their income?",
+    cat: "Financial Sponsorship",
+    bn: "আপনার স্পনসরের পেশা ও আয় কত?",
+    a: "My sponsor is my [father/mother], who works as a [profession] / runs a [business type]. Their approximate monthly income is [amount], and yearly income is [amount], which is sufficient to comfortably cover my tuition fees, accommodation, and living expenses.",
+    tip: "💡 সুনির্দিষ্ট সংখ্যা (monthly/yearly) মুখস্থ রাখুন এবং bank statement-এর সাথে মিলিয়ে নিন।"
+  },
+  {
+    q: "Do you have to pay back the money to your sponsor?",
+    cat: "Financial Sponsorship",
+    bn: "স্পনসরের টাকা কি ফেরত দিতে হবে?",
+    a: "No, I do not need to repay this money. My [father/mother] is supporting my education voluntarily as part of family responsibility, not as a loan.",
+    tip: "💡 যদি loan হয়, তাহলে সততার সাথে repayment plan উল্লেখ করুন।"
+  },
+  {
+    q: "Do you know how to open a bank account in the UK?",
+    cat: "Financial Sponsorship",
+    bn: "UK-তে ব্যাংক একাউন্ট খোলা সম্পর্কে জানেন?",
+    a: "Yes, as an international student I will need my passport, student visa, proof of UK address, and an enrolment letter from the university. I can apply online or in person, and popular student-friendly banks include HSBC, Barclays, NatWest, Lloyds, and Santander.",
+    tip: "💡 ২-৩টা ব্যাংকের নাম এবং কী কী document লাগবে মনে রাখুন।"
+  },
+  {
+    q: "How will you manage to pay your fees and living expenses?",
+    cat: "Financial Sponsorship",
+    bn: "ফি ও living expense কীভাবে ম্যানেজ করবেন?",
+    a: "My tuition fees and living expenses will be covered through my sponsor's funds, which are already available and meet the UKVI 28-day requirement. I will also bring some initial cash to cover expenses immediately on arrival.",
+    tip: "💡 28-day bank statement rule এবং arrival-cash এর কথা উল্লেখ করুন।"
+  },
+  {
+    q: "What is your career plan after completing this course?",
+    cat: "Future Plans",
+    bn: "কোর্স শেষে আপনার ক্যারিয়ার প্ল্যান কী?",
+    a: "After completing my degree, I plan to return to Bangladesh and work as a [job title] in [sector/companies, e.g. telecom, banking, FMCG]. The skills I gain — [skill 1], [skill 2] — will help me contribute to digital/organisational growth and eventually move into a senior or leadership role.",
+    tip: "💡 একটা স্পষ্ট job title + ২-৩টা কোম্পানি/সেক্টরের নাম উল্লেখ করুন, যেন উত্তরটা specific ও বিশ্বাসযোগ্য মনে হয়।"
+  },
+  {
+    q: "How does this course help you achieve your career plan?",
+    cat: "Future Plans",
+    bn: "এই কোর্স কীভাবে আপনার ক্যারিয়ার গোলে সাহায্য করবে?",
+    a: "This course directly builds the skills required for my goal of becoming a [job title]. Modules such as [Module Name] develop my [specific skill], which I will apply in real organisational settings once I return to Bangladesh.",
+    tip: "💡 প্রতিটি মডিউলকে নির্দিষ্ট career skill-এর সাথে সংযুক্ত করুন।"
+  },
+  {
+    q: "Will you return to your home country after completing your studies?",
+    cat: "Future Plans",
+    bn: "পড়াশোনা শেষে দেশে ফিরবেন কি?",
+    a: "Yes, I plan to return to Bangladesh after completing my studies. I have strong family ties, career opportunities, and responsibilities at home, and the qualification I gain in the UK will help me build a strong career there.",
+    tip: "💡 'Strong ties' প্রমাণ করুন — পরিবার, সম্পত্তি, job prospect উল্লেখ করুন।"
+  },
+  {
+    q: "Where will you live while studying, and have you booked it?",
+    cat: "Accommodation",
+    bn: "কোথায় থাকবেন এবং বুকিং দেওয়া হয়েছে কি?",
+    a: "I plan to live in [university/private accommodation name]. [If booked: I have already confirmed my booking and have the confirmation letter with me.] [If not yet: I have shortlisted my accommodation and will confirm the booking once my visa is approved.]",
+    tip: "💡 Accommodation-এর নাম, address এবং weekly/monthly cost মুখস্থ রাখুন।"
+  },
+  {
+    q: "How much will your overall living expenses be, and can you break it down?",
+    cat: "Accommodation",
+    bn: "মোট living expense কত এবং breakdown দিতে পারবেন?",
+    a: "My estimated monthly living expenses are around [£amount], which includes accommodation (£[amount]), food (£[amount]), transport (£[amount]), mobile/utilities (£[amount]), and miscellaneous costs (£[amount]). This is in line with the UKVI's required living-cost figures.",
+    tip: "💡 UKVI living cost: London-এর বাইরে প্রায় £1,023/month, লন্ডনে £1,334/month — এই figure-এর সাথে মিলিয়ে বলুন।"
   },
 ];
 
 const UKVI_QA = [
   {
     q: "What is the purpose of your visit to the UK?",
+    cat: "Personal Information",
     bn: "UK ভ্রমণের উদ্দেশ্য কী?",
     a: "I am travelling to the UK to pursue my [undergraduate/postgraduate] studies at [University Name]. I have been accepted onto the [Course Name] programme commencing [Month Year].",
     tip: "💡 সংক্ষিপ্ত ও স্পষ্ট উত্তর দিন। University নাম ও course নাম সঠিকভাবে বলুন।"
   },
   {
     q: "How long do you intend to stay in the UK?",
+    cat: "Future Plans",
     bn: "UK-তে কতদিন থাকার পরিকল্পনা?",
     a: "I intend to stay for the duration of my course, which is [1/2/3] year(s). My visa is valid until [date], and I plan to return to Bangladesh upon completing my studies.",
     tip: "💡 Visa validity-র বেশি থাকার কথা বলবেন না। Course duration স্পষ্ট করুন।"
   },
   {
     q: "Where will you be living in the UK?",
+    cat: "Accommodation",
     bn: "UK-তে কোথায় থাকবেন?",
     a: "I will be staying at [university accommodation name / private address]. I have already confirmed my accommodation booking and have the confirmation letter with me.",
     tip: "💡 Accommodation letter সাথে রাখুন। Address মুখস্থ রাখুন।"
   },
   {
     q: "How much money do you have to support yourself?",
+    cat: "Financial Sponsorship",
     bn: "নিজেকে সাপোর্ট করার জন্য কত টাকা আছে?",
     a: "I have sufficient funds to cover my tuition fees and living expenses. My bank statement shows I have maintained [amount] for the required 28-day period. My sponsor is my [father/mother] who supports my education.",
     tip: "💡 Bank statement-এর exact amount বলুন। UKVI requirement হলো tuition + £1,023-£1,334/month living cost।"
   },
   {
     q: "Have you ever been refused a UK visa before?",
+    cat: "Personal Information",
     bn: "আগে কি UK visa refusal হয়েছিল?",
     a: "Yes/No. [If yes: I was refused in [year] due to [reason]. Since then, I have [addressed the issue — e.g., improved finances, got IELTS, stronger ties to home country] and I believe my application is now much stronger.]",
     tip: "💡 সত্য বলুন — মিথ্যা বললে permanent ban হতে পারে। Refusal-এর কারণ ও সমাধান explain করুন।"
   },
   {
     q: "Do you intend to work while studying?",
+    cat: "Future Plans",
     bn: "পড়াশোনার পাশাপাশি কাজ করার পরিকল্পনা আছে?",
     a: "Yes, my Student visa permits me to work up to 20 hours per week during term time and full-time during holidays. However, my primary purpose is studying, and any part-time work would be supplementary only.",
     tip: "💡 Student visa-র 20 hour rule জানুন। Main purpose পড়াশোনা — এটা emphasise করুন।"
   },
   {
     q: "What ties do you have to Bangladesh?",
+    cat: "Family",
     bn: "Bangladesh-এর সাথে আপনার কী সম্পর্ক আছে?",
     a: "I have strong ties to Bangladesh. My parents and family live there. My father runs a [business/works as] in Bangladesh, and I am expected to return and contribute to the family. I also have property interests / career opportunities waiting for me there.",
     tip: "💡 এটাই সবচেয়ে গুরুত্বপূর্ণ প্রশ্ন। Strong ties prove করুন — family, property, job prospect, business।"
   },
   {
     q: "Why not study in Bangladesh instead?",
+    cat: "Course Module",
     bn: "Bangladesh-এ না পড়ে UK-তে কেন?",
     a: "While Bangladesh has good universities, the specific programme I am interested in — [course name] — with the level of research, industry exposure, and international recognition offered by [University Name] is not available at the same standard in Bangladesh. This qualification will significantly enhance my career prospects upon return.",
     tip: "💡 UK education-এর specific advantage বলুন — course quality, research, international recognition।"
   },
+  {
+    q: "Why did you choose this institute over others (UKVI deep-dive)?",
+    cat: "University",
+    bn: "অন্য প্রতিষ্ঠানের বদলে কেন এটি বেছে নিলেন? (গভীর প্রশ্ন)",
+    a: "I chose [University Name] for three specific reasons: first, its official recognition — it holds a [TEF rating / ranking] from [official body]; second, its [research impact / industry connection], which shows the course leads to real-world outcomes; and third, the course structure itself, which combines [unique combination, e.g. AI + Business] that I could not find elsewhere.",
+    tip: "💡 শুধু 'ভালো ইউনিভার্সিটি' বললে চলবে না — অফিসিয়াল র্যাঙ্কিং/স্বীকৃতির নাম উল্লেখ করুন (যেমন TEF, REF, Advance HE)।"
+  },
+  {
+    q: "What is the Genuine Student Test, and how do you meet it?",
+    cat: "Personal Information",
+    bn: "Genuine Student Test কী এবং আপনি কীভাবে সেটা পূরণ করেন?",
+    a: "I understand UKVI checks whether I am a genuine student rather than someone planning to work illegally. I can show this through my consistent academic background, a clear course choice linked to my career goal, sufficient funds, confirmed accommodation, and strong ties — such as family and career prospects — back in Bangladesh.",
+    tip: "💡 Officer যাচাই করতে চায় আপনি আসলেই পড়তে যাচ্ছেন কিনা। Consistent answer ও documents দিয়ে এটা প্রমাণ করুন।"
+  },
+  {
+    q: "Are you aware of the Graduate Route (Post-Study Work) visa? Will you use it to work instead of focusing on study?",
+    cat: "Future Plans",
+    bn: "গ্র্যাজুয়েট রুট ভিসা সম্পর্কে জানেন? এটা দিয়ে কি পড়ার বদলে কাজ করবেন?",
+    a: "Yes, I am aware that the Graduate Route allows international students to work for 2 years after completing their degree. However, my primary goal is to complete my studies and gain academic/research skills. If I take any short-term work or internship afterwards, it will be for skill development, not as my main purpose for coming to the UK.",
+    tip: "💡 PSW/Graduate Route নিয়ে honest থাকুন কিন্তু বারবার ক্লিয়ার করুন: main purpose পড়াশোনা, কাজ নয়।"
+  },
+  {
+    q: "Do you understand the Points-Based System (PBS) requirements for your visa?",
+    cat: "Visa & Immigration",
+    bn: "ভিসার Points-Based System (PBS) সম্পর্কে জানেন?",
+    a: "Yes. The Student visa requires 70 points in total — 50 points from a valid CAS issued by a licensed sponsor, 10 points from proof of English language ability, and 10 points from evidence of sufficient maintenance funds. I have met all three requirements.",
+    tip: "💡 50+10+10 = 70 points — এই breakdown মুখস্থ রাখুন।"
+  },
+  {
+    q: "What are your responsibilities as a student visa holder?",
+    cat: "Visa & Immigration",
+    bn: "স্টুডেন্ট ভিসা ধারক হিসেবে আপনার কী কী দায়িত্ব আছে?",
+    a: "I understand I must attend classes regularly, make satisfactory academic progress, work only within the permitted hours (up to 20 hours per week in term time), have enough funds for tuition and living costs, and keep my university and the Home Office updated with my contact details.",
+    tip: "💡 Attendance, work-hour limit, financial proof, contact updates — এই ৪টি পয়েন্ট স্পষ্টভাবে বলুন।"
+  },
+  {
+    q: "Are you using an education agent? What services have they provided?",
+    cat: "Personal Information",
+    bn: "কোনো এজেন্ট ব্যবহার করছেন? তারা কী সাহায্য করেছে?",
+    a: "[Yes/No]. [If yes: My agent helped with the application process, choosing the right course, and document preparation. However, all final decisions about my course and university were made by me.]",
+    tip: "💡 Agent থাকলে honestly বলুন, কিন্তু এটা স্পষ্ট করুন যে সিদ্ধান্ত আপনার নিজের।"
+  },
+  {
+    q: "Do you have any relatives in the UK?",
+    cat: "Family",
+    bn: "UK-তে কোনো আত্মীয় আছে?",
+    a: "[Yes/No]. [If yes: state the relationship, their name, address, and profession clearly and consistently with your documents.]",
+    tip: "💡 থাকলে relationship, address ও profession স্পষ্টভাবে বলুন — অস্পষ্টতা সন্দেহ তৈরি করে।"
+  },
+  {
+    q: "Are you married, or do you have any dependants travelling with you?",
+    cat: "Family",
+    bn: "আপনি বিবাহিত কি, বা কোনো dependent সাথে আসছে?",
+    a: "[Yes/No]. [If yes: My spouse/dependant will [accompany me / stay in Bangladesh], and their profile is [brief detail]. I have the supporting documents for this if needed.]",
+    tip: "💡 Marital status সম্পর্কিত প্রশ্নে honestly এবং সংক্ষেপে উত্তর দিন।"
+  },
+  {
+    q: "How will you handle currency exchange rate fluctuations?",
+    cat: "Financial Sponsorship",
+    bn: "টাকার exchange rate পরিবর্তন হলে কীভাবে সামলাবেন?",
+    a: "My sponsor has already arranged some additional funds to cover possible increases in cost due to exchange rate changes, so my tuition and living expenses remain secure regardless of currency fluctuation.",
+    tip: "💡 Extra buffer fund-এর কথা উল্লেখ করুন যাতে exchange rate risk address হয়।"
+  },
+  {
+    q: "What cultural differences or challenges do you expect in the UK, and how will you adapt?",
+    cat: "Future Plans",
+    bn: "UK-তে কী কালচারাল চ্যালেঞ্জ হতে পারে এবং কীভাবে adapt করবেন?",
+    a: "I may need time to get used to different accents, social norms, and classroom styles. I plan to stay open-minded, ask questions when needed, and participate in student activities and orientation programmes to adapt quickly.",
+    tip: "💡 Challenge স্বীকার করুন কিন্তু সাথে adaptation plan-ও বলুন — এটা maturity দেখায়।"
+  },
+  {
+    q: "How will you manage your time between studies and other responsibilities?",
+    cat: "Future Plans",
+    bn: "পড়াশোনা ও অন্যান্য দায়িত্বের মধ্যে সময় কীভাবে ম্যানেজ করবেন?",
+    a: "I will create a weekly timetable with fixed hours for lectures, assignments, and self-study, while also balancing rest and social activities to stay motivated and avoid burnout.",
+    tip: "💡 একটা সংক্ষিপ্ত ও বাস্তবসম্মত weekly-routine উদাহরণ দিন।"
+  },
+  {
+    q: "Tell me about the UK's culture and weather.",
+    cat: "Personal Information",
+    bn: "UK-এর culture ও weather সম্পর্কে বলুন।",
+    a: "The UK has a temperate maritime climate — mild summers (around 18-25°C) and cool, damp winters (0-7°C), with rain possible throughout the year. Culturally, it is diverse and multicultural, known for punctuality, politeness, and a strong tradition in sport, literature, and the arts.",
+    tip: "💡 Weather + ১-২টা cultural point মিলিয়ে সংক্ষেপে বলুন, যাতে স্বাভাবিক মনে হয়।"
+  },
+];
+
+const QA_CATEGORIES = [
+  { id: "all",                    label: "All",                    icon: "📌" },
+  { id: "Personal Information",   label: "Personal Information",   icon: "🧍" },
+  { id: "University",             label: "University",             icon: "🎓" },
+  { id: "Family",                 label: "Family",                 icon: "👨‍👩‍👧" },
+  { id: "Course Module",          label: "Course Module",          icon: "📘" },
+  { id: "Future Plans",           label: "Future Plans",           icon: "🚀" },
+  { id: "Financial Sponsorship",  label: "Financial Sponsorship",  icon: "💰" },
+  { id: "Accommodation",          label: "Accommodation",          icon: "🏠" },
+  { id: "Visa & Immigration",     label: "Visa & Immigration",     icon: "🛂" },
 ];
 
 const REFUSAL_REASONS = [
@@ -1465,6 +1696,7 @@ const REFUSAL_REASONS = [
 // ============================================================
 function PrepTab() {
   const [section, setSection] = useState("cas");
+  const [qaCategory, setQaCategory] = useState("all");
   const [openQ, setOpenQ] = useState(null);
   const [pdfFiles, setPdfFiles] = useState(() => {
     try {
@@ -1501,13 +1733,13 @@ function PrepTab() {
     if (viewingPdf === id) setViewingPdf(null);
   };
 
-  const C = { green: "#3DB88B", blue: "#5B8DEF", amber: "#E8A838", red: "#E85B5B" };
+  const C = { green: "#1D9E6A", blue: "#4A90D9", amber: "#E8A838", red: "#CF142B" };
 
   const SectionBtn = ({ id, icon, label }) => (
-    <button onClick={() => setSection(id)} style={{
+    <button onClick={() => { setSection(id); setQaCategory("all"); setOpenQ(null); }} style={{
       flex: 1, padding: "9px 6px", border: "none", borderRadius: 10, cursor: "pointer",
       background: section === id ? "rgba(61,184,139,0.12)" : "rgba(255,255,255,0.04)",
-      borderBottom: section === id ? "2px solid #3DB88B" : "2px solid transparent",
+      borderBottom: section === id ? "2px solid #1D9E6A" : "2px solid transparent",
       color: section === id ? C.green : "rgba(255,255,255,0.4)",
       fontSize: 11, fontWeight: section === id ? 800 : 500,
       display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
@@ -1515,6 +1747,24 @@ function PrepTab() {
       <span style={{ fontSize: 16 }}>{icon}</span>{label}
     </button>
   );
+
+  const CategoryTabs = () => (
+    <div style={{ display: "flex", gap: 6, overflowX: "auto", marginBottom: 14, paddingBottom: 2 }}>
+      {QA_CATEGORIES.map(c => (
+        <button key={c.id} onClick={() => { setQaCategory(c.id); setOpenQ(null); }} style={{
+          flex: "none", padding: "7px 12px", borderRadius: 20, cursor: "pointer", whiteSpace: "nowrap",
+          border: `1px solid ${qaCategory === c.id ? "#4A90D9" : "rgba(255,255,255,0.1)"}`,
+          background: qaCategory === c.id ? "rgba(74,144,217,0.18)" : "rgba(255,255,255,0.03)",
+          color: qaCategory === c.id ? "#4A90D9" : "rgba(255,255,255,0.45)",
+          fontSize: 11.5, fontWeight: qaCategory === c.id ? 700 : 500,
+        }}>
+          {c.icon} {c.label}
+        </button>
+      ))}
+    </div>
+  );
+
+  const filterByCategory = (list) => qaCategory === "all" ? list : list.filter(item => item.cat === qaCategory);
 
   const QACard = ({ item, i, accentColor }) => {
     const isOpen = openQ === i;
@@ -1529,7 +1779,7 @@ function PrepTab() {
             {i + 1}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#EEF2F7", marginBottom: 2 }}>{item.q}</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#F0F4FF", marginBottom: 2 }}>{item.q}</div>
             <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>{item.bn}</div>
           </div>
           <span style={{ color: accentColor, fontSize: 14, flexShrink: 0, transition: "transform 0.2s", display: "inline-block", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▾</span>
@@ -1563,15 +1813,15 @@ function PrepTab() {
       {section === "cas" && (
         <div>
           <div style={{ background: "rgba(91,141,239,0.08)", border: "1px solid rgba(91,141,239,0.25)", borderRadius: 14, padding: "14px 16px", marginBottom: 16 }}>
-            <div style={{ fontSize: 15, fontWeight: 800, color: "#EEF2F7", marginBottom: 6 }}>📋 CAS Interview কী?</div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "#F0F4FF", marginBottom: 6 }}>📋 CAS Interview কী?</div>
             <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>
-              CAS (Confirmation of Acceptance for Studies) interview সাধারণত হয় না — এটা একটা document/number। তবে কিছু ক্ষেত্রে university বা UKVI আপনাকে <strong style={{ color: "#5B8DEF" }}>Genuine Student Interview</strong>-এর জন্য ডাকতে পারে। এই interview-এ তারা verify করে যে আপনি সত্যিই পড়তে আসছেন।
+              CAS (Confirmation of Acceptance for Studies) interview সাধারণত হয় না — এটা একটা document/number। তবে কিছু ক্ষেত্রে university বা UKVI আপনাকে <strong style={{ color: "#4A90D9" }}>Genuine Student Interview</strong>-এর জন্য ডাকতে পারে। এই interview-এ তারা verify করে যে আপনি সত্যিই পড়তে আসছেন।
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 12 }}>
               {[["🎯 কে নেয়?", "UKVI Entry Clearance Officer"], ["📍 কোথায়?", "VFS/UKVCAS Centre, Dhaka"], ["⏱️ কতক্ষণ?", "১০-২০ মিনিট"], ["📅 কখন?", "Visa application-এর পর"]].map(([label, val], i) => (
                 <div key={i} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 8, padding: "8px 10px" }}>
                   <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginBottom: 3 }}>{label}</div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "#EEF2F7" }}>{val}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#F0F4FF" }}>{val}</div>
                 </div>
               ))}
             </div>
@@ -1584,44 +1834,52 @@ function PrepTab() {
           <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 10 }}>
             Possible Questions — tap to see answers
           </div>
-          {CAS_QA.map((item, i) => <QACard key={i} item={item} i={i} accentColor={C.blue} />)}
+          <CategoryTabs />
+          {filterByCategory(CAS_QA).map((item, i) => <QACard key={i} item={item} i={i} accentColor={C.blue} />)}
+          {filterByCategory(CAS_QA).length === 0 && (
+            <div style={{ textAlign: "center", padding: "20px 10px", color: "rgba(255,255,255,0.25)", fontSize: 12.5 }}>No questions in this category yet.</div>
+          )}
         </div>
       )}
 
       {section === "ukvi" && (
         <div>
           <div style={{ background: "rgba(61,184,139,0.08)", border: "1px solid rgba(61,184,139,0.25)", borderRadius: 14, padding: "14px 16px", marginBottom: 16 }}>
-            <div style={{ fontSize: 15, fontWeight: 800, color: "#EEF2F7", marginBottom: 6 }}>🎤 UKVI Interview কী?</div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "#F0F4FF", marginBottom: 6 }}>🎤 UKVI Interview কী?</div>
             <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>
-              UK Visas and Immigration (UKVI) কিছু applicant-কে <strong style={{ color: "#3DB88B" }}>Credibility Interview</strong>-এর জন্য ডাকে। এটা mandatory নয় — শুধু যাদের application-এ কোনো concern দেখা যায় তাদের ডাকা হয়। Interview-এ তারা জানতে চায় আপনি সত্যিকারের student কিনা।
+              UK Visas and Immigration (UKVI) কিছু applicant-কে <strong style={{ color: "#1D9E6A" }}>Credibility Interview</strong>-এর জন্য ডাকে। এটা mandatory নয় — শুধু যাদের application-এ কোনো concern দেখা যায় তাদের ডাকা হয়। Interview-এ তারা জানতে চায় আপনি সত্যিকারের student কিনা।
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 12 }}>
               {[["🎯 কে নেয়?", "UKVI ECO (Entry Clearance Officer)"], ["📍 কোথায়?", "Phone বা VFS Centre"], ["⏱️ কতক্ষণ?", "১৫-৩০ মিনিট"], ["📅 কখন?", "যেকোনো সময় visa process-এ"]].map(([label, val], i) => (
                 <div key={i} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 8, padding: "8px 10px" }}>
                   <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginBottom: 3 }}>{label}</div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "#EEF2F7" }}>{val}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#F0F4FF" }}>{val}</div>
                 </div>
               ))}
             </div>
           </div>
 
           <div style={{ background: "rgba(232,91,91,0.07)", border: "1px solid rgba(232,91,91,0.2)", borderRadius: 12, padding: "11px 14px", marginBottom: 14, fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.6 }}>
-            🔴 <strong style={{ color: "#E85B5B" }}>সতর্কতা:</strong> UKVI interview-এ মিথ্যা বললে permanent ban হতে পারে। সব সময় সত্য কথা বলুন, এমনকি যদি তা আপনার বিরুদ্ধেও যায়।
+            🔴 <strong style={{ color: "#CF142B" }}>সতর্কতা:</strong> UKVI interview-এ মিথ্যা বললে permanent ban হতে পারে। সব সময় সত্য কথা বলুন, এমনকি যদি তা আপনার বিরুদ্ধেও যায়।
           </div>
 
           <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 10 }}>
             Common Questions — tap to see answers
           </div>
-          {UKVI_QA.map((item, i) => <QACard key={i} item={item} i={i} accentColor={C.green} />)}
+          <CategoryTabs />
+          {filterByCategory(UKVI_QA).map((item, i) => <QACard key={i} item={item} i={i} accentColor={C.green} />)}
+          {filterByCategory(UKVI_QA).length === 0 && (
+            <div style={{ textAlign: "center", padding: "20px 10px", color: "rgba(255,255,255,0.25)", fontSize: 12.5 }}>No questions in this category yet.</div>
+          )}
         </div>
       )}
 
       {section === "refusal" && (
         <div>
           <div style={{ background: "rgba(232,91,91,0.07)", border: "1px solid rgba(232,91,91,0.25)", borderRadius: 14, padding: "14px 16px", marginBottom: 16 }}>
-            <div style={{ fontSize: 15, fontWeight: 800, color: "#EEF2F7", marginBottom: 6 }}>❌ Visa Refusal — কী করবেন?</div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "#F0F4FF", marginBottom: 6 }}>❌ Visa Refusal — কী করবেন?</div>
             <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>
-              Refusal letter-এ একটি <strong style={{ color: "#E85B5B" }}>refusal code</strong> থাকে যা কারণ নির্দেশ করে। এই code বুঝে পরবর্তী application শক্তিশালী করুন। নিচে সবচেয়ে সাধারণ refusal codes এবং সমাধান দেওয়া হলো।
+              Refusal letter-এ একটি <strong style={{ color: "#CF142B" }}>refusal code</strong> থাকে যা কারণ নির্দেশ করে। এই code বুঝে পরবর্তী application শক্তিশালী করুন। নিচে সবচেয়ে সাধারণ refusal codes এবং সমাধান দেওয়া হলো।
             </div>
           </div>
 
@@ -1629,8 +1887,8 @@ function PrepTab() {
           {REFUSAL_REASONS.map((r, i) => (
             <div key={i} style={{ marginBottom: 8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "12px 14px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                <span style={{ fontSize: 10, fontWeight: 800, color: "#E85B5B", background: "rgba(232,91,91,0.15)", padding: "2px 8px", borderRadius: 6, fontFamily: "monospace" }}>{r.code}</span>
-                <span style={{ fontSize: 13, fontWeight: 700, color: "#EEF2F7" }}>{r.title}</span>
+                <span style={{ fontSize: 10, fontWeight: 800, color: "#CF142B", background: "rgba(232,91,91,0.15)", padding: "2px 8px", borderRadius: 6, fontFamily: "monospace" }}>{r.code}</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#F0F4FF" }}>{r.title}</span>
               </div>
               <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontStyle: "italic", marginBottom: 7 }}>{r.bn}</div>
               <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.5, marginBottom: 8 }}>{r.desc}</div>
@@ -1642,7 +1900,7 @@ function PrepTab() {
             <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", marginBottom: 10 }}>📎 আপনার Refusal Letters / Documents</div>
 
             <input ref={fileInputRef} type="file" accept=".pdf" onChange={handleFileUpload} style={{ display: "none" }} />
-            <button onClick={() => fileInputRef.current?.click()} style={{ width: "100%", padding: "13px", background: "rgba(91,141,239,0.08)", border: "2px dashed rgba(91,141,239,0.4)", borderRadius: 12, color: "#5B8DEF", fontSize: 13, fontWeight: 700, cursor: "pointer", marginBottom: 12 }}>
+            <button onClick={() => fileInputRef.current?.click()} style={{ width: "100%", padding: "13px", background: "rgba(91,141,239,0.08)", border: "2px dashed rgba(91,141,239,0.4)", borderRadius: 12, color: "#4A90D9", fontSize: 13, fontWeight: 700, cursor: "pointer", marginBottom: 12 }}>
               📄 Upload PDF (Refusal Letter / Document)
             </button>
 
@@ -1656,10 +1914,10 @@ function PrepTab() {
                   <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "11px 13px", marginBottom: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10 }}>
                     <span style={{ fontSize: 22, flexShrink: 0 }}>📄</span>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: "#EEF2F7", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{f.name}</div>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: "#F0F4FF", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{f.name}</div>
                       <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)", marginTop: 1 }}>{f.size} · Uploaded {f.date}</div>
                     </div>
-                    <button onClick={() => setViewingPdf(viewingPdf === f.id ? null : f.id)} style={{ background: viewingPdf === f.id ? "rgba(61,184,139,0.15)" : "rgba(255,255,255,0.06)", border: "1px solid " + (viewingPdf === f.id ? "#3DB88B55" : "rgba(255,255,255,0.12)"), borderRadius: 7, color: viewingPdf === f.id ? "#3DB88B" : "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 700, cursor: "pointer", padding: "5px 10px", flexShrink: 0 }}>
+                    <button onClick={() => setViewingPdf(viewingPdf === f.id ? null : f.id)} style={{ background: viewingPdf === f.id ? "rgba(61,184,139,0.15)" : "rgba(255,255,255,0.06)", border: "1px solid " + (viewingPdf === f.id ? "#1D9E6A55" : "rgba(255,255,255,0.12)"), borderRadius: 7, color: viewingPdf === f.id ? "#1D9E6A" : "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 700, cursor: "pointer", padding: "5px 10px", flexShrink: 0 }}>
                       {viewingPdf === f.id ? "Close" : "View"}
                     </button>
                     <button onClick={() => deletePdf(f.id)} style={{ background: "none", border: "none", color: "rgba(232,91,91,0.5)", cursor: "pointer", fontSize: 18, lineHeight: 1, padding: "2px 4px", flexShrink: 0 }}>×</button>
@@ -1667,9 +1925,9 @@ function PrepTab() {
 
                   {viewingPdf === f.id && pdfData[f.id] && (
                     <div style={{ marginBottom: 10, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(91,141,239,0.3)" }}>
-                      <div style={{ background: "rgba(91,141,239,0.08)", padding: "8px 14px", fontSize: 12, color: "#5B8DEF", fontWeight: 700, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div style={{ background: "rgba(91,141,239,0.08)", padding: "8px 14px", fontSize: 12, color: "#4A90D9", fontWeight: 700, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <span>📄 {f.name}</span>
-                        <a href={pdfData[f.id]} download={f.name} style={{ fontSize: 11, color: "#5B8DEF", textDecoration: "none", background: "rgba(91,141,239,0.15)", padding: "3px 10px", borderRadius: 6 }}>⬇ Download</a>
+                        <a href={pdfData[f.id]} download={f.name} style={{ fontSize: 11, color: "#4A90D9", textDecoration: "none", background: "rgba(91,141,239,0.15)", padding: "3px 10px", borderRadius: 6 }}>⬇ Download</a>
                       </div>
                       <iframe
                         src={pdfData[f.id]}
@@ -1739,14 +1997,14 @@ function PackingTab() {
   const totalWeight = allItemsFlat.filter(i => checked[i.id]).reduce((s, i) => s + (i.weight || 0), 0);
   const limit = luggagePreset === "custom" ? (parseFloat(customLimit) || 23) : LUGGAGE_PRESETS.find(p => p.id === luggagePreset)?.limit || 23;
   const weightPct = Math.min(100, (totalWeight / limit) * 100);
-  const weightColor = weightPct < 70 ? "#3DB88B" : weightPct < 95 ? "#E8A838" : "#E85B5B";
+  const weightColor = weightPct < 70 ? "#1D9E6A" : weightPct < 95 ? "#E8A838" : "#CF142B";
 
-  const C = { green: "#3DB88B", blue: "#5B8DEF", amber: "#E8A838", red: "#E85B5B", surface2: "#1c2330", border: "#2a3441", textMuted: "#7d8590" };
+  const C = { green: "#1D9E6A", blue: "#4A90D9", amber: "#E8A838", red: "#CF142B", surface2: "#1c2330", border: "#2a3441", textMuted: "#7d8590" };
 
   return (
     <div>
       <div style={{ background: "rgba(91,141,239,0.08)", border: "1px solid rgba(91,141,239,0.25)", borderRadius: 14, padding: "14px 16px", marginBottom: 16 }}>
-        <div style={{ fontSize: 15, fontWeight: 800, color: "#EEF2F7", marginBottom: 6 }}>🧳 Packing Planner</div>
+        <div style={{ fontSize: 15, fontWeight: 800, color: "#F0F4FF", marginBottom: 6 }}>🧳 Packing Planner</div>
         <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", lineHeight: 1.6 }}>
           Plan and track everything you need to pack for the UK. Check off items as you pack them, and monitor your luggage weight against the airline limit.
         </div>
@@ -1755,10 +2013,10 @@ function PackingTab() {
       <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "14px 16px", marginBottom: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
           <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: 0.5 }}>Packing Progress</span>
-          <span style={{ fontSize: 12, fontWeight: 800, color: "#3DB88B" }}>{checkedCount} / {totalItems} items</span>
+          <span style={{ fontSize: 12, fontWeight: 800, color: "#1D9E6A" }}>{checkedCount} / {totalItems} items</span>
         </div>
         <div style={{ height: 6, background: "rgba(255,255,255,0.07)", borderRadius: 6, overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${overallPct}%`, background: "linear-gradient(90deg,#534AB7,#3DB88B)", borderRadius: 6, transition: "width 0.4s" }} />
+          <div style={{ height: "100%", width: `${overallPct}%`, background: "linear-gradient(90deg,#534AB7,#1D9E6A)", borderRadius: 6, transition: "width 0.4s" }} />
         </div>
       </div>
 
@@ -1795,7 +2053,7 @@ function PackingTab() {
             }}>
               <span style={{ fontSize: 20 }}>{cat.icon}</span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 13.5, fontWeight: 700, color: "#EEF2F7" }}>{cat.name}</div>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: "#F0F4FF" }}>{cat.name}</div>
                 <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{catChecked} / {cat.items.length} packed</div>
               </div>
               <span style={{ color: cat.color, fontSize: 14, transition: "transform 0.2s", display: "inline-block", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▾</span>
@@ -1816,7 +2074,7 @@ function PackingTab() {
                         {checked[item.id] && "✓"}
                       </div>
                       <div onClick={() => toggleItem(item.id)} style={{ flex: 1, cursor: "pointer" }}>
-                        <span style={{ fontSize: 13, color: checked[item.id] ? "rgba(255,255,255,0.35)" : "#EEF2F7", textDecoration: checked[item.id] ? "line-through" : "none" }}>{item.name}</span>
+                        <span style={{ fontSize: 13, color: checked[item.id] ? "rgba(255,255,255,0.35)" : "#F0F4FF", textDecoration: checked[item.id] ? "line-through" : "none" }}>{item.name}</span>
                       </div>
                       {item.weight > 0 && (
                         <span style={{ fontSize: 10.5, color: "rgba(255,255,255,0.3)", flexShrink: 0 }}>{item.weight} kg</span>
@@ -1947,8 +2205,13 @@ export default function App() {
   // ── Packing Planner via Settings (always reachable) ────────
   if (showPackingFromSettings) {
     return (
-      <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", paddingBottom: 40 }}>
-        <div style={{ position: "sticky", top: 0, background: "#08111C", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "14px 20px", display: "flex", alignItems: "center", gap: 10, zIndex: 10 }}>
+      <div style={{ minHeight: "100vh", background: "linear-gradient(180deg, #011936 0%, #0A2348 50%, #0F2D5C 100%)", fontFamily: "Arial, sans-serif", color: "#F0F4FF", paddingBottom: 40 }}>
+        <style>{`
+          * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+          html, body { overflow-x: hidden; }
+          input, button, textarea { max-width: 100%; }
+        `}</style>
+        <div style={{ position: "sticky", top: 0, background: "linear-gradient(180deg, #011936 0%, #0A2348 50%, #0F2D5C 100%)", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "14px 20px", display: "flex", alignItems: "center", gap: 10, zIndex: 10 }}>
           <button onClick={() => setShowPackingFromSettings(false)} style={{ background: "rgba(255,255,255,0.07)", border: "none", borderRadius: 8, color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 14, padding: "8px 12px" }}>← Back</button>
           <h2 style={{ margin: 0, fontSize: 17, fontWeight: 800 }}>🧳 Packing Planner</h2>
         </div>
@@ -1964,16 +2227,16 @@ export default function App() {
     const next = STATUSES[advancePrompt.toStatusId];
     return (
       <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.8)", zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "Arial, sans-serif" }}>
-        <div style={{ width: "100%", maxWidth: 380, background: "#0D1E2F", borderRadius: 22, padding: "28px 24px", border: "1px solid rgba(61,184,139,0.3)" }}>
+        <div style={{ width: "100%", maxWidth: 380, background: "#0A2545", borderRadius: 22, padding: "28px 24px", border: "1px solid rgba(61,184,139,0.3)" }}>
           <div style={{ fontSize: 38, marginBottom: 12, textAlign: "center" }}>🎯</div>
-          <div style={{ fontSize: 17, fontWeight: 800, color: "#EEF2F7", marginBottom: 8, textAlign: "center" }}>Ready to move forward?</div>
+          <div style={{ fontSize: 17, fontWeight: 800, color: "#F0F4FF", marginBottom: 8, textAlign: "center" }}>Ready to move forward?</div>
           <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, marginBottom: 20, textAlign: "center" }}>
             You completed:<br />
-            <strong style={{ color: "#EEF2F7" }}>"{advancePrompt.taskText.slice(0, 55)}"</strong><br /><br />
+            <strong style={{ color: "#F0F4FF" }}>"{advancePrompt.taskText.slice(0, 55)}"</strong><br /><br />
             Update your status to:<br />
-            <span style={{ color: "#3DB88B", fontWeight: 800, fontSize: 15 }}>{next.emoji} {next.label}</span>?
+            <span style={{ color: "#1D9E6A", fontWeight: 800, fontSize: 15 }}>{next.emoji} {next.label}</span>?
           </div>
-          <button onClick={confirmAdvance}          style={{ ...btnStyle("#3DB88B"), marginBottom: 10 }}>Yes, update my status ✓</button>
+          <button onClick={confirmAdvance}          style={{ ...btnStyle("#1D9E6A"), marginBottom: 10 }}>Yes, update my status ✓</button>
           <button onClick={() => setAdvancePrompt(null)} style={{ ...btnStyle("transparent"), border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)" }}>No, I'll update manually</button>
         </div>
       </div>
@@ -1985,13 +2248,13 @@ export default function App() {
     const toStage = STATUSES[skipWarning.toId];
     return (
       <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "Arial, sans-serif" }}>
-        <div style={{ width: "100%", maxWidth: 400, background: "#0D1E2F", borderRadius: 22, padding: "28px 24px", border: "2px solid rgba(232,91,91,0.4)", boxShadow: "0 0 40px rgba(232,91,91,0.15)" }}>
+        <div style={{ width: "100%", maxWidth: 400, background: "#0A2545", borderRadius: 22, padding: "28px 24px", border: "2px solid rgba(232,91,91,0.4)", boxShadow: "0 0 40px rgba(232,91,91,0.15)" }}>
 
           <div style={{ textAlign: "center", marginBottom: 16 }}>
             <div style={{ fontSize: 44, marginBottom: 10 }}>⚠️</div>
-            <div style={{ fontSize: 18, fontWeight: 900, color: "#E85B5B", marginBottom: 6 }}>You're skipping ahead!</div>
+            <div style={{ fontSize: 18, fontWeight: 900, color: "#CF142B", marginBottom: 6 }}>You're skipping ahead!</div>
             <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>
-              You're jumping to <strong style={{ color: "#EEF2F7" }}>{toStage.emoji} {toStage.label}</strong> but these priority tasks are still incomplete:
+              You're jumping to <strong style={{ color: "#F0F4FF" }}>{toStage.emoji} {toStage.label}</strong> but these priority tasks are still incomplete:
             </div>
           </div>
 
@@ -2000,7 +2263,7 @@ export default function App() {
               <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "9px 12px", marginBottom: 6, background: "rgba(232,91,91,0.07)", border: "1px solid rgba(232,91,91,0.2)", borderRadius: 10 }}>
                 <span style={{ fontSize: 14, marginTop: 1, flexShrink: 0 }}>❌</span>
                 <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#E85B5B", marginBottom: 2, textTransform: "uppercase", letterSpacing: 0.4 }}>{t.stage}</div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#CF142B", marginBottom: 2, textTransform: "uppercase", letterSpacing: 0.4 }}>{t.stage}</div>
                   <div style={{ fontSize: 12.5, color: "rgba(255,255,255,0.7)", lineHeight: 1.4 }}>{t.text}</div>
                 </div>
               </div>
@@ -2013,12 +2276,12 @@ export default function App() {
 
           <button
             onClick={() => setSkipWarning(null)}
-            style={{ width: "100%", padding: "12px 0", background: "#3DB88B", border: "none", borderRadius: 12, color: "#fff", fontSize: 14, fontWeight: 800, cursor: "pointer", marginBottom: 10 }}>
+            style={{ width: "100%", padding: "12px 0", background: "#1D9E6A", border: "none", borderRadius: 12, color: "#fff", fontSize: 14, fontWeight: 800, cursor: "pointer", marginBottom: 10 }}>
             ← Go back and complete tasks
           </button>
           <button
             onClick={confirmSkip}
-            style={{ width: "100%", padding: "10px 0", background: "transparent", border: "1px solid rgba(232,91,91,0.35)", borderRadius: 12, color: "#E85B5B", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+            style={{ width: "100%", padding: "10px 0", background: "transparent", border: "1px solid rgba(232,91,91,0.35)", borderRadius: 12, color: "#CF142B", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
             Skip anyway (not recommended)
           </button>
         </div>
@@ -2030,7 +2293,12 @@ export default function App() {
   if (showSettings) {
     const hasChanges = editProfile.name !== profile.name || editProfile.arrival !== profile.arrival;
     return (
-      <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+      <div style={{ minHeight: "100vh", background: "linear-gradient(180deg, #011936 0%, #0A2348 50%, #0F2D5C 100%)", fontFamily: "Arial, sans-serif", color: "#F0F4FF", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
+        <style>{`
+          * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+          html, body { overflow-x: hidden; }
+          input, button, textarea { max-width: 100%; }
+        `}</style>
         <div style={{ width: "100%", maxWidth: 420, background: "rgba(255,255,255,0.05)", borderRadius: 24, padding: "32px 28px", border: "1px solid rgba(255,255,255,0.1)" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
             <h2 style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>⚙️ Settings</h2>
@@ -2043,7 +2311,7 @@ export default function App() {
           <div style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 20, padding: "10px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 10 }}>
             💡 Change your journey stage using the status dropdown on the Home tab.
           </div>
-          <button disabled={!editProfile.name.trim() || !hasChanges} onClick={() => { if (editProfile.name.trim()) { setProfile(p => ({ ...p, ...editProfile })); setShowToast("✓ Changes Saved"); setTimeout(() => { setShowToast(""); setShowSettings(false); }, 1100); } }} style={btnStyle(editProfile.name.trim() && hasChanges ? "#3DB88B" : "#333")}>
+          <button disabled={!editProfile.name.trim() || !hasChanges} onClick={() => { if (editProfile.name.trim()) { setProfile(p => ({ ...p, ...editProfile })); setShowToast("✓ Changes Saved"); setTimeout(() => { setShowToast(""); setShowSettings(false); }, 1100); } }} style={btnStyle(editProfile.name.trim() && hasChanges ? "#1D9E6A" : "#333")}>
             Save Changes ✓
           </button>
           <button onClick={() => setShowSettings(false)} style={{ ...btnStyle("transparent"), marginTop: 10, border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.6)" }}>Cancel</button>
@@ -2054,13 +2322,13 @@ export default function App() {
           <button onClick={() => { setShowSettings(false); setShowPackingFromSettings(true); }} style={{
             width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "12px 14px", marginBottom: 12,
             background: "rgba(91,141,239,0.08)", border: "1px solid rgba(91,141,239,0.25)", borderRadius: 12,
-            color: "#5B8DEF", fontSize: 14, fontWeight: 700, cursor: "pointer", textAlign: "left",
+            color: "#4A90D9", fontSize: 14, fontWeight: 700, cursor: "pointer", textAlign: "left",
           }}>
             <span style={{ fontSize: 18 }}>🧳</span> Open Packing Planner
           </button>
 
           <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "12px 0 24px" }} />
-          <button onClick={() => { if (window.confirm("Are you sure? This will permanently delete all your progress.")) { localStorage.clear(); window.location.reload(); } }} style={{ width: "100%", padding: "12px 0", background: "transparent", border: "1px solid rgba(232,91,91,0.35)", borderRadius: 12, color: "#E85B5B", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+          <button onClick={() => { if (window.confirm("Are you sure? This will permanently delete all your progress.")) { localStorage.clear(); window.location.reload(); } }} style={{ width: "100%", padding: "12px 0", background: "transparent", border: "1px solid rgba(232,91,91,0.35)", borderRadius: 12, color: "#CF142B", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
             Reset All Progress
           </button>
         </div>
@@ -2072,14 +2340,19 @@ export default function App() {
   if (screen === "onboard") {
     const step = profile.step;
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(160deg,#0B1E35 0%,#0D2A1F 50%,#1A0D2E 100%)", fontFamily: "Arial, sans-serif", padding: 20 }}>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(180deg, #011936 0%, #0A2348 50%, #0F2D5C 100%)", fontFamily: "Arial, sans-serif", padding: 20 }}>
+        <style>{`
+          * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+          html, body { overflow-x: hidden; }
+          input, button, textarea { max-width: 100%; }
+        `}</style>
         <div style={{ width: "100%", maxWidth: 420 }}>
           {step === 0 && (
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 72, marginBottom: 16 }}>🇬🇧</div>
-              <h1 style={{ color: "#fff", fontSize: 32, fontWeight: 800, marginBottom: 8 }}>Settle<span style={{ color: "#3DB88B" }}>UK</span></h1>
+              <h1 style={{ color: "#fff", fontSize: 32, fontWeight: 800, marginBottom: 8 }}>Journey to <span style={{ color: "#1D9E6A" }}>UK</span></h1>
               <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15, marginBottom: 40, lineHeight: 1.6 }}>Your Personal UK Student Journey Manager — from offer to settlement, step by step.</p>
-              <button onClick={() => setProfile(p => ({ ...p, step: 1 }))} style={btnStyle("#3DB88B")}>Start My Journey →</button>
+              <button onClick={() => setProfile(p => ({ ...p, step: 1 }))} style={btnStyle("#1D9E6A")}>Start My Journey →</button>
               <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 12, marginTop: 16 }}>Free · No account required</p>
             </div>
           )}
@@ -2088,7 +2361,7 @@ export default function App() {
               <button onClick={() => setProfile(p => ({ ...p, step: 0 }))} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13, marginBottom: 16, padding: 0 }}>← Back</button>
               <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 24 }}>👋 What is your name?</h2>
               <input value={profile.name} onChange={e => setProfile(p => ({ ...p, name: e.target.value }))} placeholder="Your first name" style={inputStyle} />
-              <button disabled={!profile.name.trim()} onClick={() => setProfile(p => ({ ...p, step: 2 }))} style={btnStyle(profile.name.trim() ? "#3DB88B" : "#333")}>Continue →</button>
+              <button disabled={!profile.name.trim()} onClick={() => setProfile(p => ({ ...p, step: 2 }))} style={btnStyle(profile.name.trim() ? "#1D9E6A" : "#333")}>Continue →</button>
             </div>
           )}
           {step === 2 && (
@@ -2113,7 +2386,7 @@ export default function App() {
               <h2 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 8 }}>📅 Estimated UK arrival date?</h2>
               <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 20 }}>This is approximate — you can change it later</p>
               <input type="date" value={profile.arrival} onChange={e => setProfile(p => ({ ...p, arrival: e.target.value }))} style={inputStyle} />
-              <button disabled={!profile.arrival} onClick={() => { setScreen("home"); setTab("home"); }} style={btnStyle(profile.arrival ? "#3DB88B" : "#333")}>Build My Roadmap 🗺️</button>
+              <button disabled={!profile.arrival} onClick={() => { setScreen("home"); setTab("home"); }} style={btnStyle(profile.arrival ? "#1D9E6A" : "#333")}>Build My Roadmap 🗺️</button>
             </div>
           )}
         </div>
@@ -2140,9 +2413,9 @@ export default function App() {
     icon:   type === "warn" ? "⚠️" : type === "tip" ? "💡" : "ℹ️",
     bg:     type === "warn" ? "rgba(232,91,91,0.08)"   : type === "tip" ? "rgba(61,184,139,0.07)"  : "rgba(91,141,239,0.07)",
     border: type === "warn" ? "rgba(232,91,91,0.3)"    : type === "tip" ? "rgba(61,184,139,0.22)"  : "rgba(91,141,239,0.22)",
-    color:  type === "warn" ? "#E85B5B"                : type === "tip" ? "#3DB88B"                 : "#5B8DEF",
-    badge:  type === "warn" ? { label: "🔴 Urgent",   c: "#E85B5B", bg: "rgba(232,91,91,0.18)" }
-          : type === "tip"  ? { label: "🟢 Tip",      c: "#3DB88B", bg: "rgba(61,184,139,0.15)" }
+    color:  type === "warn" ? "#CF142B"                : type === "tip" ? "#1D9E6A"                 : "#4A90D9",
+    badge:  type === "warn" ? { label: "🔴 Urgent",   c: "#CF142B", bg: "rgba(232,91,91,0.18)" }
+          : type === "tip"  ? { label: "🟢 Tip",      c: "#1D9E6A", bg: "rgba(61,184,139,0.15)" }
           :                   { label: "🟡 Important", c: "#E8A838", bg: "rgba(232,168,56,0.15)" },
   });
 
@@ -2152,7 +2425,12 @@ export default function App() {
   const docPct  = Math.round((docsReadyCount / DOCS.length) * 100);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#08111C", fontFamily: "Arial, sans-serif", color: "#EEF2F7", paddingBottom: 80 }}>
+    <div style={{ minHeight: "100vh", background: "linear-gradient(180deg, #011936 0%, #0A2348 50%, #0F2D5C 100%)", fontFamily: "Arial, sans-serif", color: "#F0F4FF", paddingBottom: 80 }}>
+        <style>{`
+          * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+          html, body { overflow-x: hidden; }
+          input, button, textarea { max-width: 100%; }
+        `}</style>
 
       {/* ── HEADER ── */}
       <div style={{ background: "linear-gradient(135deg,#0B1E35 0%,#0D2A1F 100%)", borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "14px 20px 0" }}>
@@ -2162,20 +2440,20 @@ export default function App() {
               GB
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 17, fontWeight: 800, color: "#3DB88B", whiteSpace: "nowrap" }}>SettleUK</div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: "#1D9E6A", whiteSpace: "nowrap" }}>Journey to UK</div>
               <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 500, marginTop: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 Hello, {profile.name}! {arrivalDays !== null && (arrivalDays > 0 ? `· ${arrivalDays} days to arrival` : "· You're in the UK now! 🇬🇧")}
               </div>
             </div>
-            <span style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", padding: "5px 13px", background: "rgba(61,184,139,0.1)", border: "1px solid rgba(61,184,139,0.4)", borderRadius: 20, fontSize: 11.5, fontWeight: 700, color: "#3DB88B", whiteSpace: "nowrap" }}>
+            <span style={{ flexShrink: 0, display: "inline-flex", alignItems: "center", padding: "5px 13px", background: "rgba(61,184,139,0.1)", border: "1px solid rgba(61,184,139,0.4)", borderRadius: 20, fontSize: 11.5, fontWeight: 700, color: "#1D9E6A", whiteSpace: "nowrap" }}>
               {sg.name}
             </span>
             <button onClick={() => { setEditProfile({ name: profile.name, arrival: profile.arrival }); setShowSettings(true); }} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, color: "rgba(255,255,255,0.45)", cursor: "pointer", fontSize: 15, width: 34, height: 34, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>⚙️</button>
           </div>
           {/* Nav tabs */}
           <div style={{ display: "flex", overflowX: "auto", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-            {[["home","🏠","Home"],["tasks","✅","Tasks"],["costs","💷","Costs"],["docs","📄","Docs"],["prep","📚","CAS&UKVI"], ...(packingAutoVisible ? [["packing","🧳","Packing"]] : []), ["guides","📖","Guides"]].map(([id,em,lbl]) => (
-              <button key={id} onClick={() => setTab(id)} style={{ flex: "none", padding: "10px 14px", background: "transparent", border: "none", borderBottom: tab === id ? "2px solid #3DB88B" : "2px solid transparent", color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.38)", fontSize: 12.5, fontWeight: tab === id ? 700 : 400, cursor: "pointer", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 5 }}>
+            {[["home","🏠","Home"],["tasks","✅","Tasks"],["costs","💷","Costs"],["prep","📚","CAS&UKVI"],["docs","📄","Docs"], ...(packingAutoVisible ? [["packing","🧳","Packing"]] : []), ["guides","📖","Guides"]].map(([id,em,lbl]) => (
+              <button key={id} onClick={() => setTab(id)} style={{ flex: "none", padding: "10px 14px", background: "transparent", border: "none", borderBottom: tab === id ? "2px solid #1D9E6A" : "2px solid transparent", color: tab === id ? "#1D9E6A" : "rgba(255,255,255,0.38)", fontSize: 12.5, fontWeight: tab === id ? 700 : 400, cursor: "pointer", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: 5 }}>
                 <span style={{ fontSize: 13 }}>{em}</span>{lbl}
               </button>
             ))}
@@ -2201,7 +2479,7 @@ export default function App() {
               }}>
                 <span style={{ fontSize: 22 }}>📌</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: "#5B8DEF" }}>Complete Your Profile</div>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: "#4A90D9" }}>Complete Your Profile</div>
                   <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>Get personalized university recommendations</div>
                 </div>
                 <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 15 }}>›</span>
@@ -2232,7 +2510,7 @@ export default function App() {
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                   <span style={{ fontSize: 24 }}>🧳</span>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 15, fontWeight: 900, color: "#EEF2F7" }}>Complete Your Packing List</div>
+                    <div style={{ fontSize: 15, fontWeight: 900, color: "#F0F4FF" }}>Complete Your Packing List</div>
                     <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>You're flying soon! Check your luggage weight limit.</div>
                   </div>
                 </div>
@@ -2261,10 +2539,10 @@ export default function App() {
 
             <h3 style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5, color: "rgba(255,255,255,0.28)", margin: "18px 0 10px" }}>Quick Actions</h3>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              <QuickCard icon="📚" title="CAS & UKVI Prep" sub="Interview Q&A guide" onClick={() => setTab("prep")} />
               <QuickCard icon="📄" title="Documents" sub={`${docsReadyCount} of ${DOCS.length} ready`}       pct={docPct}  onClick={() => setTab("docs")} />
               <QuickCard icon="✅" title="Tasks"     sub={`${completedTasksCount} of ${sg.tasks.length} done`} pct={taskPct} onClick={() => setTab("tasks")} />
               <QuickCard icon="💷" title="Cost Calculator" sub="Plan your budget" onClick={() => setTab("costs")} />
-              <QuickCard icon="📚" title="CAS & UKVI Prep" sub="Interview Q&A guide" onClick={() => setTab("prep")} />
               <QuickCard icon="🏦" title="Banking guide" sub="Open Monzo"       onClick={() => setTab("guides")} />
               <QuickCard icon="🏥" title="NHS guide"     sub="Register with GP" onClick={() => setTab("guides")} />
             </div>
@@ -2289,13 +2567,13 @@ export default function App() {
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
                   <span style={{ fontSize: 22 }}>🧳</span>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 14, fontWeight: 800, color: "#5B8DEF" }}>Start Your Packing Planner</div>
+                    <div style={{ fontSize: 14, fontWeight: 800, color: "#4A90D9" }}>Start Your Packing Planner</div>
                     <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.45)", marginTop: 1 }}>Visa submitted! Time to plan what to pack for UK.</div>
                   </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#5B8DEF", background: "rgba(91,141,239,0.15)", padding: "3px 10px", borderRadius: 20 }}>UNLOCK NOW</span>
-                  <span style={{ fontSize: 13, color: "#5B8DEF", fontWeight: 700 }}>Open Packing Planner →</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#4A90D9", background: "rgba(91,141,239,0.15)", padding: "3px 10px", borderRadius: 20 }}>UNLOCK NOW</span>
+                  <span style={{ fontSize: 13, color: "#4A90D9", fontWeight: 700 }}>Open Packing Planner →</span>
                 </div>
               </div>
             )}
@@ -2304,15 +2582,15 @@ export default function App() {
               const isExpanded = expandedTask === task.id;
               return (
                 <div key={task.id} style={{ marginBottom: 7 }}>
-                  <div style={{ display: "flex", gap: 12, padding: "13px 14px", background: taskDone[task.id] ? "rgba(61,184,139,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${taskDone[task.id] ? "#3DB88B44" : "rgba(255,255,255,0.06)"}`, borderRadius: 12, alignItems: "flex-start" }}>
-                    <div onClick={() => toggleTask(task.id)} style={{ width: 20, height: 20, borderRadius: 6, flexShrink: 0, marginTop: 2, cursor: "pointer", border: `2px solid ${taskDone[task.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: taskDone[task.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>
+                  <div style={{ display: "flex", gap: 12, padding: "13px 14px", background: taskDone[task.id] ? "rgba(61,184,139,0.06)" : "rgba(255,255,255,0.03)", border: `1px solid ${taskDone[task.id] ? "#1D9E6A44" : "rgba(255,255,255,0.06)"}`, borderRadius: 12, alignItems: "flex-start" }}>
+                    <div onClick={() => toggleTask(task.id)} style={{ width: 20, height: 20, borderRadius: 6, flexShrink: 0, marginTop: 2, cursor: "pointer", border: `2px solid ${taskDone[task.id] ? "#1D9E6A" : "rgba(255,255,255,0.2)"}`, background: taskDone[task.id] ? "#1D9E6A" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>
                       {taskDone[task.id] && "✓"}
                     </div>
                     <div onClick={() => toggleTask(task.id)} style={{ flex: 1, cursor: "pointer" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 7, flexWrap: "wrap" }}>
-                        <span style={{ fontSize: 13.5, fontWeight: 700, textDecoration: taskDone[task.id] ? "line-through" : "none", color: taskDone[task.id] ? "rgba(255,255,255,0.28)" : "#EEF2F7" }}>{task.text}</span>
-                        {task.priority    && !taskDone[task.id] && <span style={{ fontSize: 9.5, fontWeight: 700, color: "#E8A838", background: "#E8A83820", padding: "2px 7px", borderRadius: 8 }}>PRIORITY</span>}
-                        {task.autoAdvance && !taskDone[task.id] && <span style={{ fontSize: 9.5, fontWeight: 700, color: "#5B8DEF", background: "rgba(91,141,239,0.15)", padding: "2px 7px", borderRadius: 8 }}>AUTO-ADVANCE</span>}
+                        <span style={{ fontSize: 13.5, fontWeight: 700, textDecoration: taskDone[task.id] ? "line-through" : "none", color: taskDone[task.id] ? "rgba(255,255,255,0.28)" : "#F0F4FF" }}>{task.text}</span>
+                        {task.priority    && !taskDone[task.id] && <span style={{ fontSize: 9.5, fontWeight: 700, color: "#CF142B", background: "rgba(207,20,43,0.14)", padding: "2px 7px", borderRadius: 8 }}>PRIORITY</span>}
+                        {task.autoAdvance && !taskDone[task.id] && <span style={{ fontSize: 9.5, fontWeight: 700, color: "#4A90D9", background: "rgba(74,144,217,0.15)", padding: "2px 7px", borderRadius: 8 }}>AUTO-ADVANCE</span>}
                       </div>
                     </div>
                     {task.desc && (
@@ -2321,8 +2599,8 @@ export default function App() {
                         style={{
                           flexShrink: 0, width: 24, height: 24, borderRadius: "50%",
                           background: isExpanded ? "rgba(91,141,239,0.2)" : "rgba(255,255,255,0.06)",
-                          border: `1px solid ${isExpanded ? "#5B8DEF" : "rgba(255,255,255,0.12)"}`,
-                          color: isExpanded ? "#5B8DEF" : "rgba(255,255,255,0.4)",
+                          border: `1px solid ${isExpanded ? "#4A90D9" : "rgba(255,255,255,0.12)"}`,
+                          color: isExpanded ? "#4A90D9" : "rgba(255,255,255,0.4)",
                           fontSize: 12, fontWeight: 700, cursor: "pointer",
                           display: "flex", alignItems: "center", justifyContent: "center",
                         }}
@@ -2332,64 +2610,13 @@ export default function App() {
                     )}
                   </div>
                   {isExpanded && task.desc && (
-                    <InfoExpand desc={task.desc} link={task.link} accent="#5B8DEF" />
+                    <InfoExpand desc={task.desc} link={task.link} accent="#4A90D9" />
                   )}
                 </div>
               );
             })}
             <div style={{ marginTop: 16, padding: "11px 14px", background: "rgba(61,184,139,0.05)", border: "1px solid rgba(61,184,139,0.14)", borderRadius: 12, fontSize: 11.5, color: "rgba(255,255,255,0.38)", textAlign: "center" }}>
-              ✨ <strong style={{ color: "#5B8DEF" }}>AUTO-ADVANCE</strong> tasks will prompt to update your status automatically when completed.
-            </div>
-          </div>
-        )}
-
-        {/* ── DOCS TAB ── */}
-        {tab === "docs" && (
-          <div>
-            <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>📄 Document Vault</h2>
-            <p style={{ margin: "0 0 8px", fontSize: 12.5, color: "rgba(255,255,255,0.38)" }}>{docsReadyCount} of {DOCS.length} documents ready · {docPct}%</p>
-            <div style={{ height: 5, background: "rgba(255,255,255,0.07)", borderRadius: 5, overflow: "hidden", marginBottom: 14 }}>
-              <div style={{ height: "100%", width: `${docPct}%`, background: "linear-gradient(90deg,#534AB7,#3DB88B)", borderRadius: 5, transition: "width 0.4s" }} />
-            </div>
-            <div style={{ background: "rgba(232,168,56,0.08)", border: "1px solid rgba(232,168,56,0.22)", borderRadius: 12, padding: "10px 14px", marginBottom: 16, fontSize: 12.5, color: "rgba(255,255,255,0.62)" }}>
-              💡 <strong style={{ color: "#E8A838" }}>Tip:</strong> Scan everything and upload to Google Drive. Never carry all originals in one bag.
-            </div>
-            <div>
-              {DOCS.map(doc => {
-                const isExpanded = expandedDoc === doc.id;
-                return (
-                  <div key={doc.id} style={{ marginBottom: 8 }}>
-                    <div style={{ padding: "12px 14px", borderRadius: 12, display: "flex", alignItems: "center", gap: 10, background: docChecked[doc.id] ? "rgba(61,184,139,0.08)" : "rgba(255,255,255,0.03)", border: `1px solid ${docChecked[doc.id] ? "#3DB88B55" : "rgba(255,255,255,0.07)"}` }}>
-                      <span onClick={() => toggleDoc(doc.id)} style={{ fontSize: 22, cursor: "pointer", flexShrink: 0 }}>{doc.icon}</span>
-                      <div onClick={() => toggleDoc(doc.id)} style={{ flex: 1, cursor: "pointer", minWidth: 0 }}>
-                        <div style={{ fontSize: 13, fontWeight: 700, color: docChecked[doc.id] ? "rgba(255,255,255,0.35)" : "#EEF2F7", textDecoration: docChecked[doc.id] ? "line-through" : "none" }}>{doc.name}</div>
-                        <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.28)", marginTop: 1 }}>{doc.hint}</div>
-                      </div>
-                      {doc.desc && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); setExpandedDoc(isExpanded ? null : doc.id); }}
-                          style={{
-                            flexShrink: 0, width: 24, height: 24, borderRadius: "50%",
-                            background: isExpanded ? "rgba(91,141,239,0.2)" : "rgba(255,255,255,0.06)",
-                            border: `1px solid ${isExpanded ? "#5B8DEF" : "rgba(255,255,255,0.12)"}`,
-                            color: isExpanded ? "#5B8DEF" : "rgba(255,255,255,0.4)",
-                            fontSize: 12, fontWeight: 700, cursor: "pointer",
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                          }}
-                        >
-                          ℹ️
-                        </button>
-                      )}
-                      <div onClick={() => toggleDoc(doc.id)} style={{ width: 18, height: 18, borderRadius: 5, flexShrink: 0, cursor: "pointer", border: `2px solid ${docChecked[doc.id] ? "#3DB88B" : "rgba(255,255,255,0.2)"}`, background: docChecked[doc.id] ? "#3DB88B" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>
-                        {docChecked[doc.id] && "✓"}
-                      </div>
-                    </div>
-                    {isExpanded && doc.desc && (
-                      <InfoExpand desc={doc.desc} link={doc.link} accent="#5B8DEF" />
-                    )}
-                  </div>
-                );
-              })}
+              ✨ <strong style={{ color: "#4A90D9" }}>AUTO-ADVANCE</strong> tasks will prompt to update your status automatically when completed.
             </div>
           </div>
         )}
@@ -2400,6 +2627,57 @@ export default function App() {
             <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>📚 CAS & UKVI Preparation</h2>
             <p style={{ margin: "0 0 16px", fontSize: 12.5, color: "rgba(255,255,255,0.38)" }}>Interview guide, sample Q&A, and refusal letter analysis</p>
             <PrepTab />
+          </div>
+        )}
+
+        {/* ── DOCS TAB ── */}
+        {tab === "docs" && (
+          <div>
+            <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>📄 Document Vault</h2>
+            <p style={{ margin: "0 0 8px", fontSize: 12.5, color: "rgba(255,255,255,0.38)" }}>{docsReadyCount} of {DOCS.length} documents ready · {docPct}%</p>
+            <div style={{ height: 5, background: "rgba(255,255,255,0.07)", borderRadius: 5, overflow: "hidden", marginBottom: 14 }}>
+              <div style={{ height: "100%", width: `${docPct}%`, background: "linear-gradient(90deg,#534AB7,#1D9E6A)", borderRadius: 5, transition: "width 0.4s" }} />
+            </div>
+            <div style={{ background: "rgba(232,168,56,0.08)", border: "1px solid rgba(232,168,56,0.22)", borderRadius: 12, padding: "10px 14px", marginBottom: 16, fontSize: 12.5, color: "rgba(255,255,255,0.62)" }}>
+              💡 <strong style={{ color: "#E8A838" }}>Tip:</strong> Scan everything and upload to Google Drive. Never carry all originals in one bag.
+            </div>
+            <div>
+              {DOCS.map(doc => {
+                const isExpanded = expandedDoc === doc.id;
+                return (
+                  <div key={doc.id} style={{ marginBottom: 8 }}>
+                    <div style={{ padding: "12px 14px", borderRadius: 12, display: "flex", alignItems: "center", gap: 10, background: docChecked[doc.id] ? "rgba(61,184,139,0.08)" : "rgba(255,255,255,0.03)", border: `1px solid ${docChecked[doc.id] ? "#1D9E6A55" : "rgba(255,255,255,0.07)"}` }}>
+                      <span onClick={() => toggleDoc(doc.id)} style={{ fontSize: 22, cursor: "pointer", flexShrink: 0 }}>{doc.icon}</span>
+                      <div onClick={() => toggleDoc(doc.id)} style={{ flex: 1, cursor: "pointer", minWidth: 0 }}>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: docChecked[doc.id] ? "rgba(255,255,255,0.35)" : "#F0F4FF", textDecoration: docChecked[doc.id] ? "line-through" : "none" }}>{doc.name}</div>
+                        <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.28)", marginTop: 1 }}>{doc.hint}</div>
+                      </div>
+                      {doc.desc && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setExpandedDoc(isExpanded ? null : doc.id); }}
+                          style={{
+                            flexShrink: 0, width: 24, height: 24, borderRadius: "50%",
+                            background: isExpanded ? "rgba(91,141,239,0.2)" : "rgba(255,255,255,0.06)",
+                            border: `1px solid ${isExpanded ? "#4A90D9" : "rgba(255,255,255,0.12)"}`,
+                            color: isExpanded ? "#4A90D9" : "rgba(255,255,255,0.4)",
+                            fontSize: 12, fontWeight: 700, cursor: "pointer",
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                          }}
+                        >
+                          ℹ️
+                        </button>
+                      )}
+                      <div onClick={() => toggleDoc(doc.id)} style={{ width: 18, height: 18, borderRadius: 5, flexShrink: 0, cursor: "pointer", border: `2px solid ${docChecked[doc.id] ? "#1D9E6A" : "rgba(255,255,255,0.2)"}`, background: docChecked[doc.id] ? "#1D9E6A" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11 }}>
+                        {docChecked[doc.id] && "✓"}
+                      </div>
+                    </div>
+                    {isExpanded && doc.desc && (
+                      <InfoExpand desc={doc.desc} link={doc.link} accent="#4A90D9" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
 
@@ -2418,7 +2696,7 @@ export default function App() {
             <h2 style={{ margin: "0 0 4px", fontSize: 19, fontWeight: 800 }}>📖 Guides & Resources</h2>
             <p style={{ margin: "0 0 14px", fontSize: 12.5, color: "rgba(255,255,255,0.38)" }}>Official links and step-by-step guides for life in UK</p>
             {GUIDES.map((g, i) => (
-              <a key={i} href={g.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 12, padding: "13px 14px", marginBottom: 7, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, textDecoration: "none", color: "#EEF2F7" }}>
+              <a key={i} href={g.url} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 12, padding: "13px 14px", marginBottom: 7, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, textDecoration: "none", color: "#F0F4FF" }}>
                 <span style={{ fontSize: 22 }}>{g.icon}</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13.5, fontWeight: 700 }}>{g.title}</div>
@@ -2433,17 +2711,17 @@ export default function App() {
 
       {/* ── BOTTOM NAV ── */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "rgba(8,17,28,0.96)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", padding: "8px 0 14px" }}>
-        {[["home","🏠","Home"],["tasks","✅","Tasks"],["costs","💷","Costs"],["docs","📄","Docs"],["prep","📚","Prep"], ...(packingAutoVisible ? [["packing","🧳","Packing"]] : []), ["guides","📖","Guides"]].map(([id,em,lbl]) => (
+        {[["home","🏠","Home"],["tasks","✅","Tasks"],["costs","💷","Costs"],["prep","📚","Prep"],["docs","📄","Docs"], ...(packingAutoVisible ? [["packing","🧳","Packing"]] : []), ["guides","📖","Guides"]].map(([id,em,lbl]) => (
           <button key={id} onClick={() => setTab(id)} style={{ flex: 1, background: "transparent", border: "none", cursor: "pointer", padding: "4px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
             <span style={{ fontSize: 20 }}>{em}</span>
-            <span style={{ fontSize: 10, fontWeight: 600, color: tab === id ? "#3DB88B" : "rgba(255,255,255,0.28)" }}>{lbl}</span>
+            <span style={{ fontSize: 10, fontWeight: 600, color: tab === id ? "#1D9E6A" : "rgba(255,255,255,0.28)" }}>{lbl}</span>
           </button>
         ))}
       </div>
 
       {/* ── TOAST ── */}
       {showToast && (
-        <div style={{ position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)", background: "#3DB88B", color: "#08111C", padding: "10px 24px", borderRadius: 30, fontSize: 13, fontWeight: 700, boxShadow: "0 4px 20px rgba(0,0,0,0.4)", whiteSpace: "nowrap", zIndex: 300 }}>
+        <div style={{ position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)", background: "#1D9E6A", color: "#08111C", padding: "10px 24px", borderRadius: 30, fontSize: 13, fontWeight: 700, boxShadow: "0 4px 20px rgba(0,0,0,0.4)", whiteSpace: "nowrap", zIndex: 300 }}>
           {showToast}
         </div>
       )}
