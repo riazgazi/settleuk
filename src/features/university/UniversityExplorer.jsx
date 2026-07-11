@@ -7,28 +7,34 @@ import UniversityCompare from "./UniversityCompare";
 import UniversityDetails from "./UniversityDetails";
 import { UNIVERSITY_LIST, IELTS_OPTIONS } from "../../data/universities";
 import { loadLS, saveLS } from "../../hooks/useLocalStorage";
+import FeaturePageHeader from "../../components/layout/FeaturePageHeader";
 import "./UniversityExplorer.css";
 
 /* ============================================================
    UniversityExplorer.jsx
-   A mini workspace with 4 tabs (Profile, Universities, Compare,
-   Saved) — same tab pattern as StepDetails. University Details
-   is NOT a tab; it opens as an overlay from a card tap, and the
-   header's Back button returns to whichever tab was showing.
+   Standard feature screen (Header -> Tabbed Content -> Bottom Nav,
+   same architecture as every other feature page) — NOT a modal
+   anymore. 4 tabs: Profile, Universities, Compare, Saved. Details
+   is NOT a tab; it opens from a card tap, reusing the same
+   FeaturePageHeader with its Back button repurposed to return to
+   the tab list instead of leaving the screen.
 
    Reuses:
    - UniversityFinder AS-IS for the Profile tab (savedAcademic /
-     onSaveProfile passed straight through, form not touched).
+     onSaveProfile passed straight through, form not touched). It
+     keeps its own full-screen dark modal styling when active —
+     that's an existing, unmodified interaction, not part of this
+     screen's own layout.
    - loadLS/saveLS (same helpers useJourney.js uses) for the Saved
      list — new key, no new storage system.
-   - UNIVERSITY_LIST / filter constants from data/universities.js
-     (appended there, not a separate data file).
+   - UNIVERSITY_LIST / filter constants from data/universities.js.
+   - FeaturePageHeader — same header component every feature page uses.
 
-   Props (identical to what Home.jsx already passes UniversityFinder,
-   so swapping the render target in Home.jsx is a one-line change):
+   Props:
    @param {object|null} savedAcademic
    @param {(profile: object) => void} onSaveProfile
-   @param {(saved: boolean) => void} onClose
+   @param {(tabKey: string) => void} setTab - Back returns to "tools",
+          the app's standard navigation (no browser history, no onClose).
    ============================================================ */
 
 const SAVED_UNIS_KEY = "settleuk_saved_universities";
@@ -42,7 +48,7 @@ const TABS = [
     { key: "saved", label: "❤️ Saved" },
 ];
 
-function UniversityExplorer({ savedAcademic, onSaveProfile, onClose }) {
+function UniversityExplorer({ savedAcademic, onSaveProfile, setTab }) {
     const [activeTab, setActiveTab] = useState(savedAcademic ? "universities" : "profile");
     const [editingProfile, setEditingProfile] = useState(!savedAcademic);
     const [detailsId, setDetailsId] = useState(null);
@@ -142,10 +148,12 @@ function UniversityExplorer({ savedAcademic, onSaveProfile, onClose }) {
             setDetailsId(null);
             return;
         }
-        onClose(false);
+        // Standard navigation architecture: feature pages return to Quick Tools.
+        setTab("tools");
     }
 
-    // Profile tab, showing the reused UniversityFinder form (first-time or editing).
+    // Profile tab, showing the reused UniversityFinder form (first-time or
+    // editing). Left exactly as its own full-screen modal — untouched.
     if (editingProfile) {
         return (
             <UniversityFinder
@@ -157,22 +165,14 @@ function UniversityExplorer({ savedAcademic, onSaveProfile, onClose }) {
     }
 
     return (
-        <div className="ue-overlay">
-            <div className="ue-scroll">
-                <header className="ue-header">
-                    <button type="button" className="ue-back-btn" onClick={handleHeaderBack} aria-label="Back">
-                        ←
-                    </button>
-                    <div className="ue-header-titles">
-                        <h1 className="ue-title">
-                            {detailsUniversity ? detailsUniversity.name : "University Explorer"}
-                        </h1>
-                        {!detailsUniversity && (
-                            <p className="ue-subtitle">Search, compare and shortlist UK universities.</p>
-                        )}
-                    </div>
-                </header>
+        <div className="ue-page">
+            <FeaturePageHeader
+                title={detailsUniversity ? detailsUniversity.name : "University Explorer"}
+                subtitle={detailsUniversity ? undefined : "Search, compare and shortlist UK universities."}
+                onBack={handleHeaderBack}
+            />
 
+            <div className="ue-content">
                 {detailsUniversity ? (
                     <UniversityDetails
                         university={detailsUniversity}
