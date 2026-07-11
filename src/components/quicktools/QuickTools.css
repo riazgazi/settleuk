@@ -1,0 +1,83 @@
+/*
+ * Exact match to the original .hd-tool-* rules from HomeDashboard.css
+ * (dark-navy theme) — corrected after seeing the real file. The earlier
+ * version of this file guessed a light theme; that was wrong.
+ */
+
+.qt-wrap {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Variant hooks — identical today, so home/tools look the same until
+   one of them needs different spacing/animation. Change only the
+   variant-specific rule, never qt-grid/qt-card directly, to keep the
+   other context untouched. */
+.qt-wrap--home {
+}
+
+.qt-wrap--tools {
+  padding: 20px 16px 32px;
+}
+
+.qt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.qt-header-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.qt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.qt-grid--home {
+}
+
+.qt-grid--tools {
+}
+
+.qt-card {
+  background: #0a0e27;
+  border: 1px solid #2a3363;
+  border-radius: 16px;
+  padding: 18px 14px;
+  text-align: left;
+  cursor: pointer;
+  color: #fff;
+}
+
+.qt-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.qt-tool-icon-blue   { background: linear-gradient(135deg, #2e6fe8, #1a4fc0); }
+.qt-tool-icon-teal   { background: linear-gradient(135deg, #17a688, #0e7a63); }
+.qt-tool-icon-purple { background: linear-gradient(135deg, #7a5fe0, #5c43c8); }
+.qt-tool-icon-orange { background: linear-gradient(135deg, #e0902e, #c06a1a); }
+
+.qt-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.qt-sub {
+  font-size: 12px;
+  color: #9aa3c4;
+  line-height: 1.4;
+}

@@ -1,0 +1,1 @@
+export const taskRank = (t) => (t.autoAdvance ? 2 : t.priority ? 0 : 1);

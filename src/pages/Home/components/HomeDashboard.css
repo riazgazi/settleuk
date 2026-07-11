@@ -1,0 +1,445 @@
+.home-dashboard {
+    background: #060a1f;
+    min-height: 100vh;
+    padding: 20px 16px 32px;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-sizing: border-box;
+}
+
+/* ---------- HEADER ---------- */
+.hd-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 26px;
+    position: relative;
+}
+
+.hd-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hd-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #6a5cf5, #4a3fd8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.hd-app-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.hd-greeting {
+    font-size: 13px;
+    color: #9aa3c4;
+    margin-top: 2px;
+}
+
+.hd-header-right {
+    text-align: right;
+    position: relative;
+}
+
+.hd-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(74, 63, 216, 0.12);
+    border: 1px solid #4a5fd8;
+    color: #6f8cff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.hd-chevron {
+    font-size: 11px;
+    transition: transform 0.15s ease;
+}
+
+.hd-chevron-open {
+    transform: rotate(180deg);
+}
+
+.hd-tap-to-change {
+    font-size: 11px;
+    color: #6b7394;
+    font-style: italic;
+    margin-top: 4px;
+}
+
+.hd-dropdown {
+    position: absolute;
+    right: 0;
+    top: 44px;
+    background: #10142e;
+    border: 1px solid #2a3363;
+    border-radius: 12px;
+    padding: 6px;
+    min-width: 220px;
+    z-index: 20;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.hd-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #cdd3f0;
+    font-size: 13px;
+    padding: 10px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.hd-dropdown-item:hover {
+    background: rgba(106, 92, 245, 0.15);
+}
+
+.hd-dropdown-item-active {
+    color: #6f8cff;
+    font-weight: 700;
+    background: rgba(106, 92, 245, 0.12);
+}
+
+/* ---------- SHARED CARD ---------- */
+.hd-card {
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 24px;
+}
+
+.hd-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.hd-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.hd-link-btn {
+    background: none;
+    border: none;
+    color: #6f8cff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.hd-arrow {
+    font-size: 15px;
+}
+
+/* ---------- JOURNEY CARD ---------- */
+.hd-journey-card {
+    background: #0a0e27;
+    border: 1px solid #2a3363;
+}
+
+.hd-journey-stats {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 22px;
+}
+
+.hd-days-left {
+    flex-shrink: 0;
+}
+
+.hd-days-number {
+    font-size: 44px;
+    font-weight: 800;
+    color: #6f8cff;
+    line-height: 1;
+}
+
+.hd-days-label {
+    font-size: 13px;
+    color: #9aa3c4;
+    margin-top: 4px;
+}
+
+.hd-divider {
+    width: 1px;
+    height: 46px;
+    background: #2a3363;
+}
+
+.hd-progress-block {
+    flex: 1;
+}
+
+.hd-progress-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.hd-progress-pct {
+    color: #6f8cff;
+}
+
+.hd-progress-track {
+    height: 6px;
+    border-radius: 4px;
+    background: #1c2148;
+    overflow: hidden;
+}
+
+.hd-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4a6fff, #6f8cff);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.hd-timeline {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+.hd-timeline-track {
+    position: absolute;
+    top: 17px;
+    left: 21px;
+    right: 21px;
+    height: 2px;
+    background: #2a3363;
+    z-index: 0;
+}
+
+.hd-timeline-track-fill {
+    height: 100%;
+    background: #3d5afe;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.hd-timeline-step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.hd-timeline-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    background: #10142e;
+    border: 1px solid #2a3363;
+    color: #6b7394;
+    margin-bottom: 6px;
+}
+
+.hd-timeline-circle.is-done {
+    background: #3d5afe;
+    border-color: #3d5afe;
+    color: #fff;
+}
+
+.hd-timeline-circle.is-current {
+    background: transparent;
+    border: 2px solid #3d5afe;
+    color: #fff;
+}
+
+.hd-timeline-label {
+    font-size: 11px;
+    color: #5b6389;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.hd-timeline-label-active {
+    color: #6f8cff;
+    font-weight: 600;
+}
+
+/* ---------- NEXT ACTION CARD ---------- */
+.hd-next-action-card {
+    background: linear-gradient(160deg, #232a63, #171b40);
+    border: 1px solid #3a3f7a;
+}
+
+.hd-urgency-pill {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 14px;
+    border: 1px solid #d99a2b;
+    color: #f0b429;
+    background: rgba(240, 180, 41, 0.1);
+    white-space: nowrap;
+}
+
+.hd-urgency-critical {
+    border-color: #e5484d;
+    color: #ff6b6f;
+    background: rgba(229, 72, 77, 0.1);
+}
+
+.hd-urgency-high {
+    border-color: #d99a2b;
+    color: #f0b429;
+    background: rgba(240, 180, 41, 0.1);
+}
+
+.hd-urgency-medium {
+    border-color: #4a5fd8;
+    color: #6f8cff;
+    background: rgba(74, 95, 216, 0.1);
+}
+
+.hd-next-action-body {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.hd-next-action-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    flex-shrink: 0;
+}
+
+.hd-next-action-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.hd-next-action-desc {
+    font-size: 13px;
+    color: #b3b8de;
+}
+
+.hd-start-now-btn {
+    width: 100%;
+    background: linear-gradient(90deg, #5b4fe0, #4a3fd8);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.hd-start-now-btn:active {
+    opacity: 0.85;
+}
+
+/* ---------- QUICK TOOLS ---------- */
+.hd-quick-tools-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.hd-quick-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.hd-tool-card {
+    background: #0a0e27;
+    border: 1px solid #2a3363;
+    border-radius: 18px;
+    padding: 22px 18px;
+    text-align: left;
+    cursor: pointer;
+    color: #fff;
+}
+
+.hd-tool-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 14px;
+}
+
+.hd-tool-icon-blue {
+    background: linear-gradient(135deg, #2e6fe8, #1a4fc0);
+}
+
+.hd-tool-icon-teal {
+    background: linear-gradient(135deg, #17a688, #0e7a63);
+}
+
+.hd-tool-icon-purple {
+    background: linear-gradient(135deg, #7a5fe0, #5c43c8);
+}
+
+.hd-tool-icon-orange {
+    background: linear-gradient(135deg, #e0902e, #c06a1a);
+}
+
+.hd-tool-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.hd-tool-sub {
+    font-size: 12px;
+    color: #9aa3c4;
+    line-height: 1.4;
+}
