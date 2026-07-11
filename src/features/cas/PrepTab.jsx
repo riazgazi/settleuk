@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { loadLS, saveLS } from "../../hooks/useLocalStorage";
+import React from "react";
 import { CAS_QA, UKVI_QA, QA_CATEGORIES, REFUSAL_REASONS } from "../../data/prep";
 
 const PrepTab = () => {

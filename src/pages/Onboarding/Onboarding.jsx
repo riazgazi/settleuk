@@ -93,12 +93,11 @@ export default function Onboarding() {
     const dateWrapRef = useRef(null);
 
     useEffect(() => {
-        const t = setTimeout(() => {
-            setDirection("forward");
-            setPhase(PHASE.WELCOME);
-        }, SPLASH_DURATION);
-        timers.current.push(t);
-        return () => timers.current.forEach(clearTimeout);
+        const currentTimers = timers.current;
+
+        return () => {
+            currentTimers.forEach(clearTimeout);
+        };
     }, []);
 
     // Close whichever popover is open when clicking outside of it.

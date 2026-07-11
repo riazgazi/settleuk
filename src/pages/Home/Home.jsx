@@ -51,7 +51,7 @@ const Home = () => {
         if (statusId === 0 && !academicProfile) {
             setTab("university-explorer");
         }
-    }, [statusId, academicProfile]);
+    }, [statusId, academicProfile, setTab]);
 
     // Every feature page opened from Quick Tools returns to "tools", not
     // "home" — the app's standard Back destination per Layout Standardization.
