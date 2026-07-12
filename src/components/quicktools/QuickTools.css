@@ -1,19 +1,22 @@
 /*
  * Exact match to the original .hd-tool-* rules from HomeDashboard.css
- * (dark-navy theme) — corrected after seeing the real file. The earlier
- * version of this file guessed a light theme; that was wrong.
+ * (dark-navy theme). qt-grid/qt-card stay the shared defaults used by
+ * the "tools" tab's 2x2 grid. The "home-scroll" variant (Home Dashboard
+ * only) overrides layout to a single horizontally-scrolling row —
+ * everything below the "HOME-SCROLL VARIANT" comment only ever touches
+ * that variant, never the shared/tools rules above it.
  */
 
 .qt-wrap {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Variant hooks — identical today, so home/tools look the same until
-   one of them needs different spacing/animation. Change only the
-   variant-specific rule, never qt-grid/qt-card directly, to keep the
-   other context untouched. */
-.qt-wrap--home {
-}
+/* Variant hooks — home/tools currently share the same qt-grid/qt-card
+   look, so there's nothing variant-specific to override yet. If one of
+   them needs its own spacing/animation later, add a rule here scoped to
+   that variant only (e.g. .qt-wrap--tools, .qt-grid--home) rather than
+   editing the shared qt-grid/qt-card rules, so the other context stays
+   untouched. */
 
 .qt-wrap--tools {
   padding: 20px 16px 32px;
@@ -38,12 +41,6 @@
   gap: 14px;
 }
 
-.qt-grid--home {
-}
-
-.qt-grid--tools {
-}
-
 .qt-card {
   background: #0a0e27;
   border: 1px solid #2a3363;
@@ -65,10 +62,21 @@
   margin-bottom: 12px;
 }
 
-.qt-tool-icon-blue   { background: linear-gradient(135deg, #2e6fe8, #1a4fc0); }
-.qt-tool-icon-teal   { background: linear-gradient(135deg, #17a688, #0e7a63); }
-.qt-tool-icon-purple { background: linear-gradient(135deg, #7a5fe0, #5c43c8); }
-.qt-tool-icon-orange { background: linear-gradient(135deg, #e0902e, #c06a1a); }
+.qt-tool-icon-blue {
+  background: linear-gradient(135deg, #2e6fe8, #1a4fc0);
+}
+
+.qt-tool-icon-teal {
+  background: linear-gradient(135deg, #17a688, #0e7a63);
+}
+
+.qt-tool-icon-purple {
+  background: linear-gradient(135deg, #7a5fe0, #5c43c8);
+}
+
+.qt-tool-icon-orange {
+  background: linear-gradient(135deg, #e0902e, #c06a1a);
+}
 
 .qt-title {
   font-size: 14px;
@@ -80,4 +88,59 @@
   font-size: 12px;
   color: #9aa3c4;
   line-height: 1.4;
+}
+
+/* ==========================================================
+   HOME-SCROLL VARIANT — single row, horizontally scrollable.
+   Only used by HomeDashboard (variant="home-scroll"). The
+   "tools" tab keeps the 2x2 grid above, completely untouched.
+   ========================================================== */
+
+.qt-grid--home-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  grid-template-columns: none;
+  /* undo the shared .qt-grid grid rule */
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 2px 6px;
+  margin: 0 -2px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.qt-grid--home-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.qt-grid--home-scroll .qt-card {
+  flex: 0 0 auto;
+  width: 92px;
+  min-height: 100px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.qt-grid--home-scroll .qt-icon {
+  width: 44px;
+  height: 44px;
+  font-size: 19px;
+  margin-bottom: 6px;
+}
+
+.qt-grid--home-scroll .qt-title {
+  font-size: 10.5px;
+  line-height: 1.2;
+  margin-bottom: 0;
+  white-space: normal;
+}
+
+.qt-grid--home-scroll .qt-sub {
+  display: none;
 }

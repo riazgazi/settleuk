@@ -31,7 +31,7 @@ function getDaysLeft(arrival) {
  *        - existing "You're skipping ahead" confirmation flow (untouched).
  */
 export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }) {
-    const { profile, changeStatus, taskDone, toggleTask } = useJourneyContext();
+    const { profile, changeStatus, taskDone, toggleTask, setSelectedStage } = useJourneyContext();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -102,16 +102,17 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
     }
 
     function handleStartNow() {
-        if (!currentStage?.destination) return;
+        if (!currentStage) return;
 
-        // University Explorer is now a standard tab-based feature screen
-        // (was a modal via setShowUniFinder before layout standardization).
-        if (currentStage.destination === "academic_profile") {
-            setTab("university-explorer");
-            return;
+        // Reuse the EXACT navigation My Journey uses when a stage is
+        // clicked there (setSelectedStage + setScreen("step-details")).
+        // Previously this called setTab(currentStage.destination), which
+        // routes through Home's internal tab system and was landing on
+        // the old Tasks tab instead of the Stage Details screen.
+        setSelectedStage(currentStage.id);
+        if (setScreen) {
+            setScreen("step-details");
         }
-
-        setTab(currentStage.destination);
     }
 
     // "Show All" reuses the same destination as the Bottom Navigation
@@ -200,7 +201,7 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
                     </button>
                 </div>
 
-                <div className="hd-timeline">
+                <div className="hd-timeline" style={{ "--hd-step-count": ALL_STAGE_NAMES.length }}>
                     <div className="hd-timeline-track">
                         <div className="hd-timeline-track-fill" style={{ width: `${progressPct}%` }} />
                     </div>
@@ -209,7 +210,6 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
                         const isCurrent = idx === profile.statusId;
                         return (
                             <div key={label} className="hd-timeline-step">
-                                {isCurrent && <div className="hd-timeline-current-tag">Current</div>}
                                 <div
                                     className={`hd-timeline-circle ${isDone ? "is-done" : ""} ${isCurrent ? "is-current" : ""
                                         }`}
@@ -233,14 +233,14 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
                 pure markup/CSS trim of THIS card only. No task cards, no
                 checklist container, no counters — just icon + title + step
                 badge + subtitle, a plain 3-line task list, and a small
-                right-aligned Continue button. Clicking Continue still opens
+                right-aligned Stage Details button. Clicking it still opens
                 the existing Step Details screen (handleStartNow, unchanged)
                 where the full task list, documents, and tips live. */}
             {currentStage && (
                 <div className="hd-card hd-next-action-card hd-focus-compact">
                     <div className="hd-focus-row">
                         <div className="hd-next-action-icon">
-                            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6 2.5h8.5L20 8v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 6 21V4a1.5 1.5 0 0 1 1.5-1.5z" fill="url(#hdFocusIconGrad)" />
                                 <path d="M14.5 2.5V7a1 1 0 0 0 1 1H20" fill="none" stroke="#ffffff" strokeOpacity="0.35" strokeWidth="1.2" strokeLinejoin="round" />
                                 <path d="M9 13.5l2 2 4-4.2" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -288,7 +288,7 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
                             className="hd-continue-btn"
                             onClick={handleStartNow}
                         >
-                            Continue <span className="hd-arrow">→</span>
+                            Stage Details <span className="hd-arrow">→</span>
                         </button>
                     </div>
                 </div>

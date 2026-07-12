@@ -48,9 +48,10 @@ const QUICK_TOOLS = [
 
 /**
  * @param {(tabKey: string) => void} setTab
- * @param {"home"|"tools"|"home-scroll"} [variant] - which context this is
- *        rendered in. Controls heading visibility and grid/scroll layout.
- *        Defaults to "home".
+ * @param {"home"|"tools"} [variant] - which context this is rendered in.
+ *        Controls heading visibility now, and gives a hook for spacing/
+ *        padding/grid/animation to diverge per-context later without
+ *        touching call sites. Defaults to "home".
  */
 function QuickTools({ setTab, variant = "home" }) {
     const showHeading = variant === "home";

@@ -15,6 +15,7 @@ const AppContent = () => {
   const {
     screen,
     setScreen,
+    setProfile,
     tab,
     setTab,
     advancePrompt,
@@ -26,7 +27,21 @@ const AppContent = () => {
   // "Only full-screen onboarding or temporary modals should hide the
   // Bottom Navigation."
   if (screen === "onboard") {
-    return <Onboarding />;
+    return (
+      <Onboarding
+        onComplete={(result) => {
+          if (result.profile) {
+            setProfile((p) => ({
+              ...p,
+              name: result.profile.name,
+              statusId: result.profile.statusId,
+              arrival: result.profile.intake,
+            }));
+          }
+          setScreen("home");
+        }}
+      />
+    );
   }
 
   function renderPrimaryScreen() {
