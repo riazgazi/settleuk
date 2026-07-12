@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { CAS_QA, UKVI_QA, QA_CATEGORIES, REFUSAL_REASONS } from "../../data/prep";
 
 const PrepTab = () => {
