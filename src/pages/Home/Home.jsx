@@ -30,7 +30,6 @@ const Home = () => {
         toggleTask,
         academicProfile,
         setAcademicProfile,
-        changeStatus,
         showToast,
         setScreen,
         tab,

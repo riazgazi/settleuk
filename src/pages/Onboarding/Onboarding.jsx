@@ -93,10 +93,14 @@ export default function Onboarding() {
     const dateWrapRef = useRef(null);
 
     useEffect(() => {
-        const currentTimers = timers.current;
+        const splashTimer = setTimeout(() => {
+            setPhase(PHASE.WELCOME);
+        }, SPLASH_DURATION);
+
+        timers.current.push(splashTimer);
 
         return () => {
-            currentTimers.forEach(clearTimeout);
+            timers.current.forEach(clearTimeout);
         };
     }, []);
 
