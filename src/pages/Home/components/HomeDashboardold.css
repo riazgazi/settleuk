@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-/* ---------- HEADER (unchanged) ---------- */
+/* ---------- HEADER ---------- */
 .hd-header {
     display: flex;
     justify-content: space-between;
@@ -125,7 +125,7 @@
 .hd-card {
     border-radius: 20px;
     padding: 22px;
-    margin-bottom: 18px;
+    margin-bottom: 24px;
 }
 
 .hd-card-header {
@@ -157,18 +157,17 @@
     font-size: 15px;
 }
 
-/* ---------- JOURNEY CARD — now compact: days-left + progress only.
-   Timeline lives in .hd-roadmap-card below. ---------- */
+/* ---------- JOURNEY CARD ---------- */
 .hd-journey-card {
     background: #0a0e27;
     border: 1px solid #2a3363;
-    padding: 18px 20px;
 }
 
 .hd-journey-stats {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
+    margin-bottom: 22px;
 }
 
 .hd-days-left {
@@ -176,29 +175,21 @@
 }
 
 .hd-days-number {
-    font-size: 36px;
+    font-size: 44px;
     font-weight: 800;
     color: #6f8cff;
     line-height: 1;
 }
 
 .hd-days-label {
-    font-size: 12.5px;
+    font-size: 13px;
     color: #9aa3c4;
     margin-top: 4px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.hd-days-label-icon {
-    font-size: 12px;
-    line-height: 1;
 }
 
 .hd-divider {
     width: 1px;
-    height: 40px;
+    height: 46px;
     background: #2a3363;
 }
 
@@ -207,10 +198,10 @@
 }
 
 .hd-progress-label {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: #fff;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .hd-progress-pct {
@@ -231,23 +222,16 @@
     transition: width 0.3s ease;
 }
 
-/* ---------- ROADMAP CARD — houses the stage timeline, moved out of the
-   journey card above. Same card chrome as hd-journey-card. ---------- */
-.hd-roadmap-card {
-    background: #0a0e27;
-    border: 1px solid #2a3363;
-}
-
 .hd-timeline {
     position: relative;
     display: flex;
     justify-content: space-between;
-    padding: 14px 4px 0;
+    padding: 0 4px;
 }
 
 .hd-timeline-track {
     position: absolute;
-    top: 31px;
+    top: 17px;
     left: 21px;
     right: 21px;
     height: 2px;
@@ -270,20 +254,6 @@
     align-items: center;
     flex: 1;
     min-width: 0;
-}
-
-/* "Current" tag floats above the active step's circle. */
-.hd-timeline-current-tag {
-    position: absolute;
-    top: -18px;
-    font-size: 9.5px;
-    font-weight: 700;
-    color: #6f8cff;
-    background: rgba(106, 92, 245, 0.14);
-    border: 1px solid #4a5fd8;
-    padding: 2px 8px;
-    border-radius: 10px;
-    white-space: nowrap;
 }
 
 .hd-timeline-circle {
@@ -314,9 +284,7 @@
 }
 
 .hd-timeline-label {
-    font-size: 10px;
-    line-height: 1.15;
-    letter-spacing: -0.1px;
+    font-size: 11px;
     color: #5b6389;
     text-align: center;
     white-space: nowrap;
@@ -327,131 +295,151 @@
     font-weight: 600;
 }
 
-/* ---------- CURRENT FOCUS CARD — compact preview only ----------
-   Requirement: ~40-50% shorter than the previous version. No task cards,
-   no checklist container/border, no counters — icon + title/step-badge/
-   subtitle row, a plain borderless 3-line task list, and a small
-   right-aligned Continue button. */
+/* ---------- NEXT ACTION CARD ---------- */
 .hd-next-action-card {
     background: linear-gradient(160deg, #232a63, #171b40);
     border: 1px solid #3a3f7a;
 }
 
-.hd-focus-compact {
-    padding: 16px 18px;
+.hd-urgency-pill {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 14px;
+    border: 1px solid #d99a2b;
+    color: #f0b429;
+    background: rgba(240, 180, 41, 0.1);
+    white-space: nowrap;
 }
 
-.hd-focus-row {
+.hd-urgency-critical {
+    border-color: #e5484d;
+    color: #ff6b6f;
+    background: rgba(229, 72, 77, 0.1);
+}
+
+.hd-urgency-high {
+    border-color: #d99a2b;
+    color: #f0b429;
+    background: rgba(240, 180, 41, 0.1);
+}
+
+.hd-urgency-medium {
+    border-color: #4a5fd8;
+    color: #6f8cff;
+    background: rgba(74, 95, 216, 0.1);
+}
+
+.hd-next-action-body {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 12px;
+    gap: 18px;
+    margin-bottom: 22px;
 }
 
 .hd-next-action-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
     background: rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 34px;
     flex-shrink: 0;
 }
 
-.hd-focus-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.hd-focus-title-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.hd-focus-continue-row {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-}
-
-.hd-focus-title {
-    font-size: 15px;
+.hd-next-action-title {
+    font-size: 18px;
     font-weight: 700;
     color: #fff;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    min-width: 0;
+    margin-bottom: 4px;
 }
 
-.hd-focus-subtitle {
-    font-size: 12.5px;
+.hd-next-action-desc {
+    font-size: 13px;
     color: #b3b8de;
-    margin-top: 3px;
 }
 
-/* Plain task list — no background, no border, no per-item card */
-.hd-focus-tasklist {
-    margin-bottom: 2px;
-}
-
-.hd-focus-task-line {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 5px 0;
-    cursor: pointer;
-}
-
-.hd-focus-task-icon {
-    width: 16px;
-    font-size: 13px;
-    color: #6f8cff;
-    text-align: center;
-    flex-shrink: 0;
-}
-
-.hd-focus-task-text {
-    font-size: 13px;
-    color: #e5e8fa;
-}
-
-.hd-focus-task-text.is-done {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.hd-focus-task-line:has(.hd-focus-task-text.is-done) .hd-focus-task-icon {
-    color: #1d9e6a;
-}
-
-.hd-continue-btn {
+.hd-start-now-btn {
+    width: 100%;
     background: linear-gradient(90deg, #5b4fe0, #4a3fd8);
     border: none;
     color: #fff;
-    font-size: 12.5px;
+    font-size: 16px;
     font-weight: 700;
-    padding: 7px 14px;
-    border-radius: 10px;
+    padding: 16px;
+    border-radius: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
-    flex-shrink: 0;
-    white-space: nowrap;
+    justify-content: center;
+    gap: 8px;
 }
 
-.hd-continue-btn:active {
+.hd-start-now-btn:active {
     opacity: 0.85;
 }
 
-/* ---------- QUICK TOOLS HEADER — the grid/card styling itself now lives
-   entirely in QuickTools.css (via the shared QuickTools component); this
-   file only owns the "Quick Tools" + "Show All" heading row above it. ---------- */
+/* ---------- QUICK TOOLS ---------- */
 .hd-quick-tools-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 16px;
+}
+
+.hd-quick-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.hd-tool-card {
+    background: #0a0e27;
+    border: 1px solid #2a3363;
+    border-radius: 18px;
+    padding: 22px 18px;
+    text-align: left;
+    cursor: pointer;
+    color: #fff;
+}
+
+.hd-tool-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
     margin-bottom: 14px;
+}
+
+.hd-tool-icon-blue {
+    background: linear-gradient(135deg, #2e6fe8, #1a4fc0);
+}
+
+.hd-tool-icon-teal {
+    background: linear-gradient(135deg, #17a688, #0e7a63);
+}
+
+.hd-tool-icon-purple {
+    background: linear-gradient(135deg, #7a5fe0, #5c43c8);
+}
+
+.hd-tool-icon-orange {
+    background: linear-gradient(135deg, #e0902e, #c06a1a);
+}
+
+.hd-tool-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.hd-tool-sub {
+    font-size: 12px;
+    color: #9aa3c4;
+    line-height: 1.4;
 }

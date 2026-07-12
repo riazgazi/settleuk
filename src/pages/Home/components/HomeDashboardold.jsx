@@ -1,49 +1,8 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useJourneyContext } from "../../../context/JourneyContext";
 import { STATUSES, STAGES, ALL_STAGE_NAMES } from "../../../data/stages";
+import QuickTools from "../../../components/quicktools/QuickTools";
 import "./HomeDashboard.css";
-
-// Temporary destination for "View Journey" until the Roadmap page exists.
-// Per instructions: swap this for the real roadmap tab key once it's built.
-const ROADMAP_TAB_FALLBACK = "tasks";
-
-// Quick Tools are now data-driven instead of hardcoded JSX blocks.
-// `action` receives the same setTab / setShowUniFinder handlers HomeDashboard
-// already has, so adding a new tool later is just adding an entry here.
-const QUICK_TOOLS = [
-    {
-        key: "universities",
-        icon: "🏛️",
-        iconClass: "hd-tool-icon-blue",
-        title: "Universities",
-        sub: "Find & shortlist the best",
-        action: ({ setShowUniFinder }) => setShowUniFinder(true),
-    },
-    {
-        key: "costs",
-        icon: "🧮",
-        iconClass: "hd-tool-icon-teal",
-        title: "Cost Calculator",
-        sub: "Plan your total expenses",
-        action: ({ setTab }) => setTab("costs"),
-    },
-    {
-        key: "prep",
-        icon: "📄",
-        iconClass: "hd-tool-icon-purple",
-        title: "CAS & UKVI Preparation",
-        sub: "Guides, checklist & documents",
-        action: ({ setTab }) => setTab("prep"),
-    },
-    {
-        key: "docs",
-        icon: "🧳",
-        iconClass: "hd-tool-icon-orange",
-        title: "Documents",
-        sub: "Prepare for your journey",
-        action: ({ setTab }) => setTab("docs"),
-    },
-];
 
 function getDaysLeft(arrival) {
     if (!arrival) return null;
@@ -74,10 +33,11 @@ function urgencyLabel(deadlineUrgency) {
  * HomeDashboard
  *
  * Props (integration points — wire these to your existing App-level state,
- * since this app has no router and navigates via setTab / modals):
+ * since this app has no router and navigates via setTab / setScreen / modals):
  *
  * @param {(tabKey: string) => void} setTab - existing internal tab navigator
- * @param {(show: boolean) => void} setShowUniFinder - existing University Finder modal toggle
+ * @param {(screenKey: string) => void} setScreen - existing screen-state navigator
+ *        (used for the My Journey timeline page and stage detail screens)
  * @param {(currentStatusId: number, targetStatusId: number) => void} onSkipAheadDetected
  *        - existing "You're skipping ahead" confirmation flow. HomeDashboard
  *          does NOT implement or duplicate that modal — it only detects the
@@ -85,7 +45,7 @@ function urgencyLabel(deadlineUrgency) {
  *          calling changeStatus(targetStatusId) itself if the user picks
  *          "Skip anyway", or doing nothing if "Go back" is chosen.
  */
-export default function HomeDashboard({ setTab, setShowUniFinder, onSkipAheadDetected }) {
+export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }) {
     const { profile, changeStatus } = useJourneyContext();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -118,7 +78,9 @@ export default function HomeDashboard({ setTab, setShowUniFinder, onSkipAheadDet
     }, [dropdownOpen]);
 
     function handleViewJourney() {
-        setTab(ROADMAP_TAB_FALLBACK);
+        if (setScreen) {
+            setScreen("journey");
+        }
     }
 
     function handleSelectStage(newId) {
@@ -143,11 +105,10 @@ export default function HomeDashboard({ setTab, setShowUniFinder, onSkipAheadDet
     function handleStartNow() {
         if (!currentStage?.destination) return;
 
-        // "academic_profile" isn't a real tab in this app yet — route it to the
-        // University Finder modal instead of setTab, which would otherwise crash
-        // on an unknown tab key.
+        // University Explorer is now a standard tab-based feature screen
+        // (was a modal via setShowUniFinder before layout standardization).
         if (currentStage.destination === "academic_profile") {
-            setShowUniFinder(true);
+            setTab("university-explorer");
             return;
         }
 
@@ -273,25 +234,9 @@ export default function HomeDashboard({ setTab, setShowUniFinder, onSkipAheadDet
                 </div>
             )}
 
-            {/* QUICK TOOLS */}
-            <div className="hd-quick-tools-header">
-                <div className="hd-card-title">Quick Tools</div>
-            </div>
-
-            <div className="hd-quick-tools-grid">
-                {QUICK_TOOLS.map((tool) => (
-                    <button
-                        key={tool.key}
-                        type="button"
-                        className="hd-tool-card"
-                        onClick={() => tool.action({ setTab, setShowUniFinder })}
-                    >
-                        <div className={`hd-tool-icon ${tool.iconClass}`}>{tool.icon}</div>
-                        <div className="hd-tool-title">{tool.title}</div>
-                        <div className="hd-tool-sub">{tool.sub}</div>
-                    </button>
-                ))}
-            </div>
+            {/* QUICK TOOLS — single shared implementation, also used by the
+                Bottom Navigation "Tools" tab. See components/quicktools/QuickTools.jsx */}
+            <QuickTools setTab={setTab} variant="home" />
 
             {/* Bottom Navigation is intentionally NOT rendered here — it already
           exists elsewhere in the app and must not be duplicated/redesigned. */}
