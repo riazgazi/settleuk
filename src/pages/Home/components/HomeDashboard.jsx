@@ -117,18 +117,8 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
         changeStatus(newId);
     }
 
-    function handleStartNow() {
-        if (!currentStage?.destination) return;
 
-        // University Explorer is now a standard tab-based feature screen
-        // (was a modal via setShowUniFinder before layout standardization).
-        if (currentStage.destination === "academic_profile") {
-            setTab("university-explorer");
-            return;
-        }
 
-        setTab(currentStage.destination);
-    }
 
     // Current Focus card's "Stage Details" button opens the real Stage
     // Details page (same pattern MyJourney.jsx uses when a stage is tapped:
