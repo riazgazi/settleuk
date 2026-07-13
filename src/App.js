@@ -5,6 +5,8 @@ import Onboarding from "./pages/Onboarding/Onboarding";
 import Home from "./pages/Home/Home";
 import MyJourney from "./pages/Journey/MyJourney";
 import StepDetails from "./pages/Journey/StepDetails/StepDetails";
+import Tasks from "./pages/Tasks/Tasks";
+import WelcomeToUK from "./pages/WelcomeToUK/WelcomeToUK";
 import AppLayout from "./components/layout/AppLayout";
 
 import AdvanceModal from "./components/modals/AdvanceModal";
@@ -18,6 +20,8 @@ const AppContent = () => {
     setProfile,
     tab,
     setTab,
+    view,
+    toggleView,
     advancePrompt,
     skipWarning,
     showSettings,
@@ -52,9 +56,13 @@ const AppContent = () => {
       case "step-details":
         return <StepDetails />;
 
+      case "tasks":
+        return <Tasks />;
+
       case "home":
       default:
-        return <Home />;
+        // Switch button (bottom nav) toggles this, independent of `screen`.
+        return view === "welcome" ? <WelcomeToUK /> : <Home />;
     }
   }
 
@@ -64,7 +72,14 @@ const AppContent = () => {
           AppLayout shell now, so Bottom Navigation stays persistent across
           all three — Journey/Step Details keep their own existing headers
           and content untouched; only the shell around them changed. */}
-      <AppLayout screen={screen} setScreen={setScreen} tab={tab} setTab={setTab}>
+      <AppLayout
+        screen={screen}
+        setScreen={setScreen}
+        tab={tab}
+        setTab={setTab}
+        view={view}
+        onToggleView={toggleView}
+      >
         {renderPrimaryScreen()}
       </AppLayout>
 

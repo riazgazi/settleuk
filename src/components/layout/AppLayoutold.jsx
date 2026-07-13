@@ -13,7 +13,7 @@ import BottomNav from '../home/BottomNav';
  * FeaturePageHeader, and My Journey / Step Details keep their existing
  * headers untouched.
  */
-const AppLayout = ({ children, screen, setScreen, tab, setTab, view, onToggleView }) => {
+const AppLayout = ({ children, screen, setScreen, tab, setTab }) => {
     // HomeDashboard, FeaturePageHeader-wrapped pages, UniversityExplorer,
     // MyJourney, and StepDetails all manage their own internal padding now.
     // HomeTasks/PackingTab/HomeGuides weren't part of this pass (their code
@@ -29,14 +29,7 @@ const AppLayout = ({ children, screen, setScreen, tab, setTab, view, onToggleVie
                 {children}
             </div>
 
-            <BottomNav
-                screen={screen}
-                setScreen={setScreen}
-                tab={tab}
-                setTab={setTab}
-                view={view}
-                onToggleView={onToggleView}
-            />
+            <BottomNav screen={screen} setScreen={setScreen} tab={tab} setTab={setTab} />
         </div>
     );
 };

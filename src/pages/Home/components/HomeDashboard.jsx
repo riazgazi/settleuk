@@ -1,8 +1,24 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { useJourneyContext } from "../../../context/JourneyContext";
 import { STATUSES, STAGES, ALL_STAGE_NAMES } from "../../../data/stages";
+// stageDetails.js lives alongside StepDetails.jsx per App.js's import path
+// (src/pages/Journey/StepDetails/StepDetails.jsx). If you move either file,
+// update this path to match.
+
 import QuickTools from "../../../components/quicktools/QuickTools";
 import "./HomeDashboard.css";
+
+// Same color mapping StepDetails.css uses for its .sd-hero--{color} variants,
+// adapted for the dark Current Focus card. Not a new design decision — just
+// reusing the existing per-stage color language on this card's icon tile.
+
+
+// Same icon paths StepDetails.jsx already renders for each stage (search,
+// graduation, mail, document, passport, suitcase, flag) — duplicated here
+// rather than imported, since StepDetails.jsx doesn't export its icon
+// component. If you'd rather share one component, export StageIcon from
+// StepDetails.jsx (or a shared file) and swap this out for that import.
+
 
 function getDaysLeft(arrival) {
     if (!arrival) return null;
@@ -35,7 +51,7 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
-    const currentStatus = STATUSES[profile.statusId];
+    const currentStatus = STATUSES[profile.statusId] ?? STATUSES[0];
     const currentStage = useMemo(
         () => STAGES.find((s) => s.id === profile.statusId),
         [profile.statusId]
@@ -102,17 +118,26 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
     }
 
     function handleStartNow() {
-        if (!currentStage) return;
+        if (!currentStage?.destination) return;
 
-        // Reuse the EXACT navigation My Journey uses when a stage is
-        // clicked there (setSelectedStage + setScreen("step-details")).
-        // Previously this called setTab(currentStage.destination), which
-        // routes through Home's internal tab system and was landing on
-        // the old Tasks tab instead of the Stage Details screen.
-        setSelectedStage(currentStage.id);
-        if (setScreen) {
-            setScreen("step-details");
+        // University Explorer is now a standard tab-based feature screen
+        // (was a modal via setShowUniFinder before layout standardization).
+        if (currentStage.destination === "academic_profile") {
+            setTab("university-explorer");
+            return;
         }
+
+        setTab(currentStage.destination);
+    }
+
+    // Current Focus card's "Stage Details" button opens the real Stage
+    // Details page (same pattern MyJourney.jsx uses when a stage is tapped:
+    // set which stage, then switch screens) instead of the old setTab-based
+    // Continue/handleStartNow flow.
+    function handleOpenStageDetails() {
+        if (!currentStage) return;
+        setSelectedStage(currentStage.id);
+        setScreen("step-details");
     }
 
     // "Show All" reuses the same destination as the Bottom Navigation
@@ -173,9 +198,7 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
                 <div className="hd-journey-stats">
                     <div className="hd-days-left">
                         <div className="hd-days-number">{daysLeft !== null ? daysLeft : "—"}</div>
-                        <div className="hd-days-label">
-                            <span className="hd-days-label-icon">📅</span>Days Left
-                        </div>
+                        <div className="hd-days-label">Days Left</div>
                     </div>
                     <div className="hd-divider" />
                     <div className="hd-progress-block">
@@ -201,7 +224,7 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
                     </button>
                 </div>
 
-                <div className="hd-timeline" style={{ "--hd-step-count": ALL_STAGE_NAMES.length }}>
+                <div className="hd-timeline">
                     <div className="hd-timeline-track">
                         <div className="hd-timeline-track-fill" style={{ width: `${progressPct}%` }} />
                     </div>
@@ -211,7 +234,7 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
                         return (
                             <div key={label} className="hd-timeline-step">
                                 <div
-                                    className={`hd-timeline-circle ${isDone ? "is-done" : ""} ${isCurrent ? "is-current" : ""
+                                    className={`hd-timeline-circle ${isDone ? "is-done" : ""} ${isCurrent ? "is-current is-pulsing" : ""
                                         }`}
                                 >
                                     {isDone ? "✓" : idx + 1}
@@ -229,29 +252,20 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
             </div>
 
             {/* CURRENT FOCUS CARD — compact preview only. Same currentStage /
-                taskDone / toggleTask / handleStartNow as before; this is a
-                pure markup/CSS trim of THIS card only. No task cards, no
-                checklist container, no counters — just icon + title + step
-                badge + subtitle, a plain 3-line task list, and a small
-                right-aligned Stage Details button. Clicking it still opens
-                the existing Step Details screen (handleStartNow, unchanged)
-                where the full task list, documents, and tips live. */}
+                taskDone / toggleTask as before; this is a pure markup/CSS
+                trim of THIS card only. No task cards, no checklist
+                container, no counters — just icon + title + subtitle, a
+                plain 3-line task list, and a small bottom-right "Stage
+                Details" button that opens the real Stage Details page
+                (handleOpenStageDetails: setSelectedStage + setScreen
+                ("step-details")) where the full task list, documents, and
+                tips live. handleStartNow/setTab is no longer used by this
+                button, but is left untouched below in case anything else
+                still calls it. */}
             {currentStage && (
                 <div className="hd-card hd-next-action-card hd-focus-compact">
                     <div className="hd-focus-row">
-                        <div className="hd-next-action-icon">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 2.5h8.5L20 8v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 6 21V4a1.5 1.5 0 0 1 1.5-1.5z" fill="url(#hdFocusIconGrad)" />
-                                <path d="M14.5 2.5V7a1 1 0 0 0 1 1H20" fill="none" stroke="#ffffff" strokeOpacity="0.35" strokeWidth="1.2" strokeLinejoin="round" />
-                                <path d="M9 13.5l2 2 4-4.2" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                                <defs>
-                                    <linearGradient id="hdFocusIconGrad" x1="6" y1="2.5" x2="20" y2="22.5" gradientUnits="userSpaceOnUse">
-                                        <stop stopColor="#8b7bff" />
-                                        <stop offset="1" stopColor="#4a3fd8" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </div>
+                        <div className="hd-next-action-icon">{currentStatus.emoji}</div>
                         <div className="hd-focus-info">
                             <div className="hd-focus-title-row">
                                 <span className="hd-focus-title">{currentStage.name}</span>
@@ -286,7 +300,7 @@ export default function HomeDashboard({ setTab, setScreen, onSkipAheadDetected }
                         <button
                             type="button"
                             className="hd-continue-btn"
-                            onClick={handleStartNow}
+                            onClick={handleOpenStageDetails}
                         >
                             Stage Details <span className="hd-arrow">→</span>
                         </button>

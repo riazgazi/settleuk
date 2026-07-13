@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import './Onboarding.css';
 
-// Adjust these two relative paths if you move this file — they currently assume
-// this component lives at src/pages/Onboarding/Onboarding.jsx
-import bigBenImg from '../../assets/images/big-ben.png';
-
-// skylineImage.js exports a named constant, not a default export
-import { SKYLINE_IMG } from '../../assets/images/skylineImage.js';
-
 // Journey stages/statuses, imported directly so onboarding stays in sync with
 // src/data/stages.js — no separate hardcoded list to drift out of sync.
 import { STATUSES } from '../../data/stages';
+
+// Adjust this path if you move this file — currently assumes this component
+// lives at src/pages/Onboarding/Onboarding.jsx. Still used for Screen 1's
+// hero photo; Screens 2 and 3 no longer use any background image per the
+// "clean, flat Home-matching background, no blurred imagery" requirement.
+import bigBenImg from '../../assets/images/big-ben.png';
 
 const INTAKE_OPTIONS = [
     'January 2027',
@@ -57,6 +56,11 @@ function ScreenOne({ onNext }) {
         <div className="ob-screen ob-screen-dark">
             <div className="ob-topbar">
                 <span className="ob-gb-label">GB</span>
+            </div>
+
+            {/* Flag moved here — centered, directly above the title — instead
+                of the old top-right corner slot. GB label above stays put. */}
+            <div className="ob-flag-center">
                 <UKFlagBadge />
             </div>
 
@@ -80,16 +84,18 @@ function ScreenOne({ onNext }) {
 
             <ProgressDots total={3} activeIndex={0} />
 
-            <button type="button" className="ob-btn ob-btn-primary" onClick={onNext}>
-                Start my journey
-            </button>
+            <div className="ob-bottom-action">
+                <button type="button" className="ob-btn ob-btn-primary" onClick={onNext}>
+                    Start my journey
+                </button>
+            </div>
         </div>
     );
 }
 
 function ScreenTwo({ onNext, onBack }) {
     return (
-        <div className="ob-screen ob-screen-light">
+        <div className="ob-screen ob-screen-dark">
             <button type="button" className="ob-back" onClick={onBack} aria-label="Go back">
                 ←
             </button>
@@ -110,9 +116,11 @@ function ScreenTwo({ onNext, onBack }) {
                 ))}
             </div>
 
-            <button type="button" className="ob-btn ob-btn-primary" onClick={onNext}>
-                Continue
-            </button>
+            <div className="ob-bottom-action">
+                <button type="button" className="ob-btn ob-btn-primary" onClick={onNext}>
+                    Continue
+                </button>
+            </div>
         </div>
     );
 }
@@ -123,26 +131,20 @@ function ScreenThree({ onFinish, onSkip, onBack }) {
     const [intake, setIntake] = useState('');
 
     const handleBuild = () => {
-        onFinish({ name, statusId: statusId === '' ? null : Number(statusId), intake });
+        onFinish({ name, statusId: statusId === '' ? 0 : Number(statusId), intake });
     };
 
     return (
-        <div className="ob-screen ob-screen-photo">
-            {/* Background photo, from skylineImage.js's named export SKYLINE_IMG */}
-            <div
-                className="ob-photo-bg"
-                style={{ backgroundImage: `url(${SKYLINE_IMG})` }}
-                aria-hidden="true"
-            />
-            <div className="ob-photo-overlay" />
-
-            <button type="button" className="ob-back ob-back-light" onClick={onBack} aria-label="Go back">
+        // Flat dark background matching Home exactly — no photo, no blur, no
+        // gradient. The old ob-photo-bg / ob-photo-overlay elements are gone.
+        <div className="ob-screen ob-screen-dark ob-screen-setup">
+            <button type="button" className="ob-back" onClick={onBack} aria-label="Go back">
                 ←
             </button>
 
-            <div className="ob-photo-content">
-                <h2 className="ob-photo-title">Let&rsquo;s personalize your journey 🚀</h2>
+            <h2 className="ob-photo-title">Let&rsquo;s personalize your journey 🚀</h2>
 
+            <div className="ob-form-card">
                 <label className="ob-field-label" htmlFor="ob-name">What should we call you?</label>
                 <input
                     id="ob-name"
@@ -178,11 +180,12 @@ function ScreenThree({ onFinish, onSkip, onBack }) {
                         <option key={opt} value={opt}>{opt}</option>
                     ))}
                 </select>
+            </div>
 
+            <div className="ob-bottom-action">
                 <button type="button" className="ob-btn ob-btn-primary" onClick={handleBuild}>
                     Build my journey →
                 </button>
-
                 <button type="button" className="ob-skip-link" onClick={onSkip}>
                     I&rsquo;ll set up later
                 </button>

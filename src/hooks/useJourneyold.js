@@ -27,15 +27,6 @@ export const useJourney = () => {
     // as selectedStage above.
     const [tab, setTab] = useState("home");
 
-    // "uk" = normal Journey to UK home dashboard (default).
-    // "welcome" = the blank Welcome to UK placeholder page.
-    // Controlled by the bottom-nav Switch button. Session-only, not persisted
-    // — reloading the app always comes back to "uk".
-    const [view, setView] = useState("uk");
-    const toggleView = useCallback(() => {
-        setView((v) => (v === "uk" ? "welcome" : "uk"));
-    }, []);
-
     const [showSettings, setShowSettings] = useState(false);
     const [editProfile, setEditProfile] = useState({ name: "", arrival: "" });
     const [showToast, setShowToast] = useState("");
@@ -153,8 +144,6 @@ export const useJourney = () => {
 
         selectedStage, setSelectedStage,
         tab, setTab,
-
-        view, setView, toggleView,
 
         showSettings, setShowSettings,
         editProfile, setEditProfile,
