@@ -8,6 +8,7 @@ import HomeTasks from "./components/HomeTasks";
 import HomeGuides from "./components/HomeGuides";
 
 import CostsTab from "../../features/costs/CostsTab";
+import ExpenseTracker from "../../features/expenses/ExpenseTracker";
 import PrepTab from "../../features/cas/PrepTab";
 import PackingTab from "../../features/packing/PackingTab";
 import Documents from "../../features/documents/Documents";
@@ -106,6 +107,18 @@ const Home = () => {
                     />
                     <div style={{ padding: "0 16px 24px" }}>
                         <CostsTab />
+                    </div>
+                </>
+            )}
+            {tab === "expense" && (
+                <>
+                    <FeaturePageHeader
+                        title="Expense Tracker"
+                        subtitle="Track your UK journey expenses"
+                        onBack={backToTools}
+                    />
+                    <div style={{ padding: "0 16px 24px" }}>
+                        <ExpenseTracker />
                     </div>
                 </>
             )}

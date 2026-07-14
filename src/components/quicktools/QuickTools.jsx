@@ -44,6 +44,14 @@ const QUICK_TOOLS = [
         sub: "Prepare for your journey",
         action: ({ setTab }) => setTab("docs"),
     },
+    {
+        key: "expense",
+        icon: "💰",
+        iconClass: "qt-tool-icon-green",
+        title: "Expense Tracker",
+        sub: "Track your UK journey expenses",
+        action: ({ setTab }) => setTab("expense"),
+    },
 ];
 
 /**
