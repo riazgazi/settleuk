@@ -21,12 +21,28 @@ const QUICK_TOOLS = [
         action: ({ setTab }) => setTab("university-explorer"),
     },
     {
+        key: "scholarship",
+        icon: "🎓",
+        iconClass: "qt-tool-icon-purple",
+        title: "Scholarship Finder",
+        sub: "Explore UK scholarships",
+        action: ({ setTab }) => setTab("scholarship"),
+    },
+    {
         key: "costs",
         icon: "🧮",
         iconClass: "qt-tool-icon-teal",
         title: "Budget Calculator",
         sub: "Plan your total expenses",
         action: ({ setTab }) => setTab("costs"),
+    },
+    {
+        key: "expense",
+        icon: "💰",
+        iconClass: "qt-tool-icon-green",
+        title: "Expense Tracker",
+        sub: "Track your UK journey expenses",
+        action: ({ setTab }) => setTab("expense"),
     },
     {
         key: "prep",
@@ -45,13 +61,22 @@ const QUICK_TOOLS = [
         action: ({ setTab }) => setTab("docs"),
     },
     {
-        key: "expense",
-        icon: "💰",
+        key: "application",
+        icon: "🤝",
         iconClass: "qt-tool-icon-green",
-        title: "Expense Tracker",
-        sub: "Track your UK journey expenses",
-        action: ({ setTab }) => setTab("expense"),
+        title: "Application Assistant",
+        sub: "Community support & guidance",
+        action: ({ setTab }) => setTab("application"),
+    }, ,
+    {
+        key: "packing",
+        icon: "🎒",
+        iconClass: "qt-tool-icon-orange",
+        title: "Packing Planner",
+        sub: "Plan your luggage & essentials",
+        action: ({ setTab }) => setTab("packing"),
     },
+
 ];
 
 /**

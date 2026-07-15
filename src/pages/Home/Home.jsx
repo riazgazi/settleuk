@@ -12,6 +12,7 @@ import ExpenseTracker from "../../features/expenses/ExpenseTracker";
 import PrepTab from "../../features/cas/PrepTab";
 import PackingTab from "../../features/packing/PackingTab";
 import Documents from "../../features/documents/Documents";
+import ScholarshipFinder from "../../features/scholarshipfinder/ScholarshipFinder"; import ApplicationAssistant from "../../features/applicationassistant/ApplicationAssistant";
 import UniversityExplorer from "../../features/university/UniversityExplorer";
 import StageInfoModal from "../../components/home/StageInfoModal";
 import QuickTools from "../../components/quicktools/QuickTools";
@@ -97,7 +98,18 @@ const Home = () => {
                     setTab={setTab}
                 />
             )}
-
+            {tab === "scholarship" && (
+                <>
+                    <FeaturePageHeader
+                        title="Scholarship Finder"
+                        subtitle="Explore UK scholarships"
+                        onBack={backToTools}
+                    />
+                    <div style={{ padding: "0 16px 24px" }}>
+                        <ScholarshipFinder />
+                    </div>
+                </>
+            )}
             {tab === "costs" && (
                 <>
                     <FeaturePageHeader
@@ -148,9 +160,30 @@ const Home = () => {
                     </div>
                 </>
             )}
-
-            {tab === "packing" && packingAutoVisible && <PackingTab />}
-            {tab === "guides" && <HomeGuides />}
+            {tab === "application" && (
+                <>
+                    <FeaturePageHeader
+                        title="Application Assistant"
+                        subtitle="Community support & guidance"
+                        onBack={backToTools}
+                    />
+                    <div style={{ padding: "0 16px 24px" }}>
+                        <ApplicationAssistant />
+                    </div>
+                </>
+            )}
+            {tab === "packing" && (
+                <>
+                    <FeaturePageHeader
+                        title="Packing Planner"
+                        subtitle="Prepare everything before your departure"
+                        onBack={backToTools}
+                    />
+                    <div style={{ padding: "0 16px 24px" }}>
+                        <PackingTab />
+                    </div>
+                </>
+            )}
 
             {showToast && (
                 <div style={{ position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)", background: "#1D9E6A", color: "#08111C", padding: "10px 24px", borderRadius: 30, fontSize: 13, fontWeight: 700, boxShadow: "0 4px 20px rgba(0,0,0,0.4)", whiteSpace: "nowrap", zIndex: 300 }}>
