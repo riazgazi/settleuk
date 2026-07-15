@@ -67,7 +67,7 @@ const QUICK_TOOLS = [
         title: "Application Assistant",
         sub: "Community support & guidance",
         action: ({ setTab }) => setTab("application"),
-    }, ,
+    },
     {
         key: "packing",
         icon: "🎒",

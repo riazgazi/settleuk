@@ -5,7 +5,6 @@ import { STAGES } from "../../data/stages";
 import FeaturePageHeader from "../../components/layout/FeaturePageHeader";
 import HomeDashboard from "./components/HomeDashboard";
 import HomeTasks from "./components/HomeTasks";
-import HomeGuides from "./components/HomeGuides";
 
 import CostsTab from "../../features/costs/CostsTab";
 import ExpenseTracker from "../../features/expenses/ExpenseTracker";
@@ -44,7 +43,6 @@ const Home = () => {
     const sg = STAGES[statusId];
     const stIdx = statusId;
     const arrivalDays = profile.arrival ? Math.ceil((new Date(profile.arrival + "T12:00:00") - new Date()) / (1000 * 60 * 60 * 24)) : null;
-    const packingAutoVisible = statusId === 4 || statusId === 5;
 
     // University Explorer is now a standard tab-based feature screen — was
     // a modal (setShowUniFinder) before layout standardization.
