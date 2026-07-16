@@ -2,21 +2,21 @@
     min-height: 100%;
     width: 100%;
     box-sizing: border-box;
-    padding: 24px 20px 100px;
+    padding: var(--spacing-lg) var(--page-gutter) calc(100px + var(--safe-bottom));
     background: #0A1730;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .tsk-page-title {
     color: #F5F7FA;
-    font-size: 22px;
+    font-size: clamp(19px, 5.5vw, 24px);
     font-weight: 600;
     margin: 0 0 4px;
 }
 
 .tsk-page-subtitle {
     color: #8FA0BC;
-    font-size: 13px;
+    font-size: var(--font-caption);
     margin: 0 0 20px;
 }
 
@@ -38,14 +38,17 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 12px;
+    flex-wrap: wrap;
 }
 
 .tsk-stage-title {
     color: #F5F7FA;
-    font-size: 15px;
+    font-size: var(--font-body);
     font-weight: 600;
     margin: 0;
     flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
 }
 
 .tsk-current-badge {
@@ -96,9 +99,11 @@
 
 .tsk-task-text {
     color: #E6EDF7;
-    font-size: 13.5px;
+    font-size: var(--font-body);
     line-height: 1.4;
     flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
 }
 
 .tsk-task-text-done {

@@ -103,7 +103,7 @@ const Home = () => {
                         subtitle="Explore UK scholarships"
                         onBack={backToTools}
                     />
-                    <div style={{ padding: "0 16px 24px" }}>
+                    <div style={{ padding: "0 var(--page-gutter) 24px" }}>
                         <ScholarshipFinder />
                     </div>
                 </>
@@ -115,7 +115,7 @@ const Home = () => {
                         subtitle="Estimate your UK study budget"
                         onBack={backToTools}
                     />
-                    <div style={{ padding: "0 16px 24px" }}>
+                    <div style={{ padding: "0 var(--page-gutter) 24px" }}>
                         <CostsTab />
                     </div>
                 </>
@@ -127,7 +127,7 @@ const Home = () => {
                         subtitle="Track your UK journey expenses"
                         onBack={backToTools}
                     />
-                    <div style={{ padding: "0 16px 24px" }}>
+                    <div style={{ padding: "0 var(--page-gutter) 24px" }}>
                         <ExpenseTracker />
                     </div>
                 </>
@@ -140,7 +140,7 @@ const Home = () => {
                         subtitle="Prepare your CAS and UK visa application"
                         onBack={backToTools}
                     />
-                    <div style={{ padding: "0 16px 24px" }}>
+                    <div style={{ padding: "0 var(--page-gutter) 24px" }}>
                         <PrepTab />
                     </div>
                 </>
@@ -153,7 +153,7 @@ const Home = () => {
                         subtitle="Manage all your study documents"
                         onBack={backToTools}
                     />
-                    <div style={{ padding: "0 16px 24px" }}>
+                    <div style={{ padding: "0 var(--page-gutter) 24px" }}>
                         <Documents />
                     </div>
                 </>
@@ -165,7 +165,7 @@ const Home = () => {
                         subtitle="Community support & guidance"
                         onBack={backToTools}
                     />
-                    <div style={{ padding: "0 16px 24px" }}>
+                    <div style={{ padding: "0 var(--page-gutter) 24px" }}>
                         <ApplicationAssistant />
                     </div>
                 </>
@@ -177,14 +177,14 @@ const Home = () => {
                         subtitle="Prepare everything before your departure"
                         onBack={backToTools}
                     />
-                    <div style={{ padding: "0 16px 24px" }}>
+                    <div style={{ padding: "0 var(--page-gutter) 24px" }}>
                         <PackingTab />
                     </div>
                 </>
             )}
 
             {showToast && (
-                <div style={{ position: "fixed", bottom: 90, left: "50%", transform: "translateX(-50%)", background: "#1D9E6A", color: "#08111C", padding: "10px 24px", borderRadius: 30, fontSize: 13, fontWeight: 700, boxShadow: "0 4px 20px rgba(0,0,0,0.4)", whiteSpace: "nowrap", zIndex: 300 }}>
+                <div style={{ position: "fixed", bottom: "calc(90px + var(--safe-bottom))", left: "50%", transform: "translateX(-50%)", background: "#1D9E6A", color: "#08111C", padding: "10px 24px", borderRadius: 30, fontSize: 13, fontWeight: 700, boxShadow: "0 4px 20px rgba(0,0,0,0.4)", whiteSpace: "nowrap", maxWidth: "calc(100vw - 32px)", overflow: "hidden", textOverflow: "ellipsis", zIndex: 300 }}>
                     {showToast}
                 </div>
             )}

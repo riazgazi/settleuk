@@ -1,3 +1,68 @@
+/*
+ * ---------------------------------------------------------------------
+ * Global Responsive Design System
+ * ---------------------------------------------------------------------
+ * Single source of truth for spacing, radius and typography scale used
+ * across every screen (Home, Quick Tools, Budget Calculator, University
+ * Explorer, Expense Tracker, CAS & UKVI, Documents, Packing Planner,
+ * Scholarship Finder, Application Assistant, etc).
+ *
+ * Values use clamp(min, preferred, max) so they scale smoothly between
+ * the reference breakpoints (360 / 390 / 412 / 768px) without any JS
+ * and without changing the visual design at the 390px reference size
+ * the app was designed at.
+ *
+ * Adding a new feature? Reach for these variables instead of hardcoding
+ * px values, and it will automatically stay responsive.
+ * --------------------------------------------------------------------- */
+:root {
+  /* Spacing scale */
+  --spacing-xs: clamp(4px, 1.2vw, 6px);
+  --spacing-sm: clamp(8px, 2.2vw, 12px);
+  --spacing-md: clamp(14px, 4vw, 20px);
+  --spacing-lg: clamp(20px, 5.5vw, 28px);
+  --spacing-xl: clamp(28px, 7vw, 40px);
+
+  /* Radius scale */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+
+  /* Typography scale */
+  --font-title: clamp(1.5rem, 4.5vw + 0.6rem, 2.375rem); /* ~30-38px */
+  --font-subtitle: clamp(1.05rem, 2.4vw + 0.4rem, 1.3rem);
+  --font-body: clamp(0.875rem, 1.1vw + 0.5rem, 1rem); /* ~14-16px */
+  --font-caption: clamp(0.75rem, 0.8vw + 0.45rem, 0.85rem);
+  --font-button: clamp(0.9375rem, 1vw + 0.55rem, 1.0625rem); /* ~15-17px */
+
+  /* Safe layout widths */
+  --content-max-width: 640px;
+  --page-gutter: clamp(14px, 4.5vw, 24px);
+
+  /* Gesture-nav safe areas */
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+input, button, select, textarea {
+  max-width: 100%;
+  font-family: inherit;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

@@ -1,0 +1,115 @@
+.tsk-screen {
+    min-height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px 20px 100px;
+    background: #0A1730;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.tsk-page-title {
+    color: #F5F7FA;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 4px;
+}
+
+.tsk-page-subtitle {
+    color: #8FA0BC;
+    font-size: 13px;
+    margin: 0 0 20px;
+}
+
+.tsk-stage-card {
+    border: 1px solid #22314F;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: #0F1B36;
+}
+
+.tsk-stage-card-active {
+    border: 1.5px solid #F0A93A;
+    background: #12213F;
+}
+
+.tsk-stage-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.tsk-stage-title {
+    color: #F5F7FA;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    flex: 1;
+}
+
+.tsk-current-badge {
+    background: rgba(240, 169, 58, 0.15);
+    color: #F0A93A;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.tsk-stage-count {
+    color: #8FA0BC;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.tsk-task-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tsk-task-row {
+    border-top: 1px solid #1B2846;
+    padding: 10px 0;
+}
+
+.tsk-task-row:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.tsk-task-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.tsk-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: #1D9E75;
+    flex-shrink: 0;
+}
+
+.tsk-task-text {
+    color: #E6EDF7;
+    font-size: 13.5px;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.tsk-task-text-done {
+    color: #5A6B8A;
+    text-decoration: line-through;
+}
+
+.tsk-priority-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #D85A30;
+    flex-shrink: 0;
+}

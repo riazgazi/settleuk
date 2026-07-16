@@ -22,10 +22,10 @@ const AppLayout = ({ children, screen, setScreen, tab, setTab, view, onToggleVie
     const needsLegacyPadding = screen === "home" && ["tasks", "packing", "guides"].includes(tab);
 
     return (
-        <div style={{ minHeight: "100vh", background: "linear-gradient(180deg, #011936 0%, #0A2348 50%, #0F2D5C 100%)", fontFamily: "Arial, sans-serif", color: "#F0F4FF", paddingBottom: 80 }}>
-            <style>{`* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; } html, body { overflow-x: hidden; } input, button, textarea { max-width: 100%; }`}</style>
+        <div style={{ minHeight: "100vh", background: "linear-gradient(180deg, #011936 0%, #0A2348 50%, #0F2D5C 100%)", fontFamily: "Arial, sans-serif", color: "#F0F4FF", paddingBottom: "calc(80px + var(--safe-bottom))", width: "100%" }}>
+            <style>{`* { -webkit-tap-highlight-color: transparent; }`}</style>
 
-            <div style={{ maxWidth: 640, margin: "0 auto", padding: needsLegacyPadding ? "16px 20px" : 0 }}>
+            <div style={{ maxWidth: "var(--content-max-width)", width: "100%", margin: "0 auto", padding: needsLegacyPadding ? "var(--spacing-md) var(--page-gutter)" : 0 }}>
                 {children}
             </div>
 

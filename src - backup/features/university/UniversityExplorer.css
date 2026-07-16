@@ -1,0 +1,579 @@
+/* ============================================================
+   UniversityExplorer.css
+   Shared by UniversityExplorer, Card, Search, Filters, Compare,
+   Details. Same design language as MyJourney/StepDetails/Home:
+   light theme, white cards, purple accent, rounded corners.
+
+   NOTE: the existing UniversityFinder (Academic Profile step) is
+   intentionally left with its own original dark-navy inline styles
+   — it's reused as-is, not restyled, per "do not redesign it".
+   It appears as a full-screen overlay for that one step, then the
+   rest of University Explorer (this stylesheet) takes over.
+   ============================================================ */
+
+.ue-overlay {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1a1d29;
+}
+
+.ue-scroll {
+    flex: 1;
+    overflow-y: auto;
+    background: linear-gradient(180deg, #f5f7ff 0%, #ffffff 40%, #ffffff 100%);
+    padding: 20px 16px 100px;
+}
+
+/* ---------- Header ---------- */
+
+.ue-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.ue-back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.12);
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4f46e5;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 18px;
+}
+
+.ue-header-titles {
+    flex: 1;
+}
+
+.ue-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.ue-subtitle {
+    margin: 4px 0 0;
+    font-size: 12.5px;
+    color: #6b7280;
+}
+
+.ue-edit-profile-btn {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4f46e5;
+    background: rgba(79, 70, 229, 0.1);
+    border: none;
+    border-radius: 999px;
+    padding: 7px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* ---------- Search ---------- */
+
+.ue-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 11px 14px;
+    margin-bottom: 14px;
+}
+
+.ue-search input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    font-family: inherit;
+    color: #1a1d29;
+    background: transparent;
+}
+
+.ue-search-icon {
+    color: #9498a8;
+    font-size: 15px;
+}
+
+/* ---------- Filters ---------- */
+
+.ue-filters {
+    margin-bottom: 16px;
+}
+
+.ue-filter-group {
+    margin-bottom: 12px;
+}
+
+.ue-filter-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #9498a8;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.ue-filter-chips {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+}
+
+.ue-filter-chips::-webkit-scrollbar {
+    display: none;
+}
+
+.ue-chip {
+    flex-shrink: 0;
+    padding: 7px 13px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #4b5065;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.ue-chip--active {
+    background: #4f46e5;
+    border-color: #4f46e5;
+    color: #ffffff;
+}
+
+/* ---------- University Card ---------- */
+
+.ue-results-count {
+    font-size: 12px;
+    color: #9498a8;
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.ue-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.06);
+    box-shadow: 0 4px 16px rgba(30, 41, 90, 0.05);
+    cursor: pointer;
+}
+
+.ue-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.ue-card-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(79, 70, 229, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.ue-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ue-card-name {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 700;
+}
+
+.ue-card-location {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.ue-save-btn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ue-save-btn--active {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.ue-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 0;
+}
+
+.ue-meta-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: #f3f4f8;
+    color: #4b5065;
+}
+
+.ue-card-entry {
+    margin: 10px 0 0;
+    font-size: 11.5px;
+    color: #9498a8;
+    line-height: 1.4;
+}
+
+.ue-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.ue-compare-toggle {
+    flex: 1;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4b5065;
+    cursor: pointer;
+}
+
+.ue-compare-toggle--active {
+    background: rgba(79, 70, 229, 0.1);
+    border-color: #4f46e5;
+    color: #4f46e5;
+}
+
+.ue-empty-state {
+    text-align: center;
+    padding: 40px 16px;
+    color: #9498a8;
+    font-size: 13px;
+}
+
+/* ---------- Floating buttons ---------- */
+
+.ue-floating-bar {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    gap: 8px;
+    z-index: 30;
+}
+
+.ue-floating-btn {
+    flex: 1;
+    padding: 13px;
+    border-radius: 16px;
+    border: none;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(30, 41, 90, 0.18);
+}
+
+.ue-floating-btn--primary {
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+}
+
+.ue-floating-btn--secondary {
+    background: #ffffff;
+    color: #4f46e5;
+    border: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+/* ---------- Details ---------- */
+
+.ue-details-hero {
+    border-radius: 22px;
+    padding: 24px 20px;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+    text-align: center;
+}
+
+.ue-details-hero-emoji {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.ue-details-hero-name {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.ue-details-hero-meta {
+    margin: 6px 0 0;
+    font-size: 12.5px;
+    opacity: 0.9;
+}
+
+.ue-details-section {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.06);
+    box-shadow: 0 4px 16px rgba(30, 41, 90, 0.05);
+}
+
+.ue-details-section-title {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #9498a8;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.ue-details-section-text {
+    margin: 0;
+    font-size: 13.5px;
+    color: #4b5065;
+    line-height: 1.55;
+}
+
+.ue-details-list {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13.5px;
+    color: #4b5065;
+    line-height: 1.7;
+}
+
+.ue-details-link {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4f46e5;
+    text-decoration: none;
+}
+
+.ue-details-save-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 16px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+    margin-top: 4px;
+}
+
+/* ---------- Compare ---------- */
+
+.ue-compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(99, 102, 241, 0.06);
+    box-shadow: 0 4px 16px rgba(30, 41, 90, 0.05);
+}
+
+.ue-compare-table th,
+.ue-compare-table td {
+    padding: 10px 10px;
+    font-size: 12px;
+    text-align: left;
+    border-bottom: 1px solid #f0f1f6;
+    vertical-align: top;
+}
+
+.ue-compare-table th {
+    color: #9498a8;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.ue-compare-table td {
+    color: #1a1d29;
+    font-weight: 600;
+}
+
+.ue-compare-remove {
+    display: block;
+    margin-top: 4px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.ue-compare-empty {
+    text-align: center;
+    padding: 40px 16px;
+    color: #9498a8;
+    font-size: 13px;
+}
+
+/* ---------- Tabs (same pattern as StepDetails' sd-tabs) ---------- */
+
+.ue-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+    scrollbar-width: none;
+}
+
+.ue-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.ue-tab-btn {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.ue-tab-btn--active {
+    background: #4f46e5;
+    border-color: #4f46e5;
+    color: #ffffff;
+}
+
+.ue-tab-panel {
+    animation: ueFadeSlide 0.28s ease both;
+}
+
+@keyframes ueFadeSlide {
+    from {
+        opacity: 0;
+        transform: translateX(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ---------- Profile tab ---------- */
+
+.ue-profile-summary {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 1px solid rgba(99, 102, 241, 0.06);
+    box-shadow: 0 4px 16px rgba(30, 41, 90, 0.05);
+}
+
+.ue-profile-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f1f6;
+    font-size: 13px;
+}
+
+.ue-profile-row:last-of-type {
+    border-bottom: none;
+}
+
+.ue-profile-label {
+    color: #9498a8;
+    font-weight: 600;
+}
+
+.ue-profile-value {
+    color: #1a1d29;
+    font-weight: 700;
+}
+
+.ue-edit-profile-full-btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    background: rgba(79, 70, 229, 0.1);
+    color: #4f46e5;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ue-profile-empty {
+    text-align: center;
+    padding: 24px 16px;
+    color: #9498a8;
+    font-size: 13px;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (min-width: 600px) {
+    .ue-scroll {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .ue-floating-bar {
+        max-width: 480px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+}

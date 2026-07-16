@@ -10,8 +10,8 @@
 .fph-header {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    padding: 20px 16px 4px;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--page-gutter) 4px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -32,18 +32,21 @@
 
 .fph-titles {
     flex: 1;
+    min-width: 0;
 }
 
 .fph-title {
     margin: 0;
-    font-size: 18px;
+    font-size: var(--font-subtitle);
     font-weight: 700;
     letter-spacing: -0.01em;
     color: #ffffff;
+    overflow-wrap: break-word;
 }
 
 .fph-subtitle {
     margin: 4px 0 0;
-    font-size: 12.5px;
+    font-size: var(--font-caption);
     color: #9aa3c4;
+    overflow-wrap: break-word;
 }

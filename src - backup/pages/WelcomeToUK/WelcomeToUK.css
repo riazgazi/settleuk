@@ -1,0 +1,22 @@
+.wuk-screen {
+    min-height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0A1730;
+    padding: 40px 24px;
+}
+
+.wuk-content {
+    text-align: center;
+}
+
+.wuk-title {
+    color: #F5F7FA;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}

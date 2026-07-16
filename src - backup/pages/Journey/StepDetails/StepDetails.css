@@ -1,0 +1,581 @@
+/* ============================================================
+   StepDetails.css
+   Same design language as MyJourney / HomeDashboard: light theme,
+   white background, soft blue/purple accents, rounded cards.
+   ============================================================ */
+
+.sd-page {
+    min-height: 100%;
+    background: linear-gradient(180deg, #f5f7ff 0%, #ffffff 40%, #ffffff 100%);
+    padding: 20px 16px 110px;
+    font-family: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1a1d29;
+    position: relative;
+}
+
+/* ---------- Header ---------- */
+
+.sd-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.sd-back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: 1px solid rgba(99, 102, 241, 0.12);
+    background: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4f46e5;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.sd-title {
+    flex: 1;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.sd-current-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(79, 70, 229, 0.12);
+    color: #4f46e5;
+    flex-shrink: 0;
+}
+
+/* ---------- Hero / progress card ---------- */
+
+.sd-hero {
+    border-radius: 22px;
+    padding: 20px;
+    margin-bottom: 16px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(30, 41, 90, 0.07);
+    border: 1px solid rgba(99, 102, 241, 0.06);
+}
+
+.sd-hero-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    background: rgba(99, 102, 241, 0.1);
+    color: #4f46e5;
+}
+
+.sd-hero--green .sd-hero-icon {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+}
+
+.sd-hero--blue .sd-hero-icon {
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+}
+
+.sd-hero--orange .sd-hero-icon {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+}
+
+.sd-hero--purple .sd-hero-icon {
+    background: rgba(139, 92, 246, 0.12);
+    color: #8b5cf6;
+}
+
+.sd-hero--indigo .sd-hero-icon {
+    background: rgba(99, 102, 241, 0.12);
+    color: #6366f1;
+}
+
+.sd-hero--violet .sd-hero-icon {
+    background: rgba(168, 85, 247, 0.12);
+    color: #a855f7;
+}
+
+.sd-hero--darkblue .sd-hero-icon {
+    background: rgba(30, 58, 138, 0.12);
+    color: #1e3a8a;
+}
+
+.sd-hero-desc {
+    margin: 0 0 14px;
+    font-size: 13.5px;
+    color: #4b5065;
+    line-height: 1.5;
+}
+
+.sd-hero-progress-track {
+    height: 8px;
+    border-radius: 999px;
+    background: #eef0f7;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.sd-hero-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    transition: width 0.6s ease;
+}
+
+.sd-hero-progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+/* ---------- Progress Insight Card ---------- */
+
+.sd-insight-card {
+    border-radius: 22px;
+    padding: 20px;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 22px rgba(79, 70, 229, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.08);
+}
+
+.sd-insight-row--headline {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.sd-insight-pct {
+    font-size: 28px;
+    font-weight: 800;
+    color: #4f46e5;
+    letter-spacing: -0.02em;
+}
+
+.sd-insight-pct-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.sd-insight-bar-track {
+    height: 8px;
+    border-radius: 999px;
+    background: #eef0f7;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.sd-insight-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    transition: width 0.6s ease;
+}
+
+.sd-insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.sd-insight-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sd-insight-item--score {
+    grid-column: span 2;
+}
+
+.sd-insight-label {
+    font-size: 11px;
+    color: #9498a8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.sd-insight-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1d29;
+}
+
+/* ---------- Tabs ---------- */
+
+.sd-tabs {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    scrollbar-width: none;
+}
+
+.sd-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.sd-tab-btn {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.sd-tab-btn--active {
+    background: #4f46e5;
+    border-color: #4f46e5;
+    color: #ffffff;
+}
+
+/* ---------- Tab panel + section content ---------- */
+
+.sd-tab-panel {
+    animation: sdFadeSlide 0.28s ease both;
+}
+
+@keyframes sdFadeSlide {
+    from {
+        opacity: 0;
+        transform: translateX(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.sd-section {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 18px;
+    border: 1px solid rgba(99, 102, 241, 0.06);
+    box-shadow: 0 4px 16px rgba(30, 41, 90, 0.05);
+    margin-bottom: 14px;
+}
+
+.sd-section-title {
+    margin: 0 0 8px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.sd-section-text {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: #4b5065;
+    line-height: 1.55;
+}
+
+.sd-subheading {
+    margin: 14px 0 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #1a1d29;
+}
+
+.sd-list {
+    margin: 0 0 4px;
+    padding-left: 18px;
+    font-size: 13px;
+    color: #4b5065;
+    line-height: 1.7;
+}
+
+.sd-urgency-inline {
+    font-weight: 700;
+    color: #4f46e5;
+}
+
+.sd-placeholder-text {
+    font-style: italic;
+    color: #9498a8;
+}
+
+/* ---------- Task rows ---------- */
+
+.sd-task-row {
+    display: flex;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f1f6;
+}
+
+.sd-task-row:last-child {
+    border-bottom: none;
+}
+
+.sd-task-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: #4f46e5;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.sd-task-label {
+    flex: 1;
+    cursor: pointer;
+}
+
+.sd-task-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.sd-task-text {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1a1d29;
+}
+
+.sd-task-badges {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.sd-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.sd-badge--priority {
+    background: rgba(245, 158, 11, 0.14);
+    color: #b45309;
+}
+
+.sd-badge--auto {
+    background: rgba(16, 185, 129, 0.14);
+    color: #0f766e;
+}
+
+.sd-task-desc {
+    margin: 4px 0 0;
+    font-size: 12.5px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.sd-task-link {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4f46e5;
+    text-decoration: none;
+}
+
+/* ---------- Tips / Mistakes blocks ---------- */
+
+.sd-insight-block {
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+}
+
+.sd-insight-block--tip {
+    background: rgba(59, 130, 246, 0.07);
+}
+
+.sd-insight-block--warn {
+    background: rgba(245, 158, 11, 0.08);
+}
+
+.sd-insight-block-title {
+    margin: 0 0 2px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.sd-insight-block-sub {
+    margin: 0;
+    font-size: 12.5px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* ---------- Resources ---------- */
+
+.sd-resource-row {
+    display: block;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f1f6;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4f46e5;
+    text-decoration: none;
+}
+
+.sd-resource-row:last-child {
+    border-bottom: none;
+}
+
+/* ---------- Bottom actions ---------- */
+
+.sd-bottom-actions {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid #eef0f5;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 20;
+}
+
+.sd-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 16px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.sd-btn--primary {
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+}
+
+.sd-btn--secondary {
+    background: #eef0f7;
+    color: #4f46e5;
+}
+
+.sd-btn--secondary:disabled {
+    color: #b4b7c6;
+    cursor: not-allowed;
+}
+
+.sd-lock-hint {
+    margin: 0;
+    font-size: 11.5px;
+    color: #9498a8;
+    text-align: center;
+}
+
+/* ---------- Stage completion celebration ---------- */
+
+.sd-celebration-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 29, 41, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 50;
+    animation: sdOverlayFade 0.25s ease both;
+}
+
+@keyframes sdOverlayFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.sd-celebration-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 28px 22px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(30, 41, 90, 0.2);
+    animation: sdCardPop 0.3s ease both;
+}
+
+@keyframes sdCardPop {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.sd-celebration-emoji {
+    font-size: 36px;
+    margin: 0 0 8px;
+}
+
+.sd-celebration-title {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.sd-celebration-sub {
+    margin: 0 0 18px;
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.sd-celebration-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (min-width: 600px) {
+
+    .sd-page,
+    .sd-bottom-actions {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .sd-bottom-actions {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        border-radius: 20px 20px 0 0;
+    }
+}

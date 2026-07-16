@@ -64,7 +64,8 @@ const BottomNav = ({ screen, setScreen, tab, setTab, view, onToggleView }) => {
     ];
 
     return (
-        <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "rgba(8,17,28,0.96)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", padding: "8px 0 14px", zIndex: 100 }}>
+        <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, background: "rgba(8,17,28,0.96)", backdropFilter: "blur(16px)", borderTop: "1px solid rgba(255,255,255,0.07)", zIndex: 100, paddingBottom: "var(--safe-bottom)" }}>
+            <div style={{ display: "flex", maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "8px 4px 14px" }}>
             {items.map((item) => {
                 if (item.id === "switch") {
                     return (
@@ -88,13 +89,14 @@ const BottomNav = ({ screen, setScreen, tab, setTab, view, onToggleView }) => {
                                     justifyContent: "center",
                                     gap: 2,
                                     marginTop: -8,
+                                    flexShrink: 0,
                                 }}
                             >
                                 <span style={{ fontSize: 13, lineHeight: 1 }}>🇧🇩</span>
                                 <span style={{ fontSize: 9, lineHeight: 1, color: "rgba(255,255,255,0.8)" }}>⇄</span>
                                 <span style={{ fontSize: 13, lineHeight: 1 }}>🇬🇧</span>
                             </span>
-                            <span className="jtu-bottom-nav-label" style={{ fontSize: 10, fontWeight: 600, color: item.active ? "#F0A93A" : "rgba(255,255,255,0.28)", whiteSpace: "nowrap" }}>
+                            <span className="jtu-bottom-nav-label" style={{ fontSize: "clamp(9px, 2.4vw, 10px)", fontWeight: 600, color: item.active ? "#F0A93A" : "rgba(255,255,255,0.28)", whiteSpace: "nowrap" }}>
                                 {item.label}
                             </span>
                         </button>
@@ -103,11 +105,12 @@ const BottomNav = ({ screen, setScreen, tab, setTab, view, onToggleView }) => {
 
                 return (
                     <button key={item.id} className="jtu-bottom-nav-btn" onClick={item.onClick} style={{ flex: 1, background: "transparent", border: "none", cursor: "pointer", padding: "4px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, minWidth: 0 }}>
-                        <span className="jtu-bottom-nav-icon" style={{ fontSize: 20 }}>{item.icon}</span>
-                        <span className="jtu-bottom-nav-label" style={{ fontSize: 10, fontWeight: 600, color: item.active ? "#3B82F6" : "rgba(255,255,255,0.28)", whiteSpace: "nowrap" }}>{item.label}</span>
+                        <span className="jtu-bottom-nav-icon" style={{ fontSize: "clamp(18px, 4.5vw, 20px)" }}>{item.icon}</span>
+                        <span className="jtu-bottom-nav-label" style={{ fontSize: "clamp(9px, 2.4vw, 10px)", fontWeight: 600, color: item.active ? "#3B82F6" : "rgba(255,255,255,0.28)", whiteSpace: "nowrap" }}>{item.label}</span>
                     </button>
                 );
             })}
+            </div>
         </div>
     );
 };

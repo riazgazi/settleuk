@@ -184,13 +184,14 @@ export default function ApplicationAssistant() {
         }
         .aa-container {
           max-width: 480px;
+          width: 100%;
           margin: 0 auto;
-          padding: 24px 16px 64px;
+          padding: 24px var(--page-gutter, 16px) 64px;
           box-sizing: border-box;
         }
         .aa-header { margin-bottom: 24px; }
         .aa-title {
-          font-size: 26px;
+          font-size: clamp(22px, 6vw, 28px);
           font-weight: 700;
           margin: 0;
           letter-spacing: -0.02em;

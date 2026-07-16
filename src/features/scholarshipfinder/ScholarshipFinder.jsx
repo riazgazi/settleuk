@@ -439,9 +439,9 @@ export default function ScholarshipFinder() {
           color: #ffffff;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        .sf-container { max-width: 480px; margin: 0 auto; padding: 24px 16px 64px; box-sizing: border-box; }
+        .sf-container { max-width: 480px; width: 100%; margin: 0 auto; padding: 24px var(--page-gutter, 16px) 64px; box-sizing: border-box; }
         .sf-header { margin-bottom: 20px; }
-        .sf-title { font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.02em; }
+        .sf-title { font-size: clamp(22px, 6vw, 28px); font-weight: 700; margin: 0; letter-spacing: -0.02em; }
         .sf-subtitle { font-size: 14px; color: #a1a1aa; margin: 8px 0 0; line-height: 1.5; }
 
         .sf-search-wrap { position: relative; margin-bottom: 16px; }

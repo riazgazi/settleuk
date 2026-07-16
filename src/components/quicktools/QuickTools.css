@@ -19,7 +19,7 @@
    untouched. */
 
 .qt-wrap--tools {
-  padding: 20px 16px 32px;
+  padding: var(--spacing-md) var(--page-gutter) 32px;
 }
 
 .qt-header {
@@ -30,36 +30,39 @@
 }
 
 .qt-header-title {
-  font-size: 18px;
+  font-size: var(--font-subtitle);
   font-weight: 700;
   color: #fff;
 }
 
 .qt-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-sm);
 }
 
 .qt-card {
   background: #0a0e27;
   border: 1px solid #2a3363;
-  border-radius: 16px;
-  padding: 18px 14px;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-sm);
   text-align: left;
   cursor: pointer;
   color: #fff;
+  width: 100%;
+  min-width: 0;
 }
 
 .qt-icon {
-  width: 46px;
-  height: 46px;
+  width: clamp(38px, 10vw, 46px);
+  height: clamp(38px, 10vw, 46px);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  margin-bottom: 12px;
+  font-size: clamp(16px, 4vw, 20px);
+  margin-bottom: var(--spacing-xs);
+  flex-shrink: 0;
 }
 
 .qt-tool-icon-blue {
@@ -79,15 +82,17 @@
 }
 
 .qt-title {
-  font-size: 14px;
+  font-size: var(--font-body);
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: var(--spacing-xs);
+  overflow-wrap: break-word;
 }
 
 .qt-sub {
-  font-size: 12px;
+  font-size: var(--font-caption);
   color: #9aa3c4;
   line-height: 1.4;
+  overflow-wrap: break-word;
 }
 
 /* ==========================================================

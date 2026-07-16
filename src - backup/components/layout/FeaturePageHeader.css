@@ -1,0 +1,49 @@
+/*
+ * Corrected to match the app's real dark-navy theme, confirmed via
+ * HomeDashboard.css (#060a1f/#0a0e27/#2a3363) and AppLayout.jsx's shell
+ * gradient (#011936 -> #0A2348 -> #0F2D5C). The earlier version of this
+ * file assumed a light iOS theme from the original mockup images — that
+ * didn't match the actual codebase. Fixed here since this file is new
+ * and directly part of this standardization task.
+ */
+
+.fph-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px 16px 4px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.fph-back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border: 1px solid #2a3363;
+    background: #0a0e27;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6f8cff;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 18px;
+}
+
+.fph-titles {
+    flex: 1;
+}
+
+.fph-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+}
+
+.fph-subtitle {
+    margin: 4px 0 0;
+    font-size: 12.5px;
+    color: #9aa3c4;
+}

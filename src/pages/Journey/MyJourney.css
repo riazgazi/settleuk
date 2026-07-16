@@ -5,8 +5,11 @@
 
 .journey-page {
     min-height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
     background: linear-gradient(180deg, #f5f7ff 0%, #ffffff 40%, #ffffff 100%);
-    padding: 20px 16px 100px;
+    padding: var(--spacing-md) var(--page-gutter) calc(100px + var(--safe-bottom));
     font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
     color: #1a1d29;
 }
@@ -46,14 +49,16 @@
 
 .journey-header-titles {
     flex: 1;
+    min-width: 0;
     text-align: center;
 }
 
 .journey-header-title {
     margin: 0;
-    font-size: 19px;
+    font-size: var(--font-subtitle);
     font-weight: 700;
     letter-spacing: -0.01em;
+    overflow-wrap: break-word;
 }
 
 .journey-header-subtitle {
