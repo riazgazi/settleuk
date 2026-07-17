@@ -310,29 +310,9 @@
 
 
 .timeline-node-pulse {
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 2px solid currentColor;
-    opacity: 0.5;
-    animation: journeyPulse 1.8s ease-out infinite;
-}
-
-@keyframes journeyPulse {
-    0% {
-        transform: scale(0.9);
-        opacity: 0.6;
-    }
-
-    70% {
-        transform: scale(1.35);
-        opacity: 0;
-    }
-
-    100% {
-        transform: scale(1.35);
-        opacity: 0;
-    }
+    /* Replaced by the current card's slow border/background glow
+       below — the node itself no longer blinks. */
+    display: none;
 }
 
 .timeline-node--upcoming,
@@ -364,9 +344,42 @@
 }
 
 .journey-card--current {
-    background: rgba(99, 102, 241, 0.08);
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+    background: rgba(99, 102, 241, 0.1);
+    /* Inset-only glow: physically clipped to the card's own box, so
+       it can never bleed into neighboring cards no matter how bright
+       it gets during the animation below. */
+    box-shadow:
+        inset 0 0 0 1px rgba(139, 147, 255, 0.45),
+        inset 0 0 22px rgba(99, 102, 241, 0.22),
+        0 4px 14px rgba(0, 0, 0, 0.3);
     border-color: rgba(139, 147, 255, 0.35);
+    /* Slow breathing glow: border brightens and the background tints
+       very slightly lighter over ~2.8s, then eases back — draws the
+       eye to the current stage without any blinking motion, and
+       without affecting anything outside this card. */
+    animation: journeyCardGlow 2.8s ease-in-out infinite;
+}
+
+@keyframes journeyCardGlow {
+
+    0%,
+    100% {
+        background: rgba(99, 102, 241, 0.08);
+        border-color: rgba(139, 147, 255, 0.35);
+        box-shadow:
+            inset 0 0 0 1px rgba(139, 147, 255, 0.35),
+            inset 0 0 18px rgba(99, 102, 241, 0.16),
+            0 4px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    50% {
+        background: rgba(99, 102, 241, 0.13);
+        border-color: rgba(139, 147, 255, 0.75);
+        box-shadow:
+            inset 0 0 0 1px rgba(139, 147, 255, 0.7),
+            inset 0 0 26px rgba(99, 102, 241, 0.3),
+            0 4px 14px rgba(0, 0, 0, 0.3);
+    }
 }
 
 .journey-card-top {
@@ -473,7 +486,7 @@
 
     .journey-row,
     .timeline-connector,
-    .timeline-node-pulse {
+    .journey-card--current {
         animation: none !important;
     }
 }
