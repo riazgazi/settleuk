@@ -131,14 +131,30 @@ function StageIcon({ name, ...rest }) {
     }
 }
 
-/* ---------- TIMELINE NODE (left rail) ---------- */
+/* ---------- TIMELINE NODE (left rail) ----------
+   ALIGNMENT FIX v2: the connector is split into an "upper" half
+   (row-top boundary -> node center) and a "lower" half (node center
+   -> row-bottom boundary). The first row skips its upper half
+   (nothing above it to connect to) and the last row skips its lower
+   half (nothing below it to connect to) — this is what stops the
+   line from poking out above the first circle or stopping short of
+   the last one. Each half is colored independently so the gradient
+   still correctly reflects "completed" state segment by segment.
+   ------------------------------------------------------------ */
 
-function TimelineNode({ color, icon, status, showConnector }) {
+function TimelineNode({ color, icon, status, isFirst, isLast, prevCompleted }) {
     const isCompleted = status === 'completed';
     const isCurrent = status === 'current';
 
     return (
         <div className="timeline-node-col">
+            {!isFirst && (
+                <div
+                    className={`timeline-connector timeline-connector--upper${prevCompleted ? ' timeline-connector--filled' : ''}`}
+                    aria-hidden="true"
+                />
+            )}
+
             <div
                 className={`timeline-node timeline-node--${color} timeline-node--${status}`}
                 aria-hidden="true"
@@ -149,9 +165,10 @@ function TimelineNode({ color, icon, status, showConnector }) {
                 </span>
             </div>
 
-            {showConnector && (
+            {!isLast && (
                 <div
-                    className={`timeline-connector${isCompleted ? ' timeline-connector--filled' : ''}`}
+                    className={`timeline-connector timeline-connector--lower${isCompleted ? ' timeline-connector--filled' : ''}`}
+                    aria-hidden="true"
                 />
             )}
         </div>
@@ -235,6 +252,10 @@ function MyJourney() {
 
                     const status = getStageStatus(stage.id, currentStatusId);
                     const isLast = index === STAGES.length - 1;
+                    const isFirst = index === 0;
+                    const prevCompleted =
+                        index > 0 &&
+                        getStageStatus(STAGES[index - 1].id, currentStatusId) === 'completed';
 
                     let progressText = null;
                     if (status === 'current') {
@@ -249,7 +270,9 @@ function MyJourney() {
                                 color={meta.color}
                                 icon={meta.icon}
                                 status={status}
-                                showConnector={!isLast}
+                                isFirst={isFirst}
+                                isLast={isLast}
+                                prevCompleted={prevCompleted}
                             />
                             <JourneyCard
                                 title={stage.name}

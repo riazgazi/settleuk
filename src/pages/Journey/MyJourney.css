@@ -5,13 +5,10 @@
 
 .journey-page {
     min-height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-    overflow-x: hidden;
-    background: linear-gradient(180deg, #f5f7ff 0%, #ffffff 40%, #ffffff 100%);
-    padding: var(--spacing-md) var(--page-gutter) calc(100px + var(--safe-bottom));
+    background: linear-gradient(180deg, #0a0e1a 0%, #0d1220 100%);
+    padding: 20px 16px 100px;
     font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #1a1d29;
+    color: #f1f2f8;
 }
 
 /* ---------- Header ---------- */
@@ -28,14 +25,14 @@
     width: 38px;
     height: 38px;
     border-radius: 12px;
-    border: 1px solid rgba(99, 102, 241, 0.12);
-    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(12px);
-    box-shadow: 0 2px 8px rgba(30, 41, 90, 0.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #4f46e5;
+    color: #8b93ff;
     flex-shrink: 0;
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -44,27 +41,26 @@
 .journey-back-btn:active,
 .journey-info-btn:active {
     transform: scale(0.94);
-    box-shadow: 0 1px 4px rgba(30, 41, 90, 0.08);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 .journey-header-titles {
     flex: 1;
-    min-width: 0;
     text-align: center;
 }
 
 .journey-header-title {
     margin: 0;
-    font-size: var(--font-subtitle);
+    font-size: 19px;
     font-weight: 700;
     letter-spacing: -0.01em;
-    overflow-wrap: break-word;
+    color: #ffffff;
 }
 
 .journey-header-subtitle {
     margin: 4px 0 0;
     font-size: 13px;
-    color: #6b7280;
+    color: #8890a8;
     font-weight: 500;
 }
 
@@ -121,18 +117,34 @@
     }
 }
 
-/* ---------- Left rail: node + connector ---------- */
+/* ---------- Left rail: node + connector ----------
+   Timeline column structure (per row):
+     .timeline-node-col          fixed width, stretched to card height
+                                  (via .journey-row's default
+                                  align-items: stretch)
+       ├── .timeline-connector   ONE element, top:0/bottom:0 — spans
+       │                         the full column height, so it's a
+       │                         single unbroken line. Consecutive
+       │                         rows' lines simply butt up against
+       │                         each other with zero seam.
+       └── .timeline-node        absolutely centered (top:50% +
+                                  translateY(-50%)), so it always
+                                  sits at the card's exact vertical
+                                  center, however tall the card is.
+   No JS measurement, no hardcoded margin-top anywhere.
+   ------------------------------------------------------------ */
 
 .timeline-node-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative;
     flex-shrink: 0;
     width: 40px;
 }
 
 .timeline-node {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -140,7 +152,7 @@
     align-items: center;
     justify-content: center;
     border: 2px solid transparent;
-    background: #fff;
+    background: #10152a;
     z-index: 1;
 }
 
@@ -151,18 +163,36 @@
 }
 
 .timeline-connector {
+    position: absolute;
+    left: calc(50% - 1px);
     width: 2px;
-    flex: 1;
-    min-height: 46px;
-    background: #e5e7eb;
+    background: rgba(255, 255, 255, 0.12);
     border-radius: 1px;
-    margin: 2px 0;
     transform-origin: top;
     animation: journeyGrowLine 0.6s ease both;
 }
 
+.timeline-connector--upper {
+    top: 0;
+    height: 50%;
+}
+
+.timeline-connector--lower {
+    top: 50%;
+    height: 50%;
+}
+
 .timeline-connector--filled {
     background: linear-gradient(180deg, #6366f1, #a5b4fc);
+}
+
+/* Upcoming (not-yet-reached) segments render dashed, per the target
+   design — only applies to segments that are neither filled nor
+   adjacent to the current stage. */
+.timeline-connector--dashed {
+    background: none;
+    border-left: 2px dashed rgba(255, 255, 255, 0.18);
+    width: 0;
 }
 
 @keyframes journeyGrowLine {
@@ -247,7 +277,7 @@
 }
 
 .timeline-node--current {
-    box-shadow: 0 4px 10px rgba(30, 41, 90, 0.12);
+    box-shadow: 0 0 16px rgba(99, 102, 241, 0.5), 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .timeline-node--current.timeline-node--green {
@@ -319,10 +349,10 @@
     border-radius: 20px;
     padding: 16px 18px;
     margin-bottom: 14px;
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(16px);
-    box-shadow: 0 4px 16px rgba(30, 41, 90, 0.06);
-    border: 1px solid rgba(99, 102, 241, 0.06);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     cursor: pointer;
     position: relative;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -334,9 +364,9 @@
 }
 
 .journey-card--current {
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 8px 22px rgba(79, 70, 229, 0.14);
-    border-color: rgba(99, 102, 241, 0.18);
+    background: rgba(99, 102, 241, 0.08);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+    border-color: rgba(139, 147, 255, 0.35);
 }
 
 .journey-card-top {
@@ -351,12 +381,13 @@
     font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.01em;
+    color: #f1f2f8;
 }
 
 .journey-card-desc {
     margin: 4px 0 0;
     font-size: 13px;
-    color: #6b7280;
+    color: #8890a8;
     line-height: 1.4;
     padding-right: 20px;
 }
@@ -368,18 +399,18 @@
 }
 
 .journey-card-meta--completed {
-    color: #10b981;
+    color: #34d399;
 }
 
 .journey-card-meta--current {
-    color: #4f46e5;
+    color: #8b93ff;
 }
 
 .journey-card-chevron {
     position: absolute;
     right: 16px;
     bottom: 16px;
-    color: #c7c9d9;
+    color: #4b5170;
 }
 
 /* ---------- Status badges ---------- */
@@ -394,22 +425,22 @@
 }
 
 .journey-badge--completed {
-    background: rgba(16, 185, 129, 0.12);
-    color: #10b981;
+    background: rgba(52, 211, 153, 0.15);
+    color: #34d399;
 }
 
 .journey-badge--current {
-    background: rgba(79, 70, 229, 0.12);
-    color: #4f46e5;
+    background: rgba(139, 147, 255, 0.18);
+    color: #a5abff;
 }
 
 .journey-badge--waiting {
-    background: rgba(245, 158, 11, 0.12);
-    color: #f59e0b;
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
 }
 
 .journey-badge--upcoming {
-    background: rgba(107, 114, 128, 0.1);
+    background: rgba(255, 255, 255, 0.06);
     color: #6b7280;
 }
 

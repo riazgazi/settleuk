@@ -7,6 +7,7 @@ import MyJourney from "./pages/Journey/MyJourney";
 import StepDetails from "./pages/Journey/StepDetails/StepDetails";
 import Tasks from "./pages/Tasks/Tasks";
 import WelcomeToUK from "./pages/WelcomeToUK/WelcomeToUK";
+import Profile, { PersonalInformation, Settings } from "./pages/Profile";
 import AppLayout from "./components/layout/AppLayout";
 
 import AdvanceModal from "./components/modals/AdvanceModal";
@@ -58,6 +59,15 @@ const AppContent = () => {
 
       case "tasks":
         return <Tasks />;
+
+      case "profile":
+        return <Profile onBack={() => { setScreen("home"); setTab("home"); }} />;
+
+      case "personal-info":
+        return <PersonalInformation onBack={() => setScreen("profile")} />;
+
+      case "app-settings":
+        return <Settings onBack={() => setScreen("profile")} />;
 
       case "home":
       default:

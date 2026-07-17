@@ -31,21 +31,34 @@ const FEATURES = [
     { icon: '🛂', label: 'Visa guidance' },
 ];
 
-function UKFlagBadge() {
+// Real Union Jack, drawn as an SVG so it stays crisp at any size — replaces
+// the old three-stripe placeholder badge. Used only on Screen 1.
+function UKUnionJack() {
     return (
-        <div className="ob-flag-badge" aria-hidden="true">
-            <span className="ob-flag-stripe ob-flag-green" />
-            <span className="ob-flag-stripe ob-flag-white" />
-            <span className="ob-flag-stripe ob-flag-orange" />
-        </div>
+        <svg className="ob-uk-flag" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="United Kingdom flag">
+            <rect width="60" height="36" fill="#00247D" />
+            <path d="M0,0 L60,36 M60,0 L0,36" stroke="#FFFFFF" strokeWidth="7.2" />
+            <path d="M0,0 L60,36 M60,0 L0,36" stroke="#CF142B" strokeWidth="2.6" />
+            <path d="M30,0 V36 M0,18 H60" stroke="#FFFFFF" strokeWidth="11" />
+            <path d="M30,0 V36 M0,18 H60" stroke="#CF142B" strokeWidth="6.2" />
+        </svg>
     );
 }
 
-function ProgressDots({ total, activeIndex }) {
+// variant="hero" scopes slightly larger/greener dots to Screen 1 only.
+// Screens 2 and 3 call this with no variant and get the exact original markup.
+function ProgressDots({ total, activeIndex, variant }) {
+    const wrapClass = variant === 'hero' ? 'ob-dots ob-dots-hero' : 'ob-dots';
+    const dotClass = (active) => {
+        if (variant === 'hero') {
+            return `ob-dot ob-dot-hero ${active ? 'ob-dot-active ob-dot-active-hero' : ''}`;
+        }
+        return `ob-dot ${active ? 'ob-dot-active' : ''}`;
+    };
     return (
-        <div className="ob-dots" role="progressbar" aria-valuenow={activeIndex + 1} aria-valuemin={1} aria-valuemax={total}>
+        <div className={wrapClass} role="progressbar" aria-valuenow={activeIndex + 1} aria-valuemin={1} aria-valuemax={total}>
             {Array.from({ length: total }).map((_, i) => (
-                <span key={i} className={`ob-dot ${i === activeIndex ? 'ob-dot-active' : ''}`} />
+                <span key={i} className={dotClass(i === activeIndex)} />
             ))}
         </div>
     );
@@ -53,18 +66,14 @@ function ProgressDots({ total, activeIndex }) {
 
 function ScreenOne({ onNext }) {
     return (
-        <div className="ob-screen ob-screen-dark">
-            <div className="ob-topbar">
-                <span className="ob-gb-label">GB</span>
+        <div className="ob-screen ob-screen-dark ob-screen-hero">
+            {/* GB label removed — Screen 1 is now distraction-free */}
+
+            <div className="ob-flag-center ob-anim-flag">
+                <UKUnionJack />
             </div>
 
-            {/* Flag moved here — centered, directly above the title — instead
-                of the old top-right corner slot. GB label above stays put. */}
-            <div className="ob-flag-center">
-                <UKFlagBadge />
-            </div>
-
-            <h1 className="ob-hero-title">Journey to UK</h1>
+            <h1 className="ob-hero-title ob-anim-title">Journey to UK</h1>
             <div className="ob-hero-tagline">
                 <span>from dream to destination</span>
                 <span>from destination to success</span>
@@ -72,21 +81,21 @@ function ScreenOne({ onNext }) {
 
             <div className="ob-hero-image-wrap">
                 <img
-                    className="ob-hero-image"
+                    className="ob-hero-image ob-anim-zoom"
                     src={bigBenImg}
                     alt="Illustration of a UK landmark tower"
                 />
             </div>
 
             <p className="ob-hero-subtitle">
-                Your personal UK student journey manager — from offers to arrival.
+                Plan, prepare and manage your complete UK study journey in one place.
             </p>
 
-            <ProgressDots total={3} activeIndex={0} />
+            <ProgressDots total={3} activeIndex={0} variant="hero" />
 
             <div className="ob-bottom-action">
-                <button type="button" className="ob-btn ob-btn-primary" onClick={onNext}>
-                    Start my journey
+                <button type="button" className="ob-btn ob-btn-primary ob-btn-hero ob-anim-btn" onClick={onNext}>
+                    Start My Journey
                 </button>
             </div>
         </div>
