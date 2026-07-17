@@ -331,7 +331,7 @@
     margin-bottom: 14px;
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(16px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
     border: 1px solid rgba(255, 255, 255, 0.06);
     cursor: pointer;
     position: relative;
@@ -347,11 +347,14 @@
     background: rgba(99, 102, 241, 0.1);
     /* Inset-only glow: physically clipped to the card's own box, so
        it can never bleed into neighboring cards no matter how bright
-       it gets during the animation below. */
+       it gets during the animation below. The last layer is a plain
+       depth shadow — matched to the same value every other card
+       uses, so it doesn't cast a stronger/uneven shadow onto the
+       card sitting right below it. */
     box-shadow:
         inset 0 0 0 1px rgba(139, 147, 255, 0.45),
         inset 0 0 22px rgba(99, 102, 241, 0.22),
-        0 4px 14px rgba(0, 0, 0, 0.3);
+        0 2px 8px rgba(0, 0, 0, 0.18);
     border-color: rgba(139, 147, 255, 0.35);
     /* Slow breathing glow: border brightens and the background tints
        very slightly lighter over ~2.8s, then eases back — draws the
@@ -369,7 +372,7 @@
         box-shadow:
             inset 0 0 0 1px rgba(139, 147, 255, 0.35),
             inset 0 0 18px rgba(99, 102, 241, 0.16),
-            0 4px 14px rgba(0, 0, 0, 0.3);
+            0 2px 8px rgba(0, 0, 0, 0.18);
     }
 
     50% {
@@ -378,7 +381,7 @@
         box-shadow:
             inset 0 0 0 1px rgba(139, 147, 255, 0.7),
             inset 0 0 26px rgba(99, 102, 241, 0.3),
-            0 4px 14px rgba(0, 0, 0, 0.3);
+            0 2px 8px rgba(0, 0, 0, 0.18);
     }
 }
 
